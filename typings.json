@@ -1,0 +1,10 @@
+{
+  "globalDependencies": {
+    "jquery": "registry:dt/jquery#1.10.0+20160417213236",
+    "react": "registry:dt/react#0.14.0+20160602140309",
+    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040"
+  },
+  "dependencies": {
+    "react-router": "registry:npm/react-router#2.0.0+20160214194820"
+  }
+}

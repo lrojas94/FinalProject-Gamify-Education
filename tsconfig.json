@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noImplicitAny": false,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "allowSyntheticDefaultImports": true,
+        "jsx": "react"
+    },
+    "filesGlob": [
+        "./**/*.ts",
+        "./**/*.tsx",
+        "!./node_modules/**/*.ts"
+    ],
+    "files": [
+        "./typings/globals/jquery/index.d.ts",
+        "./typings/globals/react-dom/index.d.ts",
+        "./typings/globals/react/index.d.ts",
+        "./typings/index.d.ts",
+        "./typings/modules/lodash/index.d.ts",
+        "./typings/modules/react-router/index.d.ts",
+        "./client/app.tsx",
+        "./client/components/hello.tsx",
+        "./client/components/helloAgain.tsx"
+    ],
+    "compileOnSave": false,
+    "atom": {
+        "rewriteTsconfig": true
+    }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "ReactExpressTemplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run build-watch\"  \"nodemon server/app.js\"",
+    "build": "webpack --progress --colors --module-bind 'js-babel-loader' --config webpack.config.client.js",
+    "build-watch": "webpack --progress --colors --module-bind 'js-babel-loader' --config webpack.config.client.js --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "jquery": "^2.2.4",
+    "mongoose": "^4.4.17",
+    "react": "^15.0.2",
+    "react-dom": "^15.0.2",
+    "react-router": "^2.4.1",
+    "ts-loader": "^0.8.2",
+    "typescript": "^1.8.10",
+    "webpack": "^1.13.1"
+  }
+}

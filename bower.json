@@ -1,0 +1,19 @@
+{
+  "name": "ReactExpressTemplate",
+  "description": "",
+  "main": "client/app.jsx",
+  "authors": [
+    "Luis Rojas <lrojas94@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+    "dependencies": {
+    }
+}
