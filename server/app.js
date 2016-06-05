@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var app = express();
+var usersModel = require('./models/users.js');
 
 app.use(express.static('client/'));
 app.use(express.static('bower_components/'));

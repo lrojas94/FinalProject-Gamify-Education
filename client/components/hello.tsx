@@ -42,7 +42,7 @@ export class Hello extends React.Component<{},{}>{
               <br/>
               <input type='button' onClick={this.sendPost} value='POST API Data'/>
               <br/>
-              <HelloAgain message="this is a test message"  />
+              <HelloAgain message='something'  />
           </div>
         );
     }
