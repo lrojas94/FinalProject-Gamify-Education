@@ -1,4 +1,4 @@
-import Sequelize from 'sequelize';
+import * as Sequelize from 'sequelize';
 import * as UserDef from './users.ts';
 import {constants} from './../constants.ts';
 
@@ -13,8 +13,7 @@ export function initialize():void {
 
   var sequelize = new Sequelize(constants.DATABASE_NAME,constants.DATABASE_USERNAME,constants.DATABASE_PASSWORD,{
     host: constants.DATABASE_HOST,
-    dialect: 'postgres',
-    native : false,
+    dialect: 'mysql',
     pool: {
       maxConnections: 100,
       minConnections: 0,

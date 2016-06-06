@@ -31,13 +31,10 @@ npm start
 * Within itself, the app uses routes in order to handle different components and such.
 
 
-### FOR TYPESCRIPT ###
-install typings globally: 
-``` npm install -g typings typescript ```
-
-Install react typings:
+### PROBLEMS WITH PQ-NATIVE? ###
+Install the following (Debian commands)
+```node
+sudo apt-get install python-psycopg2
+sudo apt-get install libpq-dev
+sudo apt-get install build-essential
 ```
-typings install dt~react --save --global && typings install dt~react-dom --save --global
-``` 
-
-Name your files ```.tsx``` instead of ```.jsx```.

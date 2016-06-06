@@ -12,20 +12,13 @@ module.exports = {
     module: {
         loaders: [
             {test: /\.tsx?$/, loader: 'ts-loader'},
+            { test: /\.md$/, loader: "html!markdown" },
             {test: /\.json$/, loader: 'json-loader'}
 
         ]
     },
     resolve: {
         extensions: ['', '.js','.ts']
-    },
-    node: {
-      console: false,
-      global: false,
-      process: false,
-      Buffer: false,
-      __filename: false,
-      __dirname: false
     },
     target: "node"
 };

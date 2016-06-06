@@ -15,6 +15,7 @@
         "!./node_modules/**/*.ts"
     ],
     "files": [
+        "./server/app.ts",
         "./server/constants.ts",
         "./server/models/db.ts",
         "./server/models/users.ts",
@@ -36,8 +37,7 @@
         "./typings/modules/react-router/index.d.ts",
         "./client/app.tsx",
         "./client/components/hello.tsx",
-        "./client/components/helloAgain.tsx",
-        "./server/app.tsx"
+        "./client/components/helloAgain.tsx"
     ],
     "compileOnSave": false,
     "atom": {

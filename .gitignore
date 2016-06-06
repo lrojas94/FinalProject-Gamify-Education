@@ -25,6 +25,7 @@ coverage
 
 # Compiled binary
 client/build
+www
 
 # Dependency directories
 node_modules
