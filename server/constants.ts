@@ -1,4 +1,4 @@
-module.exports = {
+export var constants = {
   DATABASE_NAME: 'gamify-education',
   DATABASE_USERNAME: 'gamify-education',
   DATABASE_PASSWORD: 'gamify-education',

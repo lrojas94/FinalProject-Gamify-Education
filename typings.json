@@ -1,8 +1,19 @@
 {
   "globalDependencies": {
+    "bluebird": "registry:dt/bluebird#2.0.0+20160319051630",
+    "body-parser": "registry:dt/body-parser#0.0.0+20160317120654",
+    "express": "registry:dt/express#4.0.0+20160317120654",
+    "express-serve-static-core": "registry:dt/express-serve-static-core#0.0.0+20160602151406",
     "jquery": "registry:dt/jquery#1.10.0+20160417213236",
+    "lodash": "registry:dt/lodash#3.10.0+20160330154726",
+    "mime": "registry:dt/mime#0.0.0+20160316155526",
+    "node": "registry:dt/node#6.0.0+20160602155235",
     "react": "registry:dt/react#0.14.0+20160602140309",
-    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040"
+    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
+    "sequelize": "registry:dt/sequelize#3.4.1+20160602143901",
+    "sequelize-fixtures": "registry:dt/sequelize-fixtures#0.0.0+20160317120654",
+    "serve-static": "registry:dt/serve-static#0.0.0+20160501131543",
+    "validator": "registry:dt/validator#4.5.1+20160316155526"
   },
   "dependencies": {
     "react-router": "registry:npm/react-router#2.0.0+20160214194820"

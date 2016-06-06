@@ -4,13 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run build-watch\"  \"nodemon server/app.js\"",
-    "build": "webpack --progress --colors --module-bind 'js-babel-loader' --config webpack.config.client.js",
-    "build-watch": "webpack --progress --colors --module-bind 'js-babel-loader' --config webpack.config.client.js --watch"
+    "start": "concurrently \"npm run client-build-watch\" \"npm run server-build-watch\" \"nodemon www/app.bundle.js\"",
+    "client-build": "webpack --progress --colors --config webpack.config.client.js",
+    "client-butil-watch": "webpack --progress --colors --config webpack.config.client.js --watch",
+    "server-build": "webpack --progress --colors --config webpack.config.server.js",
+    "server-build-watch": "webpack --progress --colors --config webpack.config.server.js --watch"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "3.4.0",
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "jquery": "^2.2.4",
@@ -24,5 +27,8 @@
     "ts-loader": "^0.8.2",
     "typescript": "^1.8.10",
     "webpack": "^1.13.1"
+  },
+  "devDependencies": {
+    "json-loader": "0.5.4"
   }
 }
