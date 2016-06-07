@@ -10,6 +10,12 @@ module.exports = {
         //at this directory our bundle file will be available
     },
     module: {
+        preLoaders: [
+            {
+                test: /\.tsx?$/,
+                loader: "tslint"
+            }
+        ],
         loaders: [
             {test: /\.tsx?$/, loader: 'ts-loader'}
         ]
@@ -17,5 +23,5 @@ module.exports = {
     resolve: {
         extensions: ['', '.js','.jsx','.ts','.tsx']
     },
-    devtool: 'eval'
+    devtool: 'cheap-module-source-map'
 };

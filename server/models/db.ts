@@ -6,12 +6,12 @@ export var initialized: Boolean = false;
 
 export var User: UserDef.Model;
 
-export function initialize():void {
-  if(this.initialized){
+export function initialize(): void {
+  if (this.initialized) {
     return;
   }
 
-  var sequelize = new Sequelize(constants.DATABASE_NAME,constants.DATABASE_USERNAME,constants.DATABASE_PASSWORD,{
+var sequelize = new Sequelize(constants.DATABASE_NAME, constants.DATABASE_USERNAME, constants.DATABASE_PASSWORD, {
     host: constants.DATABASE_HOST,
     dialect: 'postgres',
     pool: {

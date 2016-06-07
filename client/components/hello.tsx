@@ -1,39 +1,40 @@
 import * as React from 'react';
 import {Link} from 'react-router';
 import * as $ from 'jquery';
-import {HelloAgain} from "./helloAgain.tsx";
+import {HelloAgain} from './helloAgain.tsx';
 
-export class Hello extends React.Component<{},{}>{
-    displayName : String = 'Hello'
+export class Hello extends React.Component<{}, {}> {
+    public displayName: String = 'Hello';
+
     private sendGet(e) {
         e.preventDefault();
-        //Init ajax call:
+        // Init ajax call:
         $.ajax({
             url: '/api',
             method: 'GET',
             dataType: 'json',
-            data: { msg: "Hello Server with Get!" },
+            data: { msg: 'Hello Server with Get!' },
             success: function(data) {
                 console.log(data);
             }
         });
     }
 
-    private sendPost(e){
+    private sendPost(e) {
         e.preventDefault();
-        //Init ajax call:
+        // Init ajax call:
         $.ajax({
             url: '/api',
             method: 'POST',
             dataType: 'json',
-            data: { msg: "Hello Server with Post!" },
+            data: { msg: 'Hello Server with Post!' },
             success: function(data) {
                 console.log(data);
             }
         });
     }
 
-    render(){
+    public render() {
         return (
           <div>
               <div>This is a react hello module </div>

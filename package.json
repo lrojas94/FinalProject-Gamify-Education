@@ -7,7 +7,7 @@
     "start": "npm run build && node ./www/app.js",
     "start:watch": "concurrently \"npm run watch:client\" \"npm run watch:server\" \"npm run watch:build\"",
     "build": "npm run build:client && npm run build:server",
-    "build:client": "webpack --colors --config webpack.config.client.js",
+    "build:client": "webpack --colors --config webpack.config.client.js --optimize-dedupe",
     "watch:client": "webpack --colors --config webpack.config.client.js --watch",
     "build:server": "tsc ./server/app.ts --outDir ./www/",
     "watch:server": "tsc ./server/app.ts --outDir ./www/ --watch",
@@ -19,7 +19,6 @@
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "jquery": "^2.2.4",
-    "mysql": "2.11.0",
     "pg": "4.5.6",
     "pg-hstore": "2.3.2",
     "react": "^15.0.2",
@@ -29,5 +28,10 @@
     "serve-static": "1.10.3",
     "ts-loader": "^0.8.2",
     "webpack": "^1.13.1"
+  },
+  "devDependencies": {
+    "tslint": "3.10.2",
+    "tslint-loader": "2.1.4",
+    "typescript": "1.8.10"
   }
 }
