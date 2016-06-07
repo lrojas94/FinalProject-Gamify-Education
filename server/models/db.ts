@@ -1,6 +1,6 @@
 import * as Sequelize from 'sequelize';
-import * as UserDef from './users.ts';
-import {constants} from './../constants.ts';
+import * as UserDef from './users';
+import {constants} from './../constants';
 
 export var initialized: Boolean = false;
 

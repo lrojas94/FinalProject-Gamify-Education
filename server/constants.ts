@@ -1,6 +1,6 @@
 export var constants = {
-  DATABASE_NAME: 'gamifyEducation',
-  DATABASE_USERNAME: 'gamifyEducation',
-  DATABASE_PASSWORD: 'gamifyEducation',
+  DATABASE_NAME: 'gamifyeducation',
+  DATABASE_USERNAME: 'gamifyeducation',
+  DATABASE_PASSWORD: 'gamifyeducation',
   DATABASE_HOST: 'localhost'
 };
