@@ -1,12 +1,15 @@
 import * as express from 'express';
+import * as serveStatic from'serve-static';
 import * as bodyParser from 'body-parser';
 import * as path from 'path';
 import * as db from './models/db.ts';
 
 var app = express();
+var port = process.env.PORT || 3000;
 
 app.use(express.static('client/'));
 app.use(express.static('bower_components/'));
+app.use(serveStatic(path.join(__dirname,'client/'),{'index': ['index.html']}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -26,8 +29,9 @@ app.get('*', function (req, res) {
 });
 
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+app.listen(port, function () {
+  console.log(`Application running on port: ${port}`);
+
 	db.initialize();
 	db.User.sync({force: true}).then(function(){
 		db.User.create({
@@ -35,4 +39,5 @@ app.listen(3000, function () {
 			lastName: "Rojas"
 		})
 	});
+	
 });

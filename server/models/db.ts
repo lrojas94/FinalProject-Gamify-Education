@@ -13,7 +13,7 @@ export function initialize():void {
 
   var sequelize = new Sequelize(constants.DATABASE_NAME,constants.DATABASE_USERNAME,constants.DATABASE_PASSWORD,{
     host: constants.DATABASE_HOST,
-    dialect: 'mysql',
+    dialect: 'postgres',
     pool: {
       maxConnections: 100,
       minConnections: 0,

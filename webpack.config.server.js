@@ -2,7 +2,7 @@ const path = require("path");
 
 module.exports = {
     entry: {
-        app : './server/app.tsx' //Use this to add more builds. Different modules don't have to be together on a single file.
+        app : path.join(__dirname,'server/app.ts') //Use this to add more builds. Different modules don't have to be together on a single file.
     },
     output: {
         path: path.join(__dirname,'www'),
@@ -12,7 +12,7 @@ module.exports = {
     module: {
         loaders: [
             {test: /\.tsx?$/, loader: 'ts-loader'},
-            { test: /\.md$/, loader: "html!markdown" },
+            {test: /\.md$/, loader: "html!markdown"},
             {test: /\.json$/, loader: 'json-loader'}
 
         ]
@@ -20,5 +20,6 @@ module.exports = {
     resolve: {
         extensions: ['', '.js','.ts']
     },
-    target: "node"
+    target: "node",
+    devtool: 'source-map'
 };
