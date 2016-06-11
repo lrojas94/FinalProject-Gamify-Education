@@ -4,6 +4,7 @@
   "description": "Thesis Project",
   "main": "./www/app.js",
   "scripts": {
+    "prestart": "npm install && bower install && typings install",
     "start": "npm run build && node ./www/app.js",
     "start:watch": "concurrently \"npm run watch:client\" \"npm run watch:server\" \"npm run watch:build\"",
     "build": "npm run build:client && npm run build:server",

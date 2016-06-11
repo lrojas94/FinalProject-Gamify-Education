@@ -43,7 +43,9 @@ export class Hello extends React.Component<{}, {}> {
               <br/>
               <input type='button' onClick={this.sendPost} value='POST API Data'/>
               <br/>
-              <HelloAgain message='something'  />
+              <Link to='/hello/helloAgain'>Hello Again Link o/</Link>
+              <br/>
+              {this.props.children || 'Children go here :)'}
           </div>
         );
     }

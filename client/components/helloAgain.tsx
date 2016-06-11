@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 interface HelloAgainInterface {
-  message: String;
+  message?: String;
   reachingFrom?: String;
 }
 
@@ -13,7 +13,7 @@ export class HelloAgain extends React.Component<HelloAgainInterface, {}> {
       <br/>
       <strong>Im Being reached from: {this.props.reachingFrom || 'HelloAgain Module'}</strong>
       <br/>
-      {this.props.message ? <div>I recieved a message!: <strong>{this.props.message}</strong></div> : ''}
+      {this.props.message ? <div>I recieved a message!: <strong>{this.props.message || 'T.T no me mandaron'}</strong></div> : ''}
       </div>
     );
   }

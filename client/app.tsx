@@ -23,7 +23,9 @@ class App extends React.Component<{}, {}> {
 ReactDOM.render((
   <Router history={browserHistory}>
     <Route path='/' component={App}>
-      <Route path='hello' component={Hello}/>
+      <Route path='hello' component={Hello}>
+        <Route path='helloAgain' component={HelloAgain}/>
+      </Route>
       <Route path='helloAgain' component={HelloAgain}/>
     </Route>
   </Router>
