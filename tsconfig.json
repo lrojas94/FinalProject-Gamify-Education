@@ -17,7 +17,6 @@
     "files": [
         "./server/app.ts",
         "./server/constants.ts",
-        "./server/models/authentication.ts",
         "./server/models/db.ts",
         "./server/models/users.ts",
         "./typings/globals/bluebird/index.d.ts",
