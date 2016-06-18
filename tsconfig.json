@@ -17,10 +17,12 @@
     "files": [
         "./server/app.ts",
         "./server/constants.ts",
+        "./server/models/authentication.ts",
         "./server/models/db.ts",
         "./server/models/users.ts",
         "./typings/globals/bluebird/index.d.ts",
         "./typings/globals/body-parser/index.d.ts",
+        "./typings/globals/express-jwt/index.d.ts",
         "./typings/globals/express-serve-static-core/index.d.ts",
         "./typings/globals/express/index.d.ts",
         "./typings/globals/jquery/index.d.ts",
