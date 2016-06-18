@@ -12,7 +12,9 @@
     "watch:client": "webpack --colors --config webpack.config.client.js --watch",
     "build:server": "tsc ./server/app.ts --outDir ./www/",
     "watch:server": "tsc ./server/app.ts --outDir ./www/ --watch",
-    "watch:build": "nodemon ./www/app.js"
+    "watch:build": "nodemon ./www/app.js",
+    "test" : "npm run test:server",
+    "test:server" : "mocha ./www/tests/**/*.js"
   },
   "author": "Luis E. Rojas <lrojas94@gmail.com>, Manuel E. Urena, Frankie Garabito",
   "license": "ISC",
@@ -31,6 +33,8 @@
     "webpack": "^1.13.1"
   },
   "devDependencies": {
+    "chai": "3.5.0",
+    "chai-as-promised": "5.3.0",
     "tslint": "3.10.2",
     "tslint-loader": "2.1.4",
     "typescript": "1.8.10"

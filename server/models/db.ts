@@ -1,10 +1,9 @@
 import * as Sequelize from 'sequelize';
-import * as UserDef from './users';
+import * as PersonDB from './person';
 import {constants} from './../constants';
 
 export var initialized: Boolean = false;
-
-export var User: UserDef.Model;
+export var Person: PersonDB.Model;
 
 export function initialize(): void {
   if (this.initialized) {
@@ -18,10 +17,11 @@ var sequelize = new Sequelize(constants.DATABASE_NAME, constants.DATABASE_USERNA
       maxConnections: 100,
       minConnections: 0,
       maxIdleTime: 10000
-    }
+    },
+    logging: false
 
   });
-  this.User = <UserDef.Model> UserDef.define(sequelize);
+  Person = <PersonDB.Model> PersonDB.define(sequelize);
 
-  this.initialized = true;
+  initialized = true;
 };

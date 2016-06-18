@@ -1,4 +1,5 @@
 /// <reference path="../typings/index.d.ts"/>
+/// <reference path="./tests/tests.ts"/>
 import * as express from 'express';
 import * as serveStatic from'serve-static';
 import * as bodyParser from 'body-parser';
@@ -32,13 +33,4 @@ app.get('*', function (req, res) {
 
 app.listen(port, function () {
   console.log(`Application running on port: ${port}`);
-
-  db.initialize();
-  db.User.sync({force: true}).then(function(){
-    db.User.create({
-      firstName: 'Luis',
-      lastName: 'Rojas'
-    });
-  });
-
 });
