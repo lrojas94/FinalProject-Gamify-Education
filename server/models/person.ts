@@ -2,10 +2,10 @@ import * as Sequelize from 'sequelize';
 import lang from '../messages';
 
 export interface Pojo {
-  name: String;
-  lastName: String;
+  name: string;
+  lastName: string;
   birthDay: Date;
-  gender: String;
+  gender: string;
 }
 
 export interface Instance extends Sequelize.Instance<Pojo>, Pojo {};
@@ -44,7 +44,7 @@ export function define(sequelize: Sequelize.Sequelize): Model {
       }
     }
   }, {
-    freezeTableName: true, // TeacherModel tableName will be the same as the model name
+    freezeTableName: true, // Model tableName will be the same as the model name
   });
 
   return model;

@@ -11,12 +11,6 @@ module.exports = {
         //at this directory our bundle file will be available
     },
     module: {
-        preLoaders: [
-            {
-                test: /\.tsx?$/,
-                loader: "tslint"
-            }
-        ],
         loaders: [
             {
               test: /\.tsx?$/,

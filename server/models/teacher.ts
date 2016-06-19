@@ -2,11 +2,11 @@ import * as Sequelize from 'sequelize';
 import * as Person from './person';
 
 export interface Pojo {
-  username: String;
-  password: String;
-  degree?: String;
+  username: string;
+  password: string;
+  degree?: string;
   person?: Person.Pojo;
-  personId?: Number;
+  personId?: number;
 
 }
 
