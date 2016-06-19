@@ -13,8 +13,8 @@
     "build:server": "tsc ./server/app.ts --outDir ./www/",
     "watch:server": "tsc ./server/app.ts --outDir ./www/ --watch",
     "watch:build": "nodemon ./www/app.js",
-    "test" : "npm run test:server",
-    "test:server" : "mocha ./www/tests/**/*.js"
+    "test": "npm run test:server",
+    "test:server": "mocha ./www/tests/**/*.js"
   },
   "author": "Luis E. Rojas <lrojas94@gmail.com>, Manuel E. Urena, Frankie Garabito",
   "license": "ISC",
@@ -22,6 +22,9 @@
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "jquery": "^2.2.4",
+    "jsonwebtoken": "7.0.1",
+    "passport": "0.3.2",
+    "passport-jwt": "2.0.0",
     "pg": "4.5.6",
     "pg-hstore": "2.3.2",
     "react": "^15.0.2",

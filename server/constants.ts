@@ -2,5 +2,6 @@ export var constants = {
   DATABASE_NAME: 'gamifyeducation',
   DATABASE_USERNAME: 'gamifyeducation',
   DATABASE_PASSWORD: 'gamifyeducation',
-  DATABASE_HOST: 'localhost'
+  DATABASE_HOST: 'localhost',
+  JWT_SECRET: '61467AAED82BDD9A4D26AA98AA1FA6DB256FA922DE3EA9F2FB49080BF204A442'
 };
