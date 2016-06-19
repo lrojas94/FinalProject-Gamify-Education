@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import AuthConstants from '../constants/AuthConstants';
+import AuthConstants from '../constants/Constants';
 
 export default {
     logUserIn: (token) => {
