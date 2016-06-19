@@ -1,19 +1,29 @@
 import * as Sequelize from 'sequelize';
-import lang from '../messages';
+import * as Person from './person';
 
 export interface Pojo {
-  name: String;
-  lastName: String;
-  birthDay: Date;
-  gender: String;
+  username: String;
+  password: String;
+  degree?: String;
+  person?: Person.Pojo;
+  personId?: Number;
+
 }
 
 export interface Instance extends Sequelize.Instance<Pojo>, Pojo {};
 export interface Model extends Sequelize.Model<Instance, Pojo> {};
 
 export function define(sequelize: Sequelize.Sequelize): Model {
-  var model: Model = <Model> sequelize.define<Instance, Pojo>('Person', {
-    name: {
+  var model: Model = <Model> sequelize.define<Instance, Pojo>('Teacher', {
+    username: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        min: 6
+      }
+    },
+    password: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {
@@ -21,27 +31,18 @@ export function define(sequelize: Sequelize.Sequelize): Model {
         min: 3
       }
     },
-    lastName: {
+    degree: {
       type: Sequelize.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-        min: 3
-      }
+      allowNull: true
     },
-    birthDay: {
-      type: Sequelize.DATE,
+    personId: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'Person',
+        key: 'id',
+      },
+      unique: true,
       allowNull: false
-    },
-    gender: {
-      type: Sequelize.CHAR(1),
-      allowNull: false,
-      validate: {
-        isIn: {
-          args: [['m', 'f']],
-          msg: lang.es.errors.db.person.genderValidation
-        }
-      }
     }
   }, {
     freezeTableName: true, // TeacherModel tableName will be the same as the model name

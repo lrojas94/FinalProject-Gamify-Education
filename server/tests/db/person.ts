@@ -42,10 +42,7 @@ describe('Person Model', () => {
             lastName: 'Person',
             birthDay: new Date(),
             gender: 'x'
-          })
-          .catch((error) => {
-            error.message.should.contain(lang.es.errors.db.person.genderValidation);
-          });
+          }).should.eventually.be.rejected;
         });
   });
 
@@ -57,10 +54,7 @@ describe('Person Model', () => {
             lastName: 'Person',
             birthDay: new Date(),
             gender: 'm'
-          })
-          .catch((error) => {
-            error.message.should.contain('notNull Violation');
-          });
+          }).should.eventually.be.rejected;
     });
 
     it(`Should throw error when having lastName = null.`,
@@ -70,10 +64,7 @@ describe('Person Model', () => {
             lastName: null,
             birthDay: new Date(),
             gender: 'm'
-          })
-          .catch((error) => {
-            error.message.should.contain('notNull Violation');
-          });
+          }).should.eventually.be.rejected;
     });
 
     it(`Should throw error when having birthDay = null.`,
@@ -83,10 +74,7 @@ describe('Person Model', () => {
             lastName: 'Person',
             birthDay: null,
             gender: 'm'
-          })
-          .catch((error) => {
-            error.message.should.contain('notNull Violation');
-          });
+          }).should.eventually.be.rejected;
     });
 
     it(`Should throw error when having gender = null.`,
@@ -96,10 +84,7 @@ describe('Person Model', () => {
             lastName: 'Person',
             birthDay: new Date(),
             gender: null
-          })
-          .catch((error) => {
-            error.message.should.contain('notNull Violation');
-          });
+          }).should.eventually.be.rejected;
     });
   });
 
