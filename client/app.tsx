@@ -1,23 +1,33 @@
-import * as React from 'react';
+import React, {Component} from 'react';
 import * as ReactDOM from 'react-dom';
 import {Router, Route, Link, browserHistory} from 'react-router';
 
 import {Hello} from './components/hello.tsx';
 import {HelloAgain} from './components/helloAgain.tsx';
+import Header from './components/Header.tsx';
+import {Constants} from './constants/Constants';
 
-class App extends React.Component<{}, {}> {
-  public render() {
-    return (
-      <div>
-        <h1>Template App</h1>
-        <ul>
-          <li><Link to='/hello'>Hello Module</Link></li>
-          <li><Link to='/helloAgain'>Hello Again Module</Link></li>
-        </ul>
-        {this.props.children} {/*This is used so that the router can print correct module.*/}
-      </div>
-    );
-  }
+declare var Auth0Lock;
+
+class App extends Component<{}, {}> {
+
+    public componentWillMount() {
+        // Setup additional code here
+    }
+
+    public render() {
+        return (
+            <div>
+                <Header></Header>
+                <h1>Template App</h1>
+                <ul>
+                  <li><Link to='/hello'>Hello Module</Link></li>
+                  <li><Link to='/helloAgain'>Hello Again Module</Link></li>
+                </ul>
+                {this.props.children} {/*This is used so that the router can print correct module.*/}
+            </div>
+        );
+    }
 }
 
 ReactDOM.render((

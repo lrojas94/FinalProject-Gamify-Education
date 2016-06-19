@@ -5,23 +5,29 @@ import * as serveStatic from'serve-static';
 import * as bodyParser from 'body-parser';
 import * as path from 'path';
 import * as db from './models/db';
+import * as cors from 'cors';
 import {constants} from './constants';
-import {Authentication} from './models/Authentication';
 
 var app = express();
 var port = process.env.PORT || 3000;
-var jwtCheck = jwt({
-    secret: new Buffer(constants.API_BACKEND_CLIENT_SECRET, 'base64'),
-    audience: constants.API_BACKEND_CLIENT_ID
-});
 
 app.use(express.static('client/'));
 app.use(express.static('bower_components/'));
 app.use(serveStatic(path.join(__dirname, 'client/'), {'index': ['index.html']}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use('/api/login', jwtCheck);
 
+app.use(cors());
+
+/**
+ * Authentication middleware provided by express-jwt.
+ * This middleware will check incoming requests for a valid
+ * JWT on any routes that it is applied to.
+ */
+const authCheck = jwt({
+    secret: new Buffer(constants.API_BACKEND_CLIENT_SECRET, 'base64'),
+    audience: constants.API_BACKEND_CLIENT_ID
+});
 
 app.get('/api', function(req, res){
   console.log(req.query); // This is for a GET
