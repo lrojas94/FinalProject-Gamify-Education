@@ -9,3 +9,7 @@ before_script:
   - psql -c 'create database gamifyeducation;' -U postgres
   - psql -c "alter user \"gamifyeducation\" with password 'gamifyeducation';" -U postgres
   - psql -c "alter database \"gamifyeducation\" owner to \"gamifyeducation\";" -U postgres
+deploy:
+  provider: heroku
+  api_key: "1af1b48a-694f-4105-ae61-c6d2a5a2c9d2"
+  app: salty-anchorage-36119
