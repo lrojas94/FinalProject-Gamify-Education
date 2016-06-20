@@ -14,7 +14,7 @@
     "watch:server": "tsc ./server/app.ts --outDir ./www/ --watch",
     "watch:build": "nodemon ./www/app.js",
     "test": "npm run test:server",
-    "test:server": "mocha ./www/tests/**/*.js"
+    "test:server": "./node_modules/tslint/bin/tslint ./server/**/*.ts && ./node_modules/mocha/bin/mocha ./www/tests/**/*.js"
   },
   "author": "Luis E. Rojas <lrojas94@gmail.com>, Manuel E. Urena, Frankie Garabito",
   "license": "ISC",
@@ -34,7 +34,6 @@
     "sequelize": "3.23.3",
     "serve-static": "1.10.3",
     "ts-loader": "^0.8.2",
-    "tslint": "3.11.0",
     "typescript": "1.8.10",
     "typings": "1.3.0",
     "webpack": "1.13.1"
@@ -44,6 +43,7 @@
     "nodemon": "1.9.2",
     "mocha": "2.5.3",
     "concurrently": "2.1.0",
+    "tslint": "3.11.0",
     "chai-as-promised": "5.3.0"
   }
 }
