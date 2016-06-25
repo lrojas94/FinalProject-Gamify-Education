@@ -67,8 +67,10 @@ app.post('/api/login', (req, res) => {
   */
   var tokenValues: JWTTokenValues = {
     id: 0,
-    username: 'lrojas'
+    username: req.body.username || 'lrojas'
   };
+
+  console.log(req.body);
 
   /*
     Token generated for the tokenValues above:
