@@ -15,12 +15,12 @@ describe('School Model', () => {
     });
   });
   describe('Create school with no errors.', () => {
-    it('Should correctly create a person when information provided is valid and correct.', () => {
+    it('Should correctly create a School when information provided is valid and correct.', () => {
       return db.School.create({
         name: 'Juan XXIII',
         telephone: '809-707-0266'
       })
-      .then((person)=> {
+      .then((school)=> {
         school.name.should.equal('Juan XXIII');
         school.telephone.should.equal('809-707-0266');
       });
@@ -28,7 +28,7 @@ describe('School Model', () => {
   });
 
   describe('School cannot have null values.', () => {
-    it(`Should throw error when having name = null.`,
+    it('Should throw error when having name = null.',
         () => {
           return db.School.create({
             name: null,
@@ -36,9 +36,9 @@ describe('School Model', () => {
           }).should.eventually.be.rejected;
       });
 
-      it(`Should throw error when having telephone = null.`,
+      it('Should throw error when having telephone = null.',
           () => {
-            return db.Person.create({
+            return db.School.create({
               name: 'Juan XXIII',
               telephone: null
             }).should.eventually.be.rejected;
