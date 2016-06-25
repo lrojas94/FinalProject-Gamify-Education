@@ -7,35 +7,12 @@ chai.use(chaiAsPromised);
 chai.should();
 db.initialize();
 
-var nowDate = new Date();
-
 describe('Teacher Model', () => {
   before((done) => {
     db.Teacher.sync({
       force: true
     })
-    .then(() => {
-      // Create a person:
-      db.Person.bulkCreate([{
-        name: 'Luis Eduardo',
-        lastName: 'Rojas Cabrera',
-        birthDay: nowDate,
-        gender: 'm'
-      },
-      {
-        name: 'Manuel Emilio',
-        lastName: 'Urena Hernandez',
-        birthDay: nowDate,
-        gender: 'm'
-      },
-      {
-        name: 'Frankie Francisco',
-        lastName: 'Garabito Batista',
-        birthDay: nowDate,
-        gender: 'm'
-      }])
-      .then(() => done());
-    });
+    .then(() => done());
   });
 
   describe('Create Teacher With Person', () => {
@@ -65,7 +42,7 @@ describe('Teacher Model', () => {
             teacher.degree.should.equal('Math Student');
             teacher.person.name.should.equal('Luis Eduardo');
             teacher.person.lastName.should.equal('Rojas Cabrera');
-            teacher.person.birthDay.getTime().should.equal(nowDate.getTime());
+            teacher.person.birthDay.getTime().should.equal(new Date('April 28, 1994').getTime());
             teacher.person.gender.should.equal('m');
             done();
           });
