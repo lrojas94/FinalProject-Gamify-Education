@@ -2,6 +2,8 @@ import * as Sequelize from 'sequelize';
 import * as PersonDB from './person';
 import * as TeacherDB from './teacher';
 import * as StudentDB from './student';
+import * as SchoolDB from './school';
+import * as GroupDB from './group';
 import * as ProblemDB from './problem';
 import * as SolutionDB from './solution';
 import * as AnswerDB from './answer';
@@ -11,10 +13,13 @@ export var initialized: Boolean = false;
 export var Person: PersonDB.Model;
 export var Teacher: TeacherDB.Model;
 export var Student: StudentDB.Model;
+export var School: SchoolDB.Model;
+export var Group: GroupDB.Model;
 export var Problem: ProblemDB.Model;
 export var Solution: SolutionDB.Model;
 export var Answer: AnswerDB.Model;
 export var DB: Sequelize.Sequelize;
+
 
 
 export function initialize(): void {
