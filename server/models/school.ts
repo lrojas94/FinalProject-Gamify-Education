@@ -15,11 +15,7 @@ export function define(sequelize: Sequelize.Sequelize): Model {
             type: Sequelize.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true,
-                isIn: {
-                    args: [['^[a-z]+$', 'i']],
-                    msg: lang.es.errors.db.school.nameValidation
-                }
+                notEmpty: true
             }
         },
         telephone: {
@@ -27,11 +23,7 @@ export function define(sequelize: Sequelize.Sequelize): Model {
             allowNull: false,
             validate: {
                 notEmpty: true,
-                isIn: {
-                    args: [['^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$']],
-                    msg: lang.es.errors.db.school.telephoneValidation
-                }
-            }
+              }
         }
     }, {
         freezeTableName: true // Model tableName will be the same as the model name
