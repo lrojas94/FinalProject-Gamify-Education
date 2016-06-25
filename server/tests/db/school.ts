@@ -44,3 +44,4 @@ describe('School Model', () => {
             }).should.eventually.be.rejected;
       });
     });
+});
