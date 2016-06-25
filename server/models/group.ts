@@ -15,11 +15,7 @@ export function define(sequelize: Sequelize.Sequelize): Model {
             type: Sequelize.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true,
-                isIn: {
-                    args: [['^\d{4}-\d{4}$']],
-                    msg: lang.es.errors.db.group.yearValidation
-                }
+                notEmpty: true
             }
         },
         grade: {
