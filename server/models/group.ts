@@ -2,8 +2,8 @@ import * as Sequelize from 'sequelize';
 import lang from '../messages';
 
 export interface Pojo {
-    year: String;
-    grade: String;
+    year: string;
+    grade: string;
 }
 
 export interface Instance extends Sequelize.Instance<Pojo>, Pojo {};
@@ -19,7 +19,7 @@ export function define(sequelize: Sequelize.Sequelize): Model {
             }
         },
         grade: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.STRING,
             allowNull: false,
             validate: {
                 notEmpty: true,
