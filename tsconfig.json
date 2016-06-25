@@ -48,6 +48,9 @@
         "./typings/index.d.ts",
         "./typings/modules/react-router/index.d.ts",
         "./client/app.tsx",
+        "./client/components/core/header.tsx",
+        "./client/components/core/sidenav.tsx",
+        "./client/components/dashboard/dashboard.tsx",
         "./client/components/hello.tsx",
         "./client/components/helloAgain.tsx"
     ],
