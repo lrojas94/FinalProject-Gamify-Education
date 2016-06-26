@@ -21,6 +21,10 @@ module.exports = {
             {
               test: /\.tsx?$/,
               loader: 'ts'
+            },
+            {
+              test: /\.json$/,
+              loader: "json-loader"
             }
         ]
     },

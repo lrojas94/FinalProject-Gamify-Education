@@ -11,8 +11,9 @@ import * as jwt from 'jsonwebtoken';
 import {constants} from './constants';
 
 interface JWTTokenValues {
-  id: Number;
-  username: String;
+  username: string;
+  name: string;
+  jwt_token?: string;
 }
 
 const jwtBodyParam = 'jwt_token';
@@ -66,7 +67,7 @@ app.post('/api/login', (req, res) => {
     request under the name 'jwt_token'
   */
   var tokenValues: JWTTokenValues = {
-    id: 0,
+    name: 'Luis E. Rojas',
     username: req.body.username || 'lrojas'
   };
 
@@ -81,7 +82,7 @@ app.post('/api/login', (req, res) => {
   */
 
   var token = jwt.sign(tokenValues, constants.JWT_SECRET);
-  var json = {};
+  var json = tokenValues;
   json[jwtBodyParam] = token;
   res.json(json);
 });
