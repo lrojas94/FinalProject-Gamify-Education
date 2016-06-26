@@ -55,7 +55,6 @@
         "./typings/globals/sequelize-fixtures/index.d.ts",
         "./typings/globals/sequelize/index.d.ts",
         "./typings/globals/serve-static/index.d.ts",
-        "./typings/globals/superagent/index.d.ts",
         "./typings/globals/validator/index.d.ts",
         "./typings/index.d.ts",
         "./client/actions/session.tsx",
