@@ -31,7 +31,6 @@
         "./typings/globals/body-parser/index.d.ts",
         "./typings/globals/chai-as-promised/index.d.ts",
         "./typings/globals/chai/index.d.ts",
-        "./typings/globals/cors/index.d.ts",
         "./typings/globals/express-serve-static-core/index.d.ts",
         "./typings/globals/express/index.d.ts",
         "./typings/globals/history/index.d.ts",
