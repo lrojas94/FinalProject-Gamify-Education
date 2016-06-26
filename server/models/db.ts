@@ -30,25 +30,22 @@ export function initialize(): void {
         logging: false
     });
 
-  });
-  Person = <PersonDB.Model> PersonDB.define(sequelize);
-  Teacher = <TeacherDB.Model> TeacherDB.define(sequelize);
-  Student = <StudentDB.Model> StudentDB.define(sequelize);
-    this.Person  = <PersonDB.Model> PersonDB.define(sequelize);
-    this.Teacher = <TeacherDB.Model> TeacherDB.define(sequelize);
-    this.School  = <SchoolDB.Model> SchoolDB.define(sequelize);
-    this.Group   = <GroupDB.Model> GroupDB.define(sequelize);
+    Person = <PersonDB.Model>PersonDB.define(sequelize);
+    Teacher = <TeacherDB.Model>TeacherDB.define(sequelize);
+    Student = <StudentDB.Model>StudentDB.define(sequelize);
+    School = <SchoolDB.Model>SchoolDB.define(sequelize);
+    Group = <GroupDB.Model>GroupDB.define(sequelize);
 
-  // Think of it this way: The title of "Teacher" belongs to a Person
-  Teacher.belongsTo(Person, {
-    as: 'person',
-    onDelete: 'CASCADE'
-  });
+    // Think of it this way: The title of "Teacher" belongs to a Person
+    Teacher.belongsTo(Person, {
+        as: 'person',
+        onDelete: 'CASCADE'
+    });
 
-  Student.belongsTo(Person, {
-      as: 'person',
-      onDelete: 'CASCADE'
-  });
+    Student.belongsTo(Person, {
+        as: 'person',
+        onDelete: 'CASCADE'
+    });
 
-  initialized = true;
+    initialized = true;
 };
