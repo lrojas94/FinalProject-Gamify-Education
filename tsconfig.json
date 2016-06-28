@@ -17,6 +17,7 @@
         "./customTypings/redux-thunk-fsa/index.d.ts",
         "./server/app.ts",
         "./server/constants.ts",
+        "./server/controllers/apiRouter.ts",
         "./server/messages.ts",
         "./server/models/db.ts",
         "./server/models/person.ts",
