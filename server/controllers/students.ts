@@ -1,18 +1,17 @@
 import * as express from 'express';
-import * as db from './../models/db';
+import { Student, Person } from './../models/db';
 import { ResponseMessage, QueryStatus } from './../constants';
 
-const studentDB = db.Student;
 
 var router = express.Router();
 
 router.post('/', (req, res) => {
     var result: ResponseMessage = {};
 
-    studentDB.findAll({
+    Student.findAll({
         attributes: ['id', 'username'],
         include: [{
-            model: db.Person,
+            model: Person,
             as: 'person'
         }]
     })
