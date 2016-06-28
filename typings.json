@@ -5,6 +5,7 @@
     "body-parser": "registry:dt/body-parser#0.0.0+20160317120654",
     "chai": "registry:dt/chai#3.4.0+20160317120654",
     "chai-as-promised": "registry:dt/chai-as-promised#0.0.0+20160423070304",
+    "cors": "registry:dt/cors#0.0.0+20160317120654",
     "express": "registry:dt/express#4.0.0+20160317120654",
     "express-serve-static-core": "registry:dt/express-serve-static-core#0.0.0+20160602151406",
     "history": "registry:dt/history#1.8.0+20160316155526",

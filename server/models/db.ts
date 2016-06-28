@@ -11,7 +11,7 @@ export var Student: StudentDB.Model;
 
 
 export function initialize(): void {
-  if (this.initialized) {
+  if (initialized) {
     return;
   }
 
@@ -44,3 +44,6 @@ export function initialize(): void {
 
   initialized = true;
 };
+
+
+initialize();
