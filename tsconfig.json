@@ -14,6 +14,7 @@
         "!./node_modules/**/*.ts"
     ],
     "files": [
+        "./customTypings/mathquill/index.d.ts",
         "./customTypings/redux-thunk-fsa/index.d.ts",
         "./server/app.ts",
         "./server/constants.ts",

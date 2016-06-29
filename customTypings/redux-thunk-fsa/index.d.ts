@@ -7,7 +7,7 @@ declare namespace ReduxThunk {
     }
 }
 
-declare module "redux-thunk-fsa" {
+declare module 'redux-thunk-fsa' {
     var thunk: ReduxThunk.Thunk;
     export default thunk;
 }

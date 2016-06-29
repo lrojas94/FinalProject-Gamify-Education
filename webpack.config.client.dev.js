@@ -1,5 +1,5 @@
 const path = require("path");
-var webpack = require('webpack');
+const webpack = require('webpack');
 
 module.exports = {
     entry: {
@@ -11,12 +11,6 @@ module.exports = {
         //at this directory our bundle file will be available
     },
     module: {
-        preLoaders: [
-            {
-                test: /\.tsx?$/,
-                loader: "tslint"
-            }
-        ],
         loaders: [
             {
               test: /\.tsx?$/,
@@ -28,8 +22,14 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+      new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery",
+      }),
+    ],
     resolve: {
-        extensions: ['', '.js','.jsx','.ts','.tsx']
+        extensions: ['', '.js','.jsx','.ts','.tsx'],
     },
     devtool: 'cheap-module-source-map'
 };

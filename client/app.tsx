@@ -1,10 +1,12 @@
+require('script!./js/mathquill.min.js');
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider, connect } from 'react-redux';
-import thunk from 'redux-thunk-fsa';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+import thunk from 'redux-thunk-fsa';
 
 import { Sidenav, Header } from './components/core';
 import { Dashboard } from './components/dashboard';
@@ -34,10 +36,15 @@ function mapDispatchToProps(dispatch) {
 
 
 class App extends React.Component<IAppProps, {}> {
+  public componentDidMount() {
+    var MQ = MathQuill.noConflict().getInterface(2);
+    var mathField = MQ.MathField(document.getElementById('someId'));
+    mathField.latex('\\frac{1}{2}+3-2\\left(\\frac{4}{2}\\right)');
+  };
   public render() {
     return (
       <div>
-        <button onClick={() => this.props.login('lrojas','rojass')}>{this.props.session ? this.props.session.name : 'LOG IN'}</button>
+        <span id="someId" style={ { color: 'white', minWidth: '200px' } }></span>
         <Header />
         <div className="clearfix"> </div>
         <div className="page-container">

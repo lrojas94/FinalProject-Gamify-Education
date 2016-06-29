@@ -1,5 +1,5 @@
 const path = require("path");
-var webpack = require('webpack');
+const webpack = require('webpack');
 
 module.exports = {
     entry: {
@@ -28,7 +28,11 @@ module.exports = {
         'process.env': {
           'NODE_ENV': JSON.stringify('production')
         }
-      })
+      }),
+      new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery",
+      }),
     ],
     resolve: {
         extensions: ['', '.js','.jsx','.ts','.tsx']

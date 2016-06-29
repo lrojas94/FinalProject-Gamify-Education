@@ -4,7 +4,12 @@ import { ResponseMessage, QueryStatus } from './../constants';
 
 
 var router = express.Router();
-
+/**
+ * POST: http://localhost:3000/api/students/
+ * @param  {[string]} '/'   [Route]
+ * @param  {[callback]} (req,res)       [Request and Response Headers]
+ * @return {[json]}         [List of all students.]
+ */
 router.post('/', (req, res) => {
     var result: ResponseMessage = {};
 
@@ -15,20 +20,20 @@ router.post('/', (req, res) => {
             as: 'person'
         }]
     })
-        .then((users) => {
-            result.status = QueryStatus.SUCCESS;
-            result.message = 'Successful query.';
-            result.data = users;
+    .then((users) => {
+        result.status = QueryStatus.SUCCESS;
+        result.message = 'Successful query.';
+        result.data = users;
 
-            res.json(result);
-        })
-        .catch((err) => {
-            console.log(err);
-            result.status = QueryStatus.ERROR;
-            result.message = 'There was an error querying all the users.';
-            result.data = err;
-            res.json(result);
-        });
+        res.json(result);
+    })
+    .catch((err) => {
+        console.log(err);
+        result.status = QueryStatus.ERROR;
+        result.message = 'There was an error querying all the users.';
+        result.data = err;
+        res.json(result);
+    });
 });
 
 export default router;
