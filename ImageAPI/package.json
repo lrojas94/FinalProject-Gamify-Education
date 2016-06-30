@@ -1,0 +1,17 @@
+{
+  "name": "gamify-education-image-api",
+  "version": "1.0.0",
+  "description": "An image API which creates images based on LaTex and serves them to a client.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Luis E. Rojas",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cors": "^2.7.1",
+    "express": "^4.14.0",
+    "mathmode": "0.0.4"
+  }
+}
