@@ -33,6 +33,7 @@ jspm_packages
 bower_components
 typings
 imageAPI/node_modules
+imageAPI/savedImages/*.png
 # Optional npm cache directory
 .npm
 
