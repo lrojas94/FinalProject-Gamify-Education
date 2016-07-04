@@ -56,21 +56,36 @@ export function initialize(): void {
     onDelete: 'CASCADE',
   });
 
+  Answer.belongsTo(Solution, {
+    as: 'solution'
+  });
+
+  Answer.belongsTo(Problem, {
+    as: 'problem'
+  });
+
+  Answer.belongsTo(Student, {
+    as: 'student'
+  });
+
   Problem.hasMany(Solution, {
     as: 'solutions',
     foreignKey: 'problemId'
   });
 
   Problem.hasMany(Answer, {
-    as: 'answers'
+    as: 'answers',
+    foreignKey: 'problemId'
   });
 
   Solution.hasMany(Answer, {
-    as: 'answers'
+    as: 'answers',
+    foreignKey: 'solutionId'
   });
 
   Student.hasMany(Answer, {
-    as: 'answers'
+    as: 'answers',
+    foreignKey: 'studentId'
   }); // Not setup on POJO though.
 
   initialized = true;

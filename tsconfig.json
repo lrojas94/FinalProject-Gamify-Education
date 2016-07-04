@@ -18,6 +18,7 @@
         "./customTypings/redux-thunk-fsa/index.d.ts",
         "./server/app.ts",
         "./server/constants.ts",
+        "./server/controllers/answer.ts",
         "./server/controllers/api.ts",
         "./server/controllers/problems.ts",
         "./server/controllers/students.ts",

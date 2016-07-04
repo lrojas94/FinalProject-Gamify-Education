@@ -42,17 +42,12 @@ router.post('/', (req, res) => {
 router.post('/random', (req, res) => {
   var result: ResponseMessage = {};
   // should be good to actually send in the request the id's of ones solved.
-  Problem.findAll({
-    include: [{
-      model: Solution,
-      as: 'solutions'
-    }]
-  })
-  .then((problems) => {
+  Problem.Random()
+  .then((problem) => {
     result = {
       status: QueryStatus.SUCCESS,
       message: 'Random problem sent',
-      data: problems[Math.floor(Math.random() * problems.length)]
+      data: problem
     };
 
     res.json(result);
@@ -66,6 +61,7 @@ router.post('/random', (req, res) => {
 
     res.json(result);
   });
+
 });
 
 router.post('/add', (req, res) => {

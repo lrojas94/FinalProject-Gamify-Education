@@ -5,7 +5,8 @@ import * as passportJwt from 'passport-jwt';
 import { Teacher, Student, Person } from '../models/db';
 import {constants, ResponseMessage, QueryStatus, JWTTokenValues} from '../constants';
 import studentRouter from './students';
-import problemsRouter from './problems';
+import problemRouter from './problems';
+import answerRouter from './answer';
 
 
 var router = express.Router();
@@ -90,6 +91,7 @@ router.post('/profile', (req, res) => {
 });
 
 router.use('/students', studentRouter);
-router.use('/problems', problemsRouter);
+router.use('/problems', problemRouter);
+router.use('/answers', answerRouter);
 
 export default router;
