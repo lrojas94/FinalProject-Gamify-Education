@@ -1,8 +1,10 @@
 import * as Sequelize from 'sequelize';
 import * as Solution from './solution';
+import { constants } from './../constants';
 
 export interface Pojo {
     problem: string;
+    url?: string;
     solutions?: Solution.Pojo[];
     // Group
 }
@@ -20,6 +22,12 @@ export function define(sequelize: Sequelize.Sequelize): Model {
                 min: 6
             }
         },
+        url: {
+          type: Sequelize.VIRTUAL,
+          get: function() {
+            return `${constants.IMG_API_SERVER_ADDRESS}api/p${this.getDataValue('id')}`;
+          }
+        }
     }, {
         freezeTableName: true // StudentModel tableName will be the same as the model name
     });

@@ -1,6 +1,8 @@
 import * as _ from 'lodash';
 import * as express from 'express';
 import * as sequelize from 'sequelize';
+import * as rp from 'request-promise';
+import { constants } from './../constants';
 import { Pojo as SolutionPojo } from '../models/solution';
 import { Student, Problem, Solution, DB } from './../models/db';
 import { ResponseMessage, QueryStatus } from './../constants';
@@ -29,6 +31,7 @@ router.post('/', (req, res) => {
         res.json(result);
     })
     .catch((err) => {
+        console.log(err);
         result.status = QueryStatus.ERROR;
         result.message = 'There was an error querying all the users.';
         result.data = err;
@@ -104,17 +107,65 @@ router.post('/add', (req, res) => {
           // Create all solutions:
           return Solution.bulkCreate(solutions, {
             transaction: transaction
+          })
+          .then(() => {
+            return Problem.findOne({
+              where: {
+                id: problem.get('id')
+              },
+              include: [{
+                model: Solution,
+                as: 'solutions'
+              }],
+              transaction: transaction
+            });
           });
       });
     })
-    .then(() => {
+    .then((problem) => {
+    result = {
+      status: QueryStatus.SUCCESS,
+      message: 'Problem and solutions were created',
+      data: problem
+    };
+    res.json(result);
       // After creation, no data should be expected.
-      result = {
-        status: QueryStatus.SUCCESS,
-        message: 'Problem and solutions were created'
-      };
+      // Create images in API:
+      rp({
+        method: 'POST',
+        uri: `${constants.IMG_API_SERVER_ADDRESS}api/problem/create`,
+        body: problem,
+        json: true
+      })
+      .then((data: ResponseMessage) => {
+        if (data.status === QueryStatus.SUCCESS) {
+          result = {
+            status: QueryStatus.SUCCESS,
+            message: 'Problem and solutions were created',
+            data: problem
+          };
+          res.json(result);
+        }
+        else {
+          result = {
+            status: QueryStatus.ERROR,
+            message: 'Problem Created and ImageAPI Upload successful, but ImageAPI Server returned error.',
+            data: null
+          };
 
-      res.json(result);
+          res.json(result);
+        }
+      })
+      .catch((err) => {
+        result = {
+          status: QueryStatus.ERROR,
+          message: 'Error uploading problem or solutions.',
+          data: err
+        };
+
+        res.json(result);
+      });
+
     })
     .catch((err) => {
       result = {
@@ -123,7 +174,7 @@ router.post('/add', (req, res) => {
         data: err
       };
 
-      res.json(err);
+      res.json(result);
     });
 
 

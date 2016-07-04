@@ -1,5 +1,6 @@
 import * as Sequelize from 'sequelize';
 import * as Problem from './problem';
+import { constants } from './../constants';
 
 export interface Pojo {
     solution: string;
@@ -19,6 +20,13 @@ export function define(sequelize: Sequelize.Sequelize): Model {
                 notEmpty: true,
                 min: 6
             }
+        },
+        url: {
+          type: Sequelize.VIRTUAL,
+          // NOTE: It is important that getters/setters use function() instead of () => {}.
+          get: function() {
+            return `${constants.IMG_API_SERVER_ADDRESS}api/p${this.getDataValue('problemId')}_s${this.getDataValue('id')}`;
+          }
         }
     }, {
         freezeTableName: true // StudentModel tableName will be the same as the model name
