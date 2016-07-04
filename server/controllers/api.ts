@@ -5,6 +5,7 @@ import * as passportJwt from 'passport-jwt';
 import { Teacher, Student, Person } from '../models/db';
 import {constants, ResponseMessage, QueryStatus, JWTTokenValues} from '../constants';
 import studentRouter from './students';
+import problemsRouter from './problems';
 
 
 var router = express.Router();
@@ -26,32 +27,32 @@ router.post('/authenticate', (req, res) => {
             as: 'person'
         }]
     })
-        .then((teacher) => {
-            // Generate token values
-            var tokenValues: JWTTokenValues = {
-                name: teacher.person.name,
-                username: teacher.username
-            };
+    .then((teacher) => {
+        // Generate token values
+        var tokenValues: JWTTokenValues = {
+            name: teacher.person.name,
+            username: teacher.username
+        };
 
-            // Create token
-            var token = jwt.sign(tokenValues, constants.JWT_SECRET);
+        // Create token
+        var token = jwt.sign(tokenValues, constants.JWT_SECRET);
 
-            var json = tokenValues;
-            json[constants.JWT_BODY_PARAM] = token;
+        var json = tokenValues;
+        json[constants.JWT_BODY_PARAM] = token;
 
-            result.status = QueryStatus.SUCCESS;
-            result.message = 'Login Successful';
-            result.data = json;
+        result.status = QueryStatus.SUCCESS;
+        result.message = 'Login Successful';
+        result.data = json;
 
-            res.json(result);
-        })
-        .catch((err) => {
-            console.log(err);
-            result.status = QueryStatus.ERROR;
-            result.message = 'Login Unsuccessful. Wrong username or password.';
-            result.data = err;
-            res.json(result);
-        });
+        res.json(result);
+    })
+    .catch((err) => {
+        // console.log(err);
+        result.status = QueryStatus.ERROR;
+        result.message = 'Login Unsuccessful. Wrong username or password.';
+        result.data = err;
+        res.json(result);
+    });
 });
 
 router.use(passport.authenticate('jwt', { session: false }));
@@ -89,5 +90,6 @@ router.post('/profile', (req, res) => {
 });
 
 router.use('/students', studentRouter);
+router.use('/problems', problemsRouter);
 
 export default router;

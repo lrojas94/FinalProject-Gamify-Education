@@ -1,0 +1,17 @@
+{
+  "name": "GamifyGame",
+  "homepage": "https://github.com/lrojas94/FinalProject-Gamify-Education",
+  "authors": [
+    "Luis Rojas <lrojas94@gmail.com>"
+  ],
+  "description": "A game using GamifyEducation API",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

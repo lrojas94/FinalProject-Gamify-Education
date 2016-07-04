@@ -2,12 +2,19 @@ import * as Sequelize from 'sequelize';
 import * as PersonDB from './person';
 import * as TeacherDB from './teacher';
 import * as StudentDB from './student';
+import * as ProblemDB from './problem';
+import * as SolutionDB from './solution';
+import * as AnswerDB from './answer';
 import {constants} from './../constants';
 
 export var initialized: Boolean = false;
 export var Person: PersonDB.Model;
 export var Teacher: TeacherDB.Model;
 export var Student: StudentDB.Model;
+export var Problem: ProblemDB.Model;
+export var Solution: SolutionDB.Model;
+export var Answer: AnswerDB.Model;
+export var DB: Sequelize.Sequelize;
 
 
 export function initialize(): void {
@@ -15,7 +22,7 @@ export function initialize(): void {
     return;
   }
 
-  var sequelize = new Sequelize(constants.DATABASE_NAME, constants.DATABASE_USERNAME, constants.DATABASE_PASSWORD, {
+  DB = new Sequelize(constants.DATABASE_NAME, constants.DATABASE_USERNAME, constants.DATABASE_PASSWORD, {
     host: constants.DATABASE_HOST,
     port: constants.DATABASE_PORT,
     dialect: 'postgres',
@@ -27,10 +34,12 @@ export function initialize(): void {
     logging: false
 
   });
-  Person = <PersonDB.Model> PersonDB.define(sequelize);
-  Teacher = <TeacherDB.Model> TeacherDB.define(sequelize);
-  Student = <StudentDB.Model> StudentDB.define(sequelize);
-
+  Person = <PersonDB.Model> PersonDB.define(DB);
+  Teacher = <TeacherDB.Model> TeacherDB.define(DB);
+  Student = <StudentDB.Model> StudentDB.define(DB);
+  Problem = <ProblemDB.Model> ProblemDB.define(DB);
+  Solution = <SolutionDB.Model> SolutionDB.define(DB);
+  Answer = <AnswerDB.Model> AnswerDB.define(DB);
   // Think of it this way: The title of "Teacher" belongs to a Person
   Teacher.belongsTo(Person, {
     as: 'person',
@@ -42,8 +51,39 @@ export function initialize(): void {
       onDelete: 'CASCADE'
   });
 
+  Solution.belongsTo(Problem, {
+    as: 'problem',
+    onDelete: 'CASCADE',
+  });
+
+  Problem.hasMany(Solution, {
+    as: 'solutions',
+    foreignKey: 'problemId'
+  });
+
+  Problem.hasMany(Answer, {
+    as: 'answers'
+  });
+
+  Solution.hasMany(Answer, {
+    as: 'answers'
+  });
+
+  Student.hasMany(Answer, {
+    as: 'answers'
+  }); // Not setup on POJO though.
+
   initialized = true;
 };
+
+export function syncAll() {
+  Person.sync();
+  Teacher.sync();
+  Student.sync();
+  Problem.sync();
+  Solution.sync();
+  Answer.sync();
+}
 
 
 initialize();
