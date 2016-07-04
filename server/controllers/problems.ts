@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as express from 'express';
-import Sequelize from 'sequelize';
+import * as sequelize from 'sequelize';
 import { Pojo as SolutionPojo } from '../models/solution';
 import { Student, Problem, Solution, DB } from './../models/db';
 import { ResponseMessage, QueryStatus } from './../constants';
@@ -67,7 +67,7 @@ router.post('/random', (req, res) => {
 
 router.post('/add', (req, res) => {
     var result: ResponseMessage = {};
-    DB.transaction((transaction: Sequelize.Transaction) => {
+    DB.transaction((transaction: sequelize.Transaction) => {
       // If there are no solutions, just create the problem:
       if (!req.body.solutions) {
         return Problem.create({
