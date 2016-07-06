@@ -36,9 +36,9 @@ export default class Game extends Phaser.State {
         x: this.game.world.centerX,
         y: this.game.world.centerY + index * (buttonImg.height + padding),
         key: 'ui-grey',
-        upFrame: 'grey_button03.png',
+        upFrame: 'grey_button04.png',
         outFrame: 'grey_button01.png',
-        overFrame: 'grey_button01.png',
+        overFrame: 'grey_button03.png',
         downFrame: 'grey_button02.png',
         callback: () => {
           //Answer question:
@@ -63,7 +63,7 @@ export default class Game extends Phaser.State {
 
             //else, we have a new problem:D!
             let problem = data.data.newProblem;
-            this.state.start('Splash', true, false, problem);
+            this.state.start('ProblemLoader', true, false, problem);
           })
           .catch((err) => {
             console.log(err);
