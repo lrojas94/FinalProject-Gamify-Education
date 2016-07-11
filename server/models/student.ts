@@ -1,5 +1,8 @@
 import * as Sequelize from 'sequelize';
 import * as Person from './person';
+import * as Group from './group';
+import * as School from './school';
+import * as Answer from './answer';
 
 export interface Pojo {
     username: string;
@@ -7,6 +10,9 @@ export interface Pojo {
     studentId?: string;
     person?: Person.Pojo;
     personId?: number;
+    group?: Group.Pojo;
+    school?: School.Pojo;
+    answers?: Answer.Pojo[];
 }
 
 export interface Instance extends Sequelize.Instance<Pojo>, Pojo {};

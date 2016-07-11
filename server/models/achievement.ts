@@ -1,42 +1,42 @@
-import * as Student from './student';
-import * as Teacher from './teacher';
-import * as Group from './group';
 import * as Sequelize from 'sequelize';
+import * as Topic from './topic';
 
 export interface Pojo {
   name: string;
-  address: string;
-  telephone: string;
-  website?: string;
-  groups?: Group.Pojo[];
-  students?: Student.Pojo[];
-  teachers?: Teacher.Pojo[];
+  description: string;
+  thresholdQuantity: number; // Minimum ammount of problems realized.
+  thresholdPercent: number; // % of good problems on the topic.
+  iconUrl: string;
+  difficulty?: Object;
+  topic?: Topic.Pojo;
 }
 
 export interface Instance extends Sequelize.Instance<Pojo>, Pojo {};
 export interface Model extends Sequelize.Model<Instance, Pojo> {};
 
 export function define(sequelize: Sequelize.Sequelize): Model {
-  var model: Model = <Model> sequelize.define<Instance, Pojo>('School', {
+  var model: Model = <Model> sequelize.define<Instance, Pojo>('Achievement', {
     name: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {
+        notEmpty: true,
         min: 3
       }
     },
-    address: {
+    description: {
       type: Sequelize.STRING,
-      allowNull: false,
-      validate: {
-        min: 10
-      }
+      allowNull: true
     },
-    telephone: {
-      type: Sequelize.STRING,
+    thresholdQuantity: {
+      type: Sequelize.INTEGER,
       allowNull: false
     },
-    website: {
+    thresholdPercent: {
+      type: Sequelize.DOUBLE,
+      allowNull: false
+    },
+    iconUrl: {
       type: Sequelize.STRING,
       allowNull: true
     }

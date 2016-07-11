@@ -1,11 +1,14 @@
 import * as Sequelize from 'sequelize';
 import * as Problem from './problem';
+import * as Answer from './answer';
 import { constants } from './../constants';
 
 export interface Pojo {
     solution: string;
+    isCorrect?: boolean;
     problemId?: number;
     problem?: Problem.Pojo;
+    answers?: Answer.Pojo[];
 }
 
 export interface Instance extends Sequelize.Instance<Pojo>, Pojo {};
@@ -20,6 +23,10 @@ export function define(sequelize: Sequelize.Sequelize): Model {
                 notEmpty: true,
                 min: 6
             }
+        },
+        isCorrect: {
+          type: Sequelize.BOOLEAN,
+          allowNull: false
         },
         url: {
           type: Sequelize.VIRTUAL,

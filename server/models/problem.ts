@@ -1,5 +1,10 @@
 import * as Sequelize from 'sequelize';
 import * as Solution from './solution';
+import * as Group from './group';
+import * as Teacher from './teacher';
+import * as Answer from './answer';
+import * as Topic from './topic';
+import * as Difficulty from './difficulty';
 import { Solution as SolutionModel } from './db';
 import { constants } from './../constants';
 
@@ -7,7 +12,12 @@ export interface Pojo {
     problem: string;
     url?: string;
     solutions?: Solution.Pojo[];
-    // Group
+    correctSolutions?: Solution.Pojo[];
+    group?: Group.Pojo;
+    teacher?: Teacher.Pojo;
+    answers?: Answer.Pojo[];
+    topic?: Topic.Pojo;
+    difficulty?: Difficulty.Pojo;
 }
 
 export interface Instance extends Sequelize.Instance<Pojo>, Pojo {};
