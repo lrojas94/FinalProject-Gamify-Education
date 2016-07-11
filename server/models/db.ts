@@ -42,7 +42,7 @@ export function initialize(): void {
       minConnections: 0,
       maxIdleTime: 10000
     },
-    logging: false
+    // logging: false
 
   });
   Person = <PersonDB.Model> PersonDB.define(DB);
@@ -79,7 +79,8 @@ function createStudentRelations() {
 
   Student.hasMany(Answer, {
     as: 'answers',
-    foreignKey: 'studentId'
+    foreignKey: 'studentId',
+    constraints: false
   });
 
   Student.belongsTo(Group, {
@@ -99,7 +100,8 @@ function createTeacherRelations() {
 
   Teacher.hasMany(Group, {
     as: 'groups',
-    foreignKey: 'teacherId'
+    foreignKey: 'teacherId',
+    constraints: false
   });
 
   Teacher.belongsTo(School, {
@@ -108,19 +110,22 @@ function createTeacherRelations() {
 
   Teacher.hasMany(Problem, {
     as: 'problems',
-    foreignKey: 'teacherId'
+    foreignKey: 'teacherId',
+    constraints: false
   });
 };
 
 function createProblemRelations() {
   Problem.hasMany(Solution, {
     as: 'solutions',
-    foreignKey: 'problemId'
+    foreignKey: 'problemId',
+    constraints: false
   });
 
   Problem.hasMany(Answer, {
     as: 'answers',
-    foreignKey: 'problemId'
+    foreignKey: 'problemId',
+    constraints: false
   });
 
   Problem.belongsTo(Teacher, {
@@ -140,7 +145,8 @@ function createProblemRelations() {
     foreignKey: 'problemId',
     scope: {
       isCorrect: true
-    }
+    },
+    constraints: false
   });
 
   Problem.belongsTo(Difficulty, {
@@ -170,53 +176,58 @@ function createSolutionRelations() {
 
   Solution.hasMany(Answer, {
     as: 'answers',
-    foreignKey: 'solutionId'
+    foreignKey: 'solutionId',
+    constraints: false
   });
 };
 
 function createGroupRelations() {
   Group.hasMany(Student, {
     as: 'students',
-    foreignKey: 'studentId'
+    foreignKey: 'studentId',
+    constraints: false
   });
 
   Group.belongsTo(School, {
-    as: 'school',
-    foreignKey: 'schoolId'
+    as: 'school'
   });
 
   Group.hasOne(Teacher, {
-    as: 'teacher',
-    foreignKey: 'teacherId'
+    as: 'teacher'
   });
 }
 
 function createSchoolRelations() {
   School.hasMany(Group, {
     foreignKey: 'schoolId',
-    as: 'groups'
+    as: 'groups',
+    constraints: false
   });
 
   School.hasMany(Teacher, {
     as: 'teachers',
-    foreignKey: 'schoolId'
+    foreignKey: 'schoolId',
+    constraints: false
   });
 
   School.hasMany(Student, {
     as: 'students',
-    foreignKey: 'schoolId'
+    foreignKey: 'schoolId',
+    constraints: false
   });
 }
 
 function createTopicRelations() {
   Topic.hasMany(Problem, {
     as: 'problems',
-    foreignKey: 'topicId'
+    foreignKey: 'topicId',
+    constraints: false
   });
 
   Topic.hasMany(Achievement, {
     as: 'achievements',
-    foreignKey: 'topicId'
+    foreignKey: 'topicId',
+    constraints: false
   });
 }
 
@@ -229,20 +240,33 @@ function createAchievementRelations() {
 function createDifficultyRelations() {
   Difficulty.hasMany(Problem, {
     as: 'problems',
-    foreignKey: 'difficultyId'
+    foreignKey: 'difficultyId',
+    constraints: false
   });
 }
 
 export function syncAll() {
-  Person.sync();
-  Teacher.sync();
-  Student.sync();
-  Problem.sync();
-  Solution.sync();
-  Answer.sync();
-  School.sync();
-  Group.sync();
-  Topic.sync();
+  // in order to force, before running NPM start just write: export FORCED=true;
+  if (!initialized) {
+    initialize();
+  }
+  let force = process.env.FORCE === 'true';
+
+  Person.sync({force})
+  .then(() => School.sync({force})
+  .then(() => Topic.sync({force})
+  .then(() => Group.sync({force})
+  .then(() => Teacher.sync({force})
+  .then(() => Student.sync({force})
+  .then(() => Problem.sync({force})
+  .then(() => Solution.sync({force})
+  .then(() => {
+    // These have no dependency, so they can be created all together.
+    Answer.sync({force});
+    Achievement.sync({force});
+    Difficulty.sync({force});
+  }))))))));
+
 }
 
 

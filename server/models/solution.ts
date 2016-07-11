@@ -26,7 +26,8 @@ export function define(sequelize: Sequelize.Sequelize): Model {
         },
         isCorrect: {
           type: Sequelize.BOOLEAN,
-          allowNull: false
+          allowNull: false,
+          defaultValue: false
         },
         url: {
           type: Sequelize.VIRTUAL,
