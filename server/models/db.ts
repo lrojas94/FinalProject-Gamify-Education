@@ -251,22 +251,25 @@ export function syncAll() {
     initialize();
   }
   let force = process.env.FORCE === 'true';
+  var promise = new Promise((resolve, reject) => {
+    Person.sync({force})
+    .then(() => School.sync({force})
+    .then(() => Topic.sync({force})
+    .then(() => Group.sync({force})
+    .then(() => Teacher.sync({force})
+    .then(() => Student.sync({force})
+    .then(() => Difficulty.sync({force})
+    .then(() => Problem.sync({force})
+    .then(() => Solution.sync({force})
+    .then(() => Achievement.sync({force})
+    .then(() => Answer.sync({force})
+    .then(() => resolve())
+      // These have no dependency, so they can be created all together.
+    ))))))))))
+    .catch(e => reject(e));
+  });
 
-  Person.sync({force})
-  .then(() => School.sync({force})
-  .then(() => Topic.sync({force})
-  .then(() => Group.sync({force})
-  .then(() => Teacher.sync({force})
-  .then(() => Student.sync({force})
-  .then(() => Difficulty.sync({force})
-  .then(() => Problem.sync({force})
-  .then(() => Solution.sync({force})
-  .then(() => {
-    // These have no dependency, so they can be created all together.
-    Answer.sync({force});
-    Achievement.sync({force});
-
-  })))))))));
+  return promise;
 
 }
 
