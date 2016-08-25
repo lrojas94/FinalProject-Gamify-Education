@@ -9,10 +9,6 @@ chai.should();
 
 describe('School Model', () => {
 
-  beforeEach(() => {
-    return School.sync();
-  });
-
   describe('Create school with no errors.', () => {
     it('Should correctly create a School when information provided is valid and correct.', () => {
       return School.create({

@@ -8,9 +8,6 @@ chai.should();
 db.initialize();
 
 describe('Group Model', () => {
-  beforeEach(() => {
-    return db.Group.sync();
-  });
 
   describe('Create group with no errors.', () => {
     it('Should correctly create a group when information provided is valid and correct.', () => {

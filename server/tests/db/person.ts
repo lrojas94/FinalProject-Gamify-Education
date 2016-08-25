@@ -10,9 +10,6 @@ db.initialize();
 var nowDate = new Date();
 
 describe('Person Model', () => {
-  beforeEach(() => {
-    return db.Person.sync();
-  });
 
   describe('Create person with no errors.', () => {
     it('Should correctly create a person when information provided is valid and correct.', () => {

@@ -8,10 +8,6 @@ chai.should();
 db.initialize();
 
 describe('Teacher Model', () => {
-  before((done) => {
-    db.Teacher.sync()
-    .then(() => done());
-  });
 
   describe('Create Teacher With Person', () => {
     it('Should correctly create a Teacher given a valid PersonId.', (done) => {

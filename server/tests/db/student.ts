@@ -9,29 +9,25 @@ db.initialize();
 
 describe('Student Model:', () => {
     before((done) => {
-        db.Student.sync()
-        .then(() => {
-            // Create a person:
-            db.Person.bulkCreate([{
-                name: 'Luis Eduardo',
-                lastName: 'Rojas Cabrera',
-                birthDay: new Date('April 28, 1994'),
-                gender: 'm'
-            },
-            {
-                name: 'Manuel Emilio',
-                lastName: 'Urena Hernandez',
-                birthDay: new Date('October 25, 1994'),
-                gender: 'm'
-            },
-            {
-                name: 'Frankie Francisco',
-                lastName: 'Garabito Batista',
-                birthDay: new Date('August 22, 1994'),
-                gender: 'm'
-            }])
-            .then(() => done());
-        });
+      db.Person.bulkCreate([{
+          name: 'Luis Eduardo',
+          lastName: 'Rojas Cabrera',
+          birthDay: new Date('April 28, 1994'),
+          gender: 'm'
+      },
+      {
+          name: 'Manuel Emilio',
+          lastName: 'Urena Hernandez',
+          birthDay: new Date('October 25, 1994'),
+          gender: 'm'
+      },
+      {
+          name: 'Frankie Francisco',
+          lastName: 'Garabito Batista',
+          birthDay: new Date('August 22, 1994'),
+          gender: 'm'
+      }])
+      .then(() => done());
     });
 
     describe('Create Student With Person', () => {
