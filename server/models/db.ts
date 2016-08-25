@@ -251,8 +251,8 @@ export function syncAll() {
     initialize();
   }
   let force = process.env.FORCE === 'true';
-
-  Person.sync({force})
+  DB.query('SET FOREIGN_KEY_CHECKS = 0;', { raw: true })
+  .then(() => Person.sync({force})
   .then(() => School.sync({force})
   .then(() => Topic.sync({force})
   .then(() => Group.sync({force})
@@ -265,8 +265,7 @@ export function syncAll() {
     // These have no dependency, so they can be created all together.
     Answer.sync({force});
     Achievement.sync({force});
-
-  })))))))));
+  }))))))))));
 
 }
 
