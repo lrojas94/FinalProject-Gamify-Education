@@ -258,14 +258,15 @@ export function syncAll() {
   .then(() => Group.sync({force})
   .then(() => Teacher.sync({force})
   .then(() => Student.sync({force})
+  .then(() => Difficulty.sync({force})
   .then(() => Problem.sync({force})
   .then(() => Solution.sync({force})
   .then(() => {
     // These have no dependency, so they can be created all together.
     Answer.sync({force});
     Achievement.sync({force});
-    Difficulty.sync({force});
-  }))))))));
+
+  })))))))));
 
 }
 
