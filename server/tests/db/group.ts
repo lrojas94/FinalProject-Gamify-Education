@@ -5,7 +5,7 @@ import lang from '../../messages';
 
 chai.use(chaiAsPromised);
 chai.should();
-db.initialize();
+db.syncAll();
 
 describe('Group Model', () => {
 
