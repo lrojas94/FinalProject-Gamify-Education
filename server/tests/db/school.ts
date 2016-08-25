@@ -10,9 +10,7 @@ chai.should();
 describe('School Model', () => {
 
   beforeEach(() => {
-    return School.sync({
-      force: true
-    });
+    return School.sync();
   });
 
   describe('Create school with no errors.', () => {

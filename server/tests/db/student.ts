@@ -9,9 +9,7 @@ db.initialize();
 
 describe('Student Model:', () => {
     before((done) => {
-        db.Student.sync({
-            force: true
-        })
+        db.Student.sync()
         .then(() => {
             // Create a person:
             db.Person.bulkCreate([{

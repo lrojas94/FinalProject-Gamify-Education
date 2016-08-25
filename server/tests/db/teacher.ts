@@ -9,9 +9,7 @@ db.initialize();
 
 describe('Teacher Model', () => {
   before((done) => {
-    db.Teacher.sync({
-      force: true
-    })
+    db.Teacher.sync()
     .then(() => done());
   });
 

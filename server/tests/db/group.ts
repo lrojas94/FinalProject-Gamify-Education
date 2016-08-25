@@ -9,9 +9,7 @@ db.initialize();
 
 describe('Group Model', () => {
   beforeEach(() => {
-    return db.Group.sync({
-      force: true
-    });
+    return db.Group.sync();
   });
 
   describe('Create group with no errors.', () => {

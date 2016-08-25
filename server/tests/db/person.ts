@@ -11,9 +11,7 @@ var nowDate = new Date();
 
 describe('Person Model', () => {
   beforeEach(() => {
-    return db.Person.sync({
-      force: true
-    });
+    return db.Person.sync();
   });
 
   describe('Create person with no errors.', () => {
