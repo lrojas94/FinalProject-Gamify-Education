@@ -250,7 +250,7 @@ export function syncAll() {
   if (!initialized) {
     initialize();
   }
-  let force = process.env.FORCE === 'true';
+  let force = false; // do not ever force again.
   var promise = new Promise((resolve, reject) => {
     Person.sync({force})
     .then(() => School.sync({force})
