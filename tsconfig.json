@@ -45,6 +45,8 @@
         "./server/tests/db/teacher.ts",
         "./server/tests/tests.ts",
         "./server/utility/passport.ts",
+        "./server/utility/queryHelpers.ts",
+        "./server/utility/simpleRouter.ts",
         "./typings/globals/axios/index.d.ts",
         "./typings/globals/bluebird/index.d.ts",
         "./typings/globals/body-parser/index.d.ts",
