@@ -44,18 +44,18 @@ module.exports = {
           model: 'School',
           key: 'id'
         }
-      };
+      }
     })
     .then(() => {
       return Promise.all([
-        queryInterface.addColumn('students', 'groupId', {
+        queryInterface.addColumn('Student', 'groupId', {
           type: Sequelize.INTEGER,
           references: {
             model: 'Group',
             key: 'id'
           }
         }),
-        queryInterface.addColumn('problems', 'groupId', {
+        queryInterface.addColumn('Problem', 'groupId', {
           type: Sequelize.INTEGER,
           references: {
             model: 'Group',

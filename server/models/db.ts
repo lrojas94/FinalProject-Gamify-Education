@@ -192,7 +192,7 @@ function createGroupRelations() {
     as: 'school'
   });
 
-  Group.hasOne(Teacher, {
+  Group.belongsTo(Teacher, {
     as: 'teacher'
   });
 }
