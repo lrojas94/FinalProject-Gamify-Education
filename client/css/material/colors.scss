@@ -1,0 +1,56 @@
+$m-red: #f44336;
+$m-pink: #E91E63;
+$m-purple: #9C27B0;
+$m-deep-purple: #673AB7;
+$m-indigo: #3F51B5;
+$m-blue: #2196F3;
+$m-light-blue: #03A9F4;
+$m-cyan: #00BCD4;
+$m-teal: #009688;
+$m-green: #4CAF50;
+$m-light-green: #8BC34A;
+$m-lime: #CDDC39;
+$m-yellow: #FFEB3B;
+$m-amber: #FFC107;
+$m-orange: #FF9800;
+$m-deep-orange: #FF5722;
+$m-brown: #795548;
+$m-grey: #9E9E9E;
+$m-blue-grey: #607D8B;
+
+@mixin materialbg($color) {
+  background: $color;
+  color: white;
+  border-color: darken($color, 5);
+
+  &.btn {
+    &:hover{
+      background: lighten($color, 5);
+      border-color: $color;
+    }
+  }
+
+  &:hover,&:active {
+    color: white;
+  }
+}
+
+.m-red { @include materialbg($m-red) };
+.m-pink { @include materialbg($m-pink) };
+.m-purple { @include materialbg($m-purple) };
+.m-deep-purple { @include materialbg($m-deep-purple) };
+.m-indigo { @include materialbg($m-indigo) };
+.m-blue { @include materialbg($m-blue) };
+.m-light-blue { @include materialbg($m-light-blue) };
+.m-cyan { @include materialbg($m-cyan) };
+.m-teal { @include materialbg($m-teal) };
+.m-green { @include materialbg($m-green) };
+.m-light-green { @include materialbg($m-light-green) };
+.m-lime { @include materialbg($m-lime) };
+.m-yellow { @include materialbg($m-yellow) };
+.m-amber { @include materialbg($m-amber) };
+.m-orange { @include materialbg($m-orange) };
+.m-deep-orange { @include materialbg($m-deep-orange) };
+.m-brown { @include materialbg($m-brown) };
+.m-grey { @include materialbg($m-grey) };
+.m-blue-grey { @include materialbg($m-blue-grey) };

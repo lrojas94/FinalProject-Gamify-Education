@@ -6,7 +6,7 @@ import { Teacher } from './../models/db';
 
 const jwtStrategy = passportJwt.Strategy;
 const jwtPassportOpts: passportJwt.StrategyOptions = {
-    jwtFromRequest: passportJwt.ExtractJwt.fromBodyField(constants.JWT_BODY_PARAM),
+    jwtFromRequest: passportJwt.ExtractJwt.fromAuthHeader(),
     secretOrKey: constants.JWT_SECRET,
 };
 

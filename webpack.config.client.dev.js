@@ -1,9 +1,10 @@
+
 const path = require("path");
 const webpack = require('webpack');
 
 module.exports = {
     entry: {
-        app : path.join(__dirname,'/client/app.tsx') //Use this to add more builds. Different modules don't have to be together on a single file.
+        app : path.join(__dirname,'/client/app.jsx') //Use this to add more builds. Different modules don't have to be together on a single file.
     },
     output: {
         path: path.join(__dirname,'client/build/'),
@@ -13,8 +14,13 @@ module.exports = {
     module: {
         loaders: [
             {
-              test: /\.tsx?$/,
-              loader: 'ts'
+              test: /\.jsx?$/,
+              loader: 'babel-loader',
+              query:
+              {
+                presets:['react','es2015'],
+                plugins: ["transform-class-properties"]
+              }
             },
             {
               test: /\.json$/,
@@ -22,15 +28,11 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-      new webpack.ProvidePlugin({
-        $: "jquery",
-        jQuery: "jquery",
-        _: "lodash"
-      }),
-    ],
     resolve: {
-        extensions: ['', '.js','.jsx','.ts','.tsx'],
+        extensions: ['', '.js', '.jsx']
     },
-    devtool: 'cheap-module-source-map'
+    node: {
+      fs: "empty"
+    },
+
 };

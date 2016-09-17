@@ -1,0 +1,60 @@
+$nav-bg : #2A3F54;
+#navbar-content {
+  box-sizing: border-box;
+  background: $nav-bg;
+  color: white;
+  height: 100%;
+  min-width: 15em;
+
+  a {
+    text-decoration: none;
+    color: white;
+    width: 100%;
+    &:hover{
+      color: darken(white, 10);
+    }
+  }
+
+  hr {
+    color: darken($nav-bg, 7.5);
+    border-top: 1px solid darken($nav-bg, 7.5);
+  }
+
+  #navbar-links {
+    width: 100%;
+    .nav-link-container {
+      width: 100%;
+      overflow: hidden;
+      padding: 1em;
+
+      &:hover{
+        background: darken($nav-bg, 7.5);
+      }
+      a {
+        width: 100%;
+      }
+    }
+  }
+
+  #navbar-session{
+    text-align: center;
+    padding: 1.5em;
+    #navbar-image-container {
+      width: 75px;
+      height: 75px;
+      overflow: hidden;
+      border-radius: 50%;
+      border: 2px solid white;
+      img {
+        width: 100%;
+        height: auto;
+        min-height: 100%;
+        min-width: 100%;
+        position: relative;
+      }
+
+      margin: auto;
+    }
+  }
+
+}

@@ -1,5 +1,18 @@
 import * as _ from  'lodash';
 
+
+export interface ITableQuery {
+  req?: any;
+  model: any;
+  attributes: string[];
+  searchAttributes?: any;
+  url: string;
+  include?: any;
+  includeInSearchQuery?: any;
+  includeInWhere?: any;
+}
+
+
 var queryHelper = {
   generateOr: (req, elements, forcedQuery?) => {
     if (!elements) {
@@ -45,7 +58,7 @@ var queryHelper = {
    * @param  {Function} onFailure        Function to be called on error.
    * @return {object}                  Query results
    */
-  tableQuery: ({ req, model, attributes, searchAttributes, url, include, includeInSearchQuery, includeInWhere }) => {
+  tableQuery: ({ req, model, attributes, searchAttributes, url, include, includeInSearchQuery, includeInWhere }: ITableQuery) => {
     var limit = req.query.limit && req.query.limit < 25 ? req.query.limit : 10;
     var page = req.query.page - 1 || 0;
     var or = queryHelper.generateOr(req, searchAttributes);
@@ -70,7 +83,7 @@ var queryHelper = {
       .then((data) => {
         var nextPage = page * limit + limit > data.count ? 1 : page + 2;
         var result = {
-          status: 'success',
+          status: 0,
           data: data.rows,
           count: data.count,
           page: page + 1,
@@ -125,7 +138,7 @@ var queryHelper = {
         console.log(data);
 
         resolve({
-          status: 'success',
+          status: 0,
           data: data
         });
       })
@@ -144,7 +157,14 @@ var queryHelper = {
    * @param  {Object} data          Data representing the model.
    * @return {Promise}      A promise which resolves into the result of insertion.
    */
-  upsert({ model, data, attributes, path, req, transaction, checkForId }) {
+  upsert({ model, data, attributes, path, req, transaction }: {
+    model: any,
+    data?: any,
+    attributes: string[],
+    path?: string,
+    req: any, // Express router actually.
+    transaction: any // Sequelize transaction
+  }) {
 
     if (!data && attributes && req) {
       if (path) {
@@ -159,6 +179,7 @@ var queryHelper = {
       console.log(data);
       if (data.id) {
         // this is an update
+        console.log('UPDATING-----------------------------------');
         model.findOne({
           where: {
             id: data.id
@@ -181,11 +202,15 @@ var queryHelper = {
       else {
         // this is a create
         //
+        console.log('CREATING-----------------------------------');
         model.create(data, { transaction: transaction })
         .then((result) => {
           resolve(result);
         })
-        .catch((err) => reject(err));
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
       }
     });
   },

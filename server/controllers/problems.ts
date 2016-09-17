@@ -4,42 +4,32 @@ import * as sequelize from 'sequelize';
 import * as rp from 'request-promise';
 import { constants } from './../constants';
 import { Pojo as SolutionPojo } from '../models/solution';
-import { Student, Problem, Solution, DB } from './../models/db';
+import { Student, Problem, Solution, Teacher, Answer, DB } from './../models/db';
 import { ResponseMessage, QueryStatus } from './../constants';
+import simpleRouter from './../utility/simpleRouter';
 
 
-var router = express.Router();
-/**
- * POST: http://localhost:3000/api/problems/
- * @param  {[string]} '/'   [Route]
- * @param  {[callback]} (req,res)       [Request and Response Headers]
- * @return {[json]}         [List of all problems.]
- */
-router.post('/', (req, res) => {
-    var result: ResponseMessage = {};
-
-    Problem.findAll({
-      include: [{
-        model: Solution,
-        as: 'solutions'
-      }]
-    })
-    .then((problems) => {
-        result.status = QueryStatus.SUCCESS;
-        result.message = 'Successful query.';
-        result.data = problems;
-        res.json(result);
-    })
-    .catch((err) => {
-        console.log(err);
-        result.status = QueryStatus.ERROR;
-        result.message = 'There was an error querying all the users.';
-        result.data = err;
-        res.json(result);
-    });
+var router = simpleRouter({
+    model: Problem,
+    url: '/problems',
+    modelName: 'Problem',
+    attributes: ['id', 'problem', 'url'],
+    opts: {
+      list: {
+        model: Problem,
+        attributes: ['id', 'problem', 'url'],
+        url: '/problems',
+        include: [{ model: Solution, as: 'solutions'}],
+        searchAttributes: ['problem', 'url']
+      },
+      view: {
+        include: [{ model: Solution, as: 'solutions' }, { model: Teacher, as: 'teacher' }, { model: Answer, as: 'answers'}]
+      }
+    }
 });
 
-router.post('/random', (req, res) => {
+
+router.router.post('/random', (req, res) => {
   var result: ResponseMessage = {};
   // should be good to actually send in the request the id's of ones solved.
   Problem.Random()
@@ -64,7 +54,7 @@ router.post('/random', (req, res) => {
 
 });
 
-router.post('/add', (req, res) => {
+router.router.post('/add', (req, res) => {
     var result: ResponseMessage = {};
     DB.transaction((transaction: sequelize.Transaction) => {
       // If there are no solutions, just create the problem:
@@ -176,4 +166,4 @@ router.post('/add', (req, res) => {
 
 });
 
-export default router;
+export default router.router;

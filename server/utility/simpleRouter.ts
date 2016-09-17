@@ -16,15 +16,46 @@
 import * as _ from 'lodash';
 import * as express from 'express';
 import * as jwt from 'jsonwebtoken';
-
+import Sequelize from 'sequelize';
 import passport from './passport';
 import queryHelpers from './queryHelpers';
+import { ITableQuery } from './queryHelpers';
 
-module.exports = ({ model, url, modelName, resultObjectName, attributes }) => {
+export interface ISimpleRouter {
+  model: any;
+  url: string;
+  modelName: string;
+  resultObjectName?: string;
+  attributes: string[];
+  opts?: ISimpleRouterOpts;
+}
+
+export interface ISimpleRouterOpts {
+  list?: ITableQuery;
+  upsert?: {
+    include: {
+      bodyPath: string,
+      upsert: Function
+    }[];
+  };
+  view?: {
+    include: {
+      model: any;
+      as?: string
+    }[]
+  };
+}
+
+export interface IUpsert {
+  req: any;
+  path: string;
+  transaction?: any;
+};
+
+export default ({ model, url, modelName, resultObjectName, attributes, opts }: ISimpleRouter ) => {
   resultObjectName = resultObjectName || _.camelCase(modelName);
 
   var router = express.Router();
-  router.use(passport.authenticate('jwt', { session: false }));
 
 
   router.get('/', (req: any, res: any) => {
@@ -33,11 +64,11 @@ module.exports = ({ model, url, modelName, resultObjectName, attributes }) => {
       req: req,
       model: model,
       url: url,
-      attributes: attributes,
-      searchAttributes: null,
-      include: null,
-      includeInSearchQuery: null,
-      includeInWhere: null
+      attributes: opts.list.attributes || attributes,
+      searchAttributes: opts.list.searchAttributes,
+      include: opts.list.include,
+      includeInSearchQuery: opts.list.includeInSearchQuery,
+      includeInWhere: opts.list.includeInWhere
     })
     .then((result) => {
       return res.json(result);
@@ -45,7 +76,7 @@ module.exports = ({ model, url, modelName, resultObjectName, attributes }) => {
     .catch((err) => {
       console.log(err);
       return res.json({
-        status: 'error',
+        status: 1,
         message: `There was an error querying for ${modelName}.`
       });
     });
@@ -57,17 +88,18 @@ module.exports = ({ model, url, modelName, resultObjectName, attributes }) => {
       where: {
         id: req.params.id
       },
+      include: opts.view.include
     })
     .then((data) => {
       res.json({
-        status: 'success',
+        status: 0,
         [resultObjectName]: data
       });
     })
     .catch((err) => {
       console.log(err);
       res.json({
-        status: 'error',
+        status: 1,
         message: `${modelName} not found.`
       });
     });
@@ -80,7 +112,7 @@ module.exports = ({ model, url, modelName, resultObjectName, attributes }) => {
    * @param  {[type]} onSuccess Function to call on Success
    * @return {[type]}           Model object.
    */
-  var upsertModel = ({req,  path,  transaction}) => {
+  var upsertModel = ({req,  path,  transaction}: IUpsert) => {
 
     return queryHelpers.upsert({
       req: req,
@@ -89,7 +121,6 @@ module.exports = ({ model, url, modelName, resultObjectName, attributes }) => {
       model: model,
       transaction: transaction,
       data: null,
-      checkForId: null
     });
   };
 
@@ -97,19 +128,20 @@ module.exports = ({ model, url, modelName, resultObjectName, attributes }) => {
   router.post('/', (req: any, res) => {
     upsertModel({
       req,
-      path: null,
+      path: resultObjectName,
       transaction: null
     })
     .then((data) => {
       return res.json({
-        status: 'sucess',
+        status: 0,
         message: `${modelName} was successfuly added to our servers.`,
         [resultObjectName]: data
       });
     })
     .catch((err) => {
+      console.log(err);
       return res.json({
-        status: 'error',
+        status: 1,
         message: `${modelName} could not be created.`,
         // errorData: errorsHelper(err),
         errorCode: null
@@ -120,23 +152,22 @@ module.exports = ({ model, url, modelName, resultObjectName, attributes }) => {
 
   router.put('/:id', (req, res) => {
 
-    req.body.id = req.params.id;
     upsertModel({
       req,
-      path: null,
+      path: resultObjectName,
       transaction: null
     })
     .then((data) => {
       return res.json({
-        status: 'sucess',
+        status: 0,
         message: `${modelName} was successfuly added to our servers.`,
         [resultObjectName]: data
       });
     })
     .catch((err) => {
       return res.json({
-        status: 'error',
-        message: `${modelName} could not be created.`,
+        status: 1,
+        message: `${modelName} could not be updated.`,
         // errorData: errorsHelper(err),
         errorCode: null
       });
@@ -146,7 +177,7 @@ module.exports = ({ model, url, modelName, resultObjectName, attributes }) => {
   router.delete('/:id', (req, res) => {
     if (req.params.id === 'undefined' || req.params.id === '') {
       res.json({
-        status: 'error',
+        status: 1,
         message: `No ${modelName} was provided to be deleted.`
       });
       return;
@@ -159,13 +190,13 @@ module.exports = ({ model, url, modelName, resultObjectName, attributes }) => {
     })
     .then(() => {
       res.json({
-        status: 'success',
+        status: 0,
         message: `${modelName} was deleted successfuly`
       });
     })
     .catch((err) => {
       res.json({
-        status: 'error',
+        status: 1,
         message: 'It seems like something happened while trying to delete this address. Maybe it did not exist, but there\'s a chance it was our fault. Please check again later.',
         // errorData: errorsHelper(err)
       });

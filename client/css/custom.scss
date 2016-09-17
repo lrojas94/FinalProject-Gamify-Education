@@ -1,0 +1,194 @@
+@import 'material/colors';
+@import 'common/navbar';
+@import 'common/griddle';
+
+$color-clouds: #ecf0f1;
+$color-nepthritis: #27ae60;
+$color-header-blue: #73879C;
+
+html {
+  height: 100%;
+  font-family: 'Lato', sans-serif;
+  background: $color-clouds;
+
+}
+
+body {
+  min-height: 100%;
+  height: 100%;
+  background: $color-clouds;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 100;
+}
+
+label, th {
+  font-family: 'Open Sans', sans-serif;
+  color: $color-header-blue;
+}
+
+.padded-content {
+  padding: 0 1em;
+  h1,h2,h3,h4,h5,h6 {
+    color: $color-header-blue;
+  }
+}
+
+.container-fluid {
+  background: white;
+}
+
+.full-height {
+  height:  100%;
+}
+
+#content {
+  height: 100%;
+  min-height: 100%;
+  > div {
+    height: 100%; // This is added by react
+  }
+}
+
+#login-form {
+  background: url('http://www.coredigitalworks.com/wp-content/uploads/2014/07/Engagement-through-gamification.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+  padding: 8em;
+  @media(max-width: 800px) {
+    padding: 3em;
+  }
+  > .row {
+    height: 100%;
+    display: flex;
+    align-self: center;
+    align-content: center;
+    align-items: center;
+  }
+
+  &:before {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background: rgba(0,0,0,0.5);
+
+  }
+
+  h3 {
+    background: $color-nepthritis;
+    color: white;
+    margin: 0;
+    padding: 0.8em;
+    text-align: center;
+  }
+
+  #form-container {
+    background: white;
+    padding: 3em;
+    height: 100%;
+
+    form {
+      position: relative;
+      bottom: 0.5em;
+    }
+  }
+
+}
+/**
+ * SideMeun
+ */
+#sidebar-handler {
+  background: $color-clouds;
+  padding: 1.3em;
+
+  @media (min-width: 800px){
+    #sidebar-handler-left {
+      display: none;
+    }
+  }
+  #sidebar-handler-left {
+    float: left;
+  }
+  #sidebar-handler-right {
+    float: right;
+    p {
+      margin: 0;
+      font-weight: 700;
+    }
+  }
+}
+
+.section-title {
+  padding: 3.5em;
+  text-align: center;
+  color: white;
+  font-size: 2em;
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  z-index: 0;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  margin: 0;
+
+  &:before {
+    display: block;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: -1;
+  }
+}
+
+/**
+ * bootstrap overrides:
+ */
+.btn, input, .form-control {
+  border-radius: 0px;
+}
+
+@mixin material-fab($size) {
+  line-height: $size!important;
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  text-align: center;
+  display: inline-block;
+  margin: 0.2em;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+
+  &:hover {
+    text-decoration: none;
+    cursor: pointer;
+    &:before {
+        //darken:
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(white, 0.2);
+        z-index: -1;
+    }
+  }
+
+  .material-icons {
+    line-height: $size!important;
+  }
+}
+
+.btn-fab-sm { @include material-fab(37px) }
+.btn-fab { @include material-fab(55px) }

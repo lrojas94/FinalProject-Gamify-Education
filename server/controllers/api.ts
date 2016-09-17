@@ -2,11 +2,13 @@ import * as express from 'express';
 import * as jwt from 'jsonwebtoken';
 import * as passport from 'passport';
 import * as passportJwt from 'passport-jwt';
+import * as _ from 'lodash';
 import { Teacher, Student, Person } from '../models/db';
 import {constants, ResponseMessage, QueryStatus, JWTTokenValues} from '../constants';
 import studentRouter from './students';
 import problemRouter from './problems';
 import answerRouter from './answer';
+import teacherRouter from './teachers';
 
 
 var router = express.Router();
@@ -38,8 +40,7 @@ router.post('/authenticate', (req, res) => {
         // Create token
         var token = jwt.sign(tokenValues, constants.JWT_SECRET);
 
-        var json = tokenValues;
-        json[constants.JWT_BODY_PARAM] = token;
+        var json = _.assign(tokenValues, { token, name: teacher.person.name, lastName: teacher.person.lastName });
 
         result.status = QueryStatus.SUCCESS;
         result.message = 'Login Successful';
@@ -48,7 +49,7 @@ router.post('/authenticate', (req, res) => {
         res.json(result);
     })
     .catch((err) => {
-        // console.log(err);
+        console.log(err);
         result.status = QueryStatus.ERROR;
         result.message = 'Login Unsuccessful. Wrong username or password.';
         result.data = err;
@@ -93,5 +94,6 @@ router.post('/profile', (req, res) => {
 router.use('/students', studentRouter);
 router.use('/problems', problemRouter);
 router.use('/answers', answerRouter);
+router.use('/teachers', teacherRouter.router);
 
 export default router;
