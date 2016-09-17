@@ -40,7 +40,6 @@ module.exports = {
         validate: {
           isIn: {
             args: [['m', 'f']],
-            msg: lang.es.errors.db.person.genderValidation
           }
         }
       }

@@ -28,7 +28,6 @@ module.exports = {
               notEmpty: true,
               isIn: {
                   args: [['7', '8']],
-                  msg: lang.es.errors.db.group.gradeValidation
               }
           }
       },
