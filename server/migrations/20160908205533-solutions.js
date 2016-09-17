@@ -19,7 +19,7 @@ module.exports = {
           allowNull: false,
           validate: {
               notEmpty: true,
-              min: 6
+              len: [2, 256]
           }
       },
       isCorrect: {

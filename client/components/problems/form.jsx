@@ -11,7 +11,7 @@ import { Route } from './../../models/route';
  * This method does not bother createing the form. Instead, it will return the fields so that they can be
  * added anywhere they seem to be needed.
  */
-class TeacherForm extends Component {
+class ProblemForm extends Component {
     constructor(props) {
       super(props);
 
@@ -35,4 +35,4 @@ class TeacherForm extends Component {
 /**
  * TODO: This form should contain a MATHQUILL input. Create that.
  */
-export default TeacherForm;
+export default ProblemForm;

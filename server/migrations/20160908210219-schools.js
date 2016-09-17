@@ -18,14 +18,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          min: 3
+          len: [3, 256]
         }
       },
       address: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          min: 10
+          len: [10, 256]
         }
       },
       telephone: {

@@ -32,7 +32,8 @@ export function define(sequelize: Sequelize.Sequelize): Model {
             allowNull: false,
             validate: {
                 notEmpty: true,
-                min: 6
+                len: [2, 256]
+
             }
         },
         url: {

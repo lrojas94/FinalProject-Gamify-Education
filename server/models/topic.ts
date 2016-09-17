@@ -18,7 +18,7 @@ export function define(sequelize: Sequelize.Sequelize): Model {
       allowNull: false,
       validate: {
         notEmpty: true,
-        min: 3
+        len: [3, 256]
       }
     },
     description: {

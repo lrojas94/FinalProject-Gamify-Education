@@ -2,6 +2,7 @@ import * as express from 'express';
 import { Teacher, Person } from './../models/db';
 import { ResponseMessage, QueryStatus } from './../constants';
 import simpleRouter from './../utility/simpleRouter';
+import personRouter from './person';
 
 /**
  * http://localhost:3000/api/teachers/
@@ -25,6 +26,17 @@ var router = simpleRouter({
       },
       view: {
         include: [{ model: Person, as: 'person' }]
+      },
+      upsert: {
+        include: [
+          {
+            bodyPath: 'person',
+            upsert: personRouter.upsert,
+            isAssociation: true,
+            associationName: 'Person'
+          }
+        ],
+        onUpsert: null
       }
     }
 });

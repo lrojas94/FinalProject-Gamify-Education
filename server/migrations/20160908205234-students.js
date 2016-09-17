@@ -19,7 +19,7 @@ module.exports = {
           allowNull: false,
           validate: {
               notEmpty: true,
-              min: 6
+              len: [6, 256]
           }
       },
       password: {
@@ -27,7 +27,7 @@ module.exports = {
           allowNull: false,
           validate: {
               notEmpty: true,
-              min: 3
+              len: [6, 256]
           }
       },
       studentId: {
@@ -36,7 +36,7 @@ module.exports = {
           unique: true,
           validate: {
               notEmpty: true,
-              min: 7
+              len: [7, 256]
           }
       },
       personId: {

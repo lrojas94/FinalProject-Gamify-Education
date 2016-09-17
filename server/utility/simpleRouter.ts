@@ -35,8 +35,12 @@ export interface ISimpleRouterOpts {
   upsert?: {
     include: {
       bodyPath: string,
-      upsert: Function
+      upsert: (data: IUpsert) =>  Promise<any>,
+      isAssociation?: boolean,
+      associationName?: string,
+      onUpsert?: (data: any) => Promise<any>
     }[];
+    onUpsert?: (data: any) => Promise<any>
   };
   view?: {
     include: {
@@ -48,7 +52,7 @@ export interface ISimpleRouterOpts {
 
 export interface IUpsert {
   req: any;
-  path: string;
+  path?: string;
   transaction?: any;
 };
 
@@ -112,15 +116,94 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
    * @param  {[type]} onSuccess Function to call on Success
    * @return {[type]}           Model object.
    */
-  var upsertModel = ({req,  path,  transaction}: IUpsert) => {
+  var upsertModel = ({req,  path,  transaction}: IUpsert): Promise<any> => {
+    /**
+     * TODO: Create transaction when expecting to use includes.
+     * @type {[type]}
+     */
+    path = path || resultObjectName;
+    return new Promise((resolve, reject) => {
+      queryHelpers.upsert({
+        req: req,
+        attributes: attributes,
+        path: path,
+        model: model,
+        transaction: transaction,
+        data: null,
+      })
+      .then((data) => {
+        if (!opts.upsert) {
+          resolve(data);
+        }
+        /**
+         * Makes sure to insert/update all includes included in UPSERT as well as set
+         * relationships with them if required to do so.
+         * @type {[type]}
+         */
+        var addIncludes = (data) =>  {
+          var promises = [];
+          if (opts.upsert.include) {
+            _.forEach(opts.upsert.include, (include) => {
+              promises.push(new Promise((resolve, reject) => {
+                include.upsert({
+                  req,
+                  path: include.bodyPath
+                })
+                .then((newUpsertData) => {
+                  console.log('NEW UPSERT DATA!!');
+                  if (include.isAssociation) {
+                    console.log('IS ASSOC!!!!');
+                    data[`set${include.associationName}`](newUpsertData, { transaction: transaction })
+                    .then(() => {
+                      console.log('I just set *-*');
+                      resolve(data);
+                    })
+                    .catch((err) => {
+                      console.log('THERE WAS AN ERR T.T');
+                      console.log(err);
+                      reject(err);
+                    });
+                  }
+                  else {
+                    resolve(newUpsertData);
+                  }
+                });
+              }));
+            });
+          }
+          return Promise.all(promises);
+        };
 
-    return queryHelpers.upsert({
-      req: req,
-      attributes: attributes,
-      path: path,
-      model: model,
-      transaction: transaction,
-      data: null,
+        if (opts.upsert.onUpsert) {
+          opts.upsert.onUpsert(data)
+          .then(() => {
+            if (opts.upsert.include) {
+              addIncludes(data)
+              .then(() => {
+                resolve(data);
+              })
+              .catch((err) => {
+                reject(err);
+              });
+            }
+          });
+        }
+        else if (opts.upsert.include) {
+          addIncludes(data)
+          .then(() => {
+            resolve(data);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+        }
+        else {
+          resolve(data);
+        }
+      })
+      .catch((err) => {
+        reject(err);
+      });
     });
   };
 
@@ -207,6 +290,6 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
 
   return {
     router,
-    [`upsert${modelName}`]: upsertModel
+    upsert: upsertModel
   };
 };

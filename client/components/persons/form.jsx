@@ -30,7 +30,7 @@ class PersonForm extends Component {
             <div className='form-group'>
               <label htmlFor="input-person-lastName" className="control-label">Last Name *</label>
               <input type="text" className="form-control" id="input-person-lastName" onChange={this.props.handleFormChange}
-              value={this.props.degree} name='lastName' required/>
+              value={this.props.lastName} name='lastName' required/>
             </div>
             <div className='form-group'>
               <label htmlFor="input-person-bday" className="control-label">Birth Date *</label>

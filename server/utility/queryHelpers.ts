@@ -186,12 +186,19 @@ var queryHelper = {
           }
         })
         .then((prevData) => {
+
+
           if (prevData == null) {
             return reject(new Error('Object was not found.'));
           }
+          console.log('----------- FOUND THAT ELEMENT -----------------');
           // it actually exists!!
           return prevData.update(data, { transaction: transaction })
-          .then((result) => resolve(result))
+          .then((result) => {
+            console.log(' --------------- ELEMENT UPDATED ---------------');
+            console.log(result);
+            resolve(result);
+          })
           .catch((err) => reject(err));
         })
         .catch((err) => {
