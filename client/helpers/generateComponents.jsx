@@ -186,7 +186,11 @@ var generateView = ({pluralDisplayName, displayName, view, actions, url}) => {
               return (
                 <div className='col-xs-12 col-sm-6' key={p.path}>
                 <h4>{ p.name }</h4>
-                <p>{_.get(this.props, `${elemName}.${p.path}`)}</p>
+                {p.template ? (
+                    <p.template data={_.get(this.props, `${elemName}.${p.path}`)} />
+                ): (
+                    <p>{_.get(this.props, `${elemName}.${p.path}`)}</p>
+                )}
                 </div>
               );
             })

@@ -12,6 +12,7 @@ import { LinkColumn } from './../general/linkColumn';
 import { Route } from './../../models/route';
 import TeachersForm from './form';
 import PersonForm from './../persons/form';
+import DateComponent from './../general/DateComponent';
 
 const initialState = {
   teacher: {
@@ -37,7 +38,11 @@ const generatedFeatures = componentGenerator({
   view: {
     title: 'Teacher',
     elements: [
-      { title: '', properties: ['username', 'degree'], element: 'teachers.view.teacher.data'  },
+      { title: '', properties: ['username', 'degree'], element: 'teachers.view.teacher.data' },
+      { title: 'Personal Information',
+        properties: ['name', {name: 'Last Name', path: 'lastName'}, {template: DateComponent, path: 'birthDay', name: 'Birth Date'}, 'gender'],
+        element: 'teachers.view.teacher.data.person'
+      }
       // { title: 'person', template: ShowAddress, element: 'teachers.view.teacher.data.address' },
       // { title: 'phone', template: ShowPhone, element: 'teachers.view.teacher.data.phone' }
     ]
