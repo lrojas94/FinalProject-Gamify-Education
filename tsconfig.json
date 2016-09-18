@@ -83,9 +83,7 @@
         "./typings/globals/sequelize/index.d.ts",
         "./typings/globals/serve-static/index.d.ts",
         "./typings/globals/validator/index.d.ts",
-        "./typings/index.d.ts",
-        "./GamifyGame/node_modules/browser-sync/node_modules/bs-recipes/recipes/webpack.typescript.react/src/components/HelloWorld.tsx",
-        "./GamifyGame/node_modules/browser-sync/node_modules/bs-recipes/recipes/webpack.typescript.react/src/main.tsx"
+        "./typings/index.d.ts"
     ],
     "compileOnSave": false,
     "atom": {

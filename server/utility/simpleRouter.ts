@@ -16,7 +16,7 @@
 import * as _ from 'lodash';
 import * as express from 'express';
 import * as jwt from 'jsonwebtoken';
-import Sequelize from 'sequelize';
+import * as Sequelize from 'sequelize';
 import passport from './passport';
 import queryHelpers from './queryHelpers';
 import { ITableQuery } from './queryHelpers';

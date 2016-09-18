@@ -2,6 +2,7 @@ const path = require("path");
 const webpack = require('webpack');
 
 module.exports = {
+    devtool: 'cheap-module-source-map',
     entry: {
         app : path.join(__dirname,'/client/app.tsx') //Use this to add more builds. Different modules don't have to be together on a single file.
     },
@@ -13,8 +14,8 @@ module.exports = {
     module: {
         loaders: [
             {
-              test: /\.tsx?$/,
-              loader: 'ts'
+              test: /\.jsx?$/,
+              loader: 'babel-loader'
             }
         ]
     },
@@ -37,6 +38,5 @@ module.exports = {
     ],
     resolve: {
         extensions: ['', '.js','.jsx','.ts','.tsx']
-    },
-    devtool: 'cheap-module-source-map'
+    }
 };

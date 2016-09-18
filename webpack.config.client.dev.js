@@ -1,38 +1,41 @@
-
 const path = require("path");
 const webpack = require('webpack');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
+const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
+    template: __dirname + '/client/index.html',
+    filename: 'index.html',
+    inject: 'body'
+});
 
 module.exports = {
-    entry: {
-        app : path.join(__dirname,'/client/app.jsx') //Use this to add more builds. Different modules don't have to be together on a single file.
-    },
+    devtool: 'eval',
+    entry: [
+        'webpack-dev-server/client?http://localhost:3000', // WebpackDevServer host and port
+        'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors]
+        './client/app.jsx'
+    ],
     output: {
-        path: path.join(__dirname,'client/build/'),
-        filename: '[name].bundle.js', //this is the default name, so you can skip it
-        //at this directory our bundle file will be available
+        path: path.join(__dirname, 'client/build/'),
+        filename: '[name].bundle.js', // this is the default name, so you can skip it
+        // at this directory our bundle file will be available
     },
+    plugins: [HTMLWebpackPluginConfig],
     module: {
-        loaders: [
-            {
-              test: /\.jsx?$/,
-              loader: 'babel-loader',
-              query:
-              {
-                presets:['react','es2015'],
-                plugins: ["transform-class-properties"]
-              }
-            },
-            {
-              test: /\.json$/,
-              loader: "json-loader"
-            }
-        ]
+        loaders: [{
+            test: /\.jsx?$/,
+            exclude: [/node_modules/, /bower_components/, /typings/],
+            loaders: ['babel-loader'],
+        }, {
+            test: /\.json$/,
+            exclude: [/node_modules/, /bower_components/, /typings/],
+            loader: "json-loader"
+        }]
     },
     resolve: {
         extensions: ['', '.js', '.jsx']
     },
     node: {
-      fs: "empty"
+        fs: "empty"
     },
 
 };
