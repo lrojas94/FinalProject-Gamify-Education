@@ -23,7 +23,6 @@ const initialState = {
     personId: ''
   },
   person: {
-    id: '',
     name: '',
     lastName: '',
     birthDay: '',
@@ -37,7 +36,7 @@ const generatedFeatures = componentGenerator({
   view: {
     title: 'Teacher',
     elements: [
-      { title: '', properties: ['username', 'degree'], element: 'teachers.view.teacher.data'  },
+      { title: '', properties: ['username', 'degree', ], element: 'teachers.view.teacher.data'  },
       // { title: 'person', template: ShowAddress, element: 'teachers.view.teacher.data.address' },
       // { title: 'phone', template: ShowPhone, element: 'teachers.view.teacher.data.phone' }
     ]
@@ -46,7 +45,7 @@ const generatedFeatures = componentGenerator({
     metadata: [
       {
         columnName: 'username',
-        displayName: 'Username',
+        displayName: 'Nombre de Usuario',
         customComponent: LinkColumn.bind(this),
         session: null,
         route: new Route('/teachers/view/<%= data %>', 'view'),
@@ -54,7 +53,7 @@ const generatedFeatures = componentGenerator({
       },
       {
         columnName: 'degree',
-        displayName: 'Degree'
+        displayName: 'Diplomado'
       }
     ],
     queryKeys: ['username', 'degree'],
@@ -88,7 +87,6 @@ const generatedFeatures = componentGenerator({
         name: 'Personal Data',
         stateName: 'person',
         component: PersonForm,
-        toggler: 'personToggler'
       }
     ],
     pickAttributes: ['teacher', 'person'],
