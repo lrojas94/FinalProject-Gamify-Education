@@ -5,7 +5,6 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider, connect} from 'react-redux';
 import {push} from 'react-router-redux';
 import {login, logout} from './../../actions/session';
-import MathTextField from '../general/mathTextField';
 
 function mapStateToProps(props) {
     return {session: props.session};
@@ -29,7 +28,6 @@ class HomeIndex extends Component {
                 <p>
                     Home Page
                 </p>
-                <MathTextField />
                 {this.props.children}
             </div>
         );

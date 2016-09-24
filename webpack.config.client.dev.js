@@ -1,22 +1,22 @@
 const path = require("path");
-const webpack = require('webpack');
+const webpack = require("webpack");
 
 module.exports = {
     entry: {
-        app: path.join(__dirname, '/client/app.jsx') //Use this to add more builds. Different modules don't have to be together on a single file.
+        app: path.join(__dirname, "/client/app.jsx") //Use this to add more builds. Different modules don't have to be together on a single file.
     },
     output: {
-        path    : path.join(__dirname, 'client/build/'),
-        filename: '[name].bundle.js', //this is the default name, so you can skip it
+        path    : path.join(__dirname, "client/build/"),
+        filename: "[name].bundle.js", //this is the default name, so you can skip it
         //at this directory our bundle file will be available
     },
     module: {
         loaders: [{
             test    : /\.jsx?$/,
             exclude : [/node_modules/, /typings/, /www/],
-            loader  : 'babel-loader',
+            loader  : "babel-loader",
             query   : {
-                presets : ['react', 'es2015'],
+                presets : ["react", "es2015"],
                 plugins : ["transform-class-properties"]
             }
         }, {
@@ -27,11 +27,14 @@ module.exports = {
             loader : "style-loader!css-loader"
         }, {
             test   : /\.(ttf|eot|otf|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
-            loader : 'file-loader'
+            loader : "file-loader",
+            query  : {
+                mimeType: "application/octet-stream"
+            }
         }]
     },
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ["", ".js", ".jsx"]
     },
     node: {
         fs: "empty"
