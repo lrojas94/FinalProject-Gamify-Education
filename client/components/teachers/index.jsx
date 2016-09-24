@@ -12,6 +12,7 @@ import { LinkColumn } from './../general/linkColumn';
 import { Route } from './../../models/route';
 import TeachersForm from './form';
 import PersonForm from './../persons/form';
+import DateComponent from './../general/dateComponent';
 
 const initialState = {
   teacher: {
