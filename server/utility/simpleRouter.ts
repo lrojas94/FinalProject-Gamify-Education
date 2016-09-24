@@ -124,7 +124,6 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
      */
     path = path || resultObjectName;
     return new Promise((resolve, reject) => {
-
       queryHelpers.upsert({
         req: req,
         attributes: attributes,
@@ -153,7 +152,7 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
                 })
                 .then((newUpsertData) => {
                   if (include.isAssociation) {
-                    data[`set${include.associationName}`](newUpsertData, { transaction: transaction })
+                    data[`set${include.associationName}${_.isArray(newUpsertData) ? 's' : ''}`](newUpsertData, { transaction: transaction })
                     .then(() => {
                       resolve(data);
                     })
@@ -168,16 +167,18 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
                 });
               }));
             });
+            return Promise.all(promises);
           }
-          return Promise.all(promises);
+          else {
+            return new Promise((resolve, reject) => { resolve(); });
+          }
         };
 
-        if (opts.upsert.onUpsert) {
-          opts.upsert.onUpsert(data)
-          .then(() => {
-            console.log('After On Upsert...');
-            if (opts.upsert.include) {
-              addIncludes(data)
+        if (opts.upsert.include) {
+          addIncludes(data)
+          .then((something) => {
+            if (opts.upsert.onUpsert) {
+              opts.upsert.onUpsert(data)
               .then(() => {
                 resolve(data);
               })
@@ -193,8 +194,8 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
             reject(err);
           });
         }
-        else if (opts.upsert.include) {
-          addIncludes(data)
+        else if (opts.upsert.onUpsert) {
+          opts.upsert.onUpsert(data)
           .then(() => {
             resolve(data);
           })

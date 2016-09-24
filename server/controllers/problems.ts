@@ -7,6 +7,7 @@ import { Pojo as SolutionPojo } from '../models/solution';
 import { Student, Problem, Solution, Teacher, Answer, DB } from './../models/db';
 import { ResponseMessage, QueryStatus } from './../constants';
 import simpleRouter from './../utility/simpleRouter';
+import solutionRouter from './solutions';
 
 
 var router = simpleRouter({
@@ -27,28 +28,39 @@ var router = simpleRouter({
       },
       upsert: {
         onUpsert: (data: any) => {
-          console.log(data);
           return new Promise((resolve, reject) => {
-            rp({
-              method: 'POST',
-              uri: `${constants.IMG_API_SERVER_ADDRESS}api/problem/create`,
-              body: data,
-              json: true
-            })
-            .then((responseData: ResponseMessage) => {
-              if (responseData.status === QueryStatus.SUCCESS) {
-                resolve();
-              }
-              else {
-                reject(new Error('Upload was not Successful'));
-              }
+            data.getSolutions()
+            .then((solutions) => {
+              data.setDataValue('solutions', solutions);
+              rp({
+                method: 'POST',
+                uri: `${constants.IMG_API_SERVER_ADDRESS}api/problem/create`,
+                body: data,
+                json: true
+              })
+              .then((responseData: ResponseMessage) => {
+                if (responseData.status === QueryStatus.SUCCESS) {
+                  resolve();
+                }
+                else {
+                  reject(new Error('Upload was not Successful'));
+                }
+              })
+              .catch((err) => {
+                reject(err);
+              });
             })
             .catch((err) => {
               reject(err);
             });
           });
         },
-        include: null
+        include: [{
+          isAssociation: true,
+          upsert: solutionRouter.upsert,
+          bodyPath: 'solutions',
+          associationName: 'Solution',
+        }]
       }
     }
 });

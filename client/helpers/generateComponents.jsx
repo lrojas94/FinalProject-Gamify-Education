@@ -414,6 +414,30 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
       generateForms() {
        var forms = _.map(opts.forms, (form) => {
          var Component = form.component;
+         var displayToggler = () => {
+           var display = (
+             <div className='row'>
+              <div className='col-xs-12'>
+                <h3> {_.capitalize(form.name)} </h3>
+                <Component
+                 {...this.state[form.stateName]}
+                 handleFormChange={this.handlers[form.name].bind(this)}/>
+              </div>
+             </div>
+           );
+
+           if(form.toggler) {
+             // This is a toggler form.
+             if(this.state[form.toggler]) {
+               // we are to show the form
+               return display;
+             }
+             return '';
+           }
+           else {
+             return display;
+           }
+         }
          return (
            <div key={form.name}>
              {form.toggler ? (
@@ -432,29 +456,7 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
                </div>
              ) : ''}
 
-             { form.toggler ?
-               this.state[form.toggler] ?
-                 (
-                   <div className='row'>
-                    <div className='col-xs-12'>
-                      <h3> {_.capitalize(form.name)} </h3>
-                      <Component
-                       {...this.state[form.stateName]}
-                       handleFormChange={this.handlers[form.name].bind(this)}/>
-                    </div>
-                   </div>
-                 )
-                 : ''
-               :(
-                 <div className='row'>
-                  <div className='col-xs-12'>
-                    <h3> {_.capitalize(form.name)} </h3>
-                    <Component
-                     {...this.state[form.stateName]}
-                     handleFormChange={this.handlers[form.name].bind(this)}/>
-                  </div>
-                 </div>
-               )}
+             {displayToggler()}
               <hr/>
            </div>
          );

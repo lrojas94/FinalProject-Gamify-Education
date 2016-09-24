@@ -25,6 +25,7 @@
         "./server/controllers/api.ts",
         "./server/controllers/person.ts",
         "./server/controllers/problems.ts",
+        "./server/controllers/solutions.ts",
         "./server/controllers/students.ts",
         "./server/controllers/teachers.ts",
         "./server/messages.ts",

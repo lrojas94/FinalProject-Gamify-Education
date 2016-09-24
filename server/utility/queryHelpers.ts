@@ -168,58 +168,77 @@ var queryHelper = {
 
     if (!data && attributes && req) {
       if (path) {
-        data = _.chain(_.get(req.body, path)).pick(attributes).omit(_.isEmpty).omit(_.isNull).omit(_.isUndefined).value();
+        data = _.get(req.body, path);
+        if (!_.isArray(data)) {
+          data = _.chain(data).pick(attributes).omit(_.isEmpty).omit(_.isNull).omit(_.isUndefined).value();
+        }
       }
       else {
         data = _.chain(req.body).pick(attributes).omit(_.isEmpty).omit(_.isNull).omit(_.isUndefined).value();
       }
     }
 
-    return new Promise((resolve, reject) => {
-      console.log(data);
-      if (data.id) {
-        // this is an update
-        console.log('UPDATING-----------------------------------');
-        model.findOne({
-          where: {
-            id: data.id
-          }
-        })
-        .then((prevData) => {
+    console.log(path);
+
+    var upsert = (data) => {
+      return new Promise((resolve, reject) => {
+        if (data.id) {
+          // this is an update
+          console.log('UPDATING-----------------------------------');
+          model.findOne({
+            where: {
+              id: data.id
+            }
+          })
+          .then((prevData) => {
 
 
-          if (prevData == null) {
+            if (prevData == null) {
+              return reject(new Error('Object was not found.'));
+            }
+            console.log('----------- FOUND THAT ELEMENT -----------------');
+            // it actually exists!!
+            return prevData.update(data, { transaction: transaction })
+            .then((result) => {
+              console.log(' --------------- ELEMENT UPDATED ---------------');
+              console.log(result);
+              resolve(result);
+            })
+            .catch((err) => reject(err));
+          })
+          .catch((err) => {
+            // object probably doesnt exist, so:
             return reject(new Error('Object was not found.'));
-          }
-          console.log('----------- FOUND THAT ELEMENT -----------------');
-          // it actually exists!!
-          return prevData.update(data, { transaction: transaction })
+          });
+        }
+        else {
+          // this is a create
+          //
+          model.create(data, { transaction: transaction })
           .then((result) => {
-            console.log(' --------------- ELEMENT UPDATED ---------------');
-            console.log(result);
             resolve(result);
           })
-          .catch((err) => reject(err));
-        })
-        .catch((err) => {
-          // object probably doesnt exist, so:
-          return reject(new Error('Object was not found.'));
-        });
-      }
-      else {
-        // this is a create
-        //
-        console.log('CREATING-----------------------------------');
-        model.create(data, { transaction: transaction })
-        .then((result) => {
-          resolve(result);
-        })
-        .catch((err) => {
-          console.log(err);
-          reject(err);
-        });
-      }
-    });
+          .catch((err) => {
+            console.log(err);
+            reject(err);
+          });
+        }
+      });
+    };
+
+    if (_.isArray(data)) {
+      var promises = [];
+      console.log('-------------------- IMPORTANT ---------------- MULTIPLE ITEMS --------------------');
+      _.map(data, (itemData) => {
+          promises.push(upsert(itemData));
+      });
+      return Promise.all(promises);
+    }
+    else if (data && !_.isEmpty(data)) {
+      console.log('-------------------- IMPORTANT ---------------- SINGLE ITEM --------------------');
+      return upsert(data);
+    }
+    else return new Promise((resolve, reject) => { reject(new Error('No data was provided.')); }) ;
   },
   /**
    * Allows to create an set an association to an instance.
@@ -245,9 +264,8 @@ var queryHelper = {
           transaction: transaction
         })
         .then((result) => {
-          return instance[`set${associationName}`](result, {transaction: transaction})
+          return instance[`set${associationName}${_.isArray(result) ? 's' : ''}`](result, {transaction: transaction})
           .then((finalResult) => {
-            console.log('finalResult');
             resolve(finalResult);
           }
           )
