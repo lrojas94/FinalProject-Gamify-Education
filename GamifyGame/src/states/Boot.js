@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import WebFont from 'webfontloader';
-import Axios from 'axios';
+import axios from 'axios';
+import constants from './../constants';
 
 export default class Boot extends Phaser.State {
   init () {
@@ -22,6 +23,8 @@ export default class Boot extends Phaser.State {
       fill: '#dddddd',
       align: 'center'
     });
+
+    axios.defaults.headers.common['Authorization'] = constants.JWT_TOKEN;
 
     text.anchor.setTo(0.5, 0.5);
 

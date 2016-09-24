@@ -372,8 +372,6 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
           .omitBy(_.isEmpty)
           .value();
 
-          console.log(data);
-
           this.setState(_.assign({}, this.props.initialState || opts.initialState))
           this.props.addUpdateItem(data);
         }

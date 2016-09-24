@@ -24,6 +24,31 @@ var router = simpleRouter({
       },
       view: {
         include: [{ model: Solution, as: 'solutions' }, { model: Teacher, as: 'teacher' }, { model: Answer, as: 'answers'}]
+      },
+      upsert: {
+        onUpsert: (data: any) => {
+          console.log(data);
+          return new Promise((resolve, reject) => {
+            rp({
+              method: 'POST',
+              uri: `${constants.IMG_API_SERVER_ADDRESS}api/problem/create`,
+              body: data,
+              json: true
+            })
+            .then((responseData: ResponseMessage) => {
+              if (responseData.status === QueryStatus.SUCCESS) {
+                resolve();
+              }
+              else {
+                reject(new Error('Upload was not Successful'));
+              }
+            })
+            .catch((err) => {
+              reject(err);
+            });
+          });
+        },
+        include: null
       }
     }
 });

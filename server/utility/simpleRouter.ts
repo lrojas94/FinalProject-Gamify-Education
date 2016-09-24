@@ -54,6 +54,7 @@ export interface IUpsert {
   req: any;
   path?: string;
   transaction?: any;
+  data?: any;
 };
 
 export default ({ model, url, modelName, resultObjectName, attributes, opts }: ISimpleRouter ) => {
@@ -116,13 +117,14 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
    * @param  {[type]} onSuccess Function to call on Success
    * @return {[type]}           Model object.
    */
-  var upsertModel = ({req,  path,  transaction}: IUpsert): Promise<any> => {
+  var upsertModel = ({req,  path,  transaction, data  }: IUpsert): Promise<any> => {
     /**
      * TODO: Create transaction when expecting to use includes.
      * @type {[type]}
      */
     path = path || resultObjectName;
     return new Promise((resolve, reject) => {
+
       queryHelpers.upsert({
         req: req,
         attributes: attributes,
@@ -150,16 +152,12 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
                   path: include.bodyPath
                 })
                 .then((newUpsertData) => {
-                  console.log('NEW UPSERT DATA!!');
                   if (include.isAssociation) {
-                    console.log('IS ASSOC!!!!');
                     data[`set${include.associationName}`](newUpsertData, { transaction: transaction })
                     .then(() => {
-                      console.log('I just set *-*');
                       resolve(data);
                     })
                     .catch((err) => {
-                      console.log('THERE WAS AN ERR T.T');
                       console.log(err);
                       reject(err);
                     });
@@ -177,6 +175,7 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
         if (opts.upsert.onUpsert) {
           opts.upsert.onUpsert(data)
           .then(() => {
+            console.log('After On Upsert...');
             if (opts.upsert.include) {
               addIncludes(data)
               .then(() => {
@@ -186,6 +185,12 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
                 reject(err);
               });
             }
+            else {
+              resolve(data);
+            }
+          })
+          .catch((err) => {
+            reject(err);
           });
         }
         else if (opts.upsert.include) {

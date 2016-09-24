@@ -22,9 +22,11 @@ app.post('/api/problem/create', function(req,res) {
   console.log(req.body);
   const data = req.body; // This itself is a problem I think.
   mathmode(data.problem).pipe(fs.createWriteStream(path.join(__dirname,`./savedImages/p${data.id}.png`)));
-  data.solutions.map((solution) => {
-    mathmode(solution.solution).pipe(fs.createWriteStream(path.join(__dirname,`./savedImages/p${data.id}_s${solution.id}.png`)));
-  });
+  if(data.solutions) {
+    data.solutions.map((solution) => {
+      mathmode(solution.solution).pipe(fs.createWriteStream(path.join(__dirname,`./savedImages/p${data.id}_s${solution.id}.png`)));
+    });
+  }
   res.json({
     status: 0,
     message: 'Problem created.'
