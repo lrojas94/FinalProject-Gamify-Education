@@ -345,13 +345,39 @@ var generateList = ({ actions, displayName, pluralDisplayName, list, url }) => {
 
 }
 
+/**
+ * - Forms -> What forms are to be included. (toggler/name/component)
+ * - pickAttributes -> which attributes will be sent to the server
+ * - initialState -> Initial component state
+ */
+
+
+/**
+ * Creates an Add/Edit component to create items.
+ * crateOpts contains:
+   {
+    forms: Each form that will be included in the add of the new item. (It might be composed of more than 1.),
+    forms are composed by:
+      {
+      toggler: an UNIQUE name which allows this form to be included or not.
+      name: The title name to be displayed.
+      stateName: What name does this form has in the state.
+      component: Form component.
+      multiple: {
+        statePath: the path in which items are found. ** REQUIRED **
+        stateTemplate: an object which represents the state of each of the forms.
+        initialId: defaults to 0, defines the inital ID for the forms. (No real reason to modify this, but in any case.)
+      }
+    }
+  }
+ */
+
 var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
   class CreateUpdate extends Component {
       constructor(props) {
         super(props);
-        this.state = _.assign({}, this.props.initialState || opts.initialState);
-        this.generateHandles();
-        this.generateTogglers();
+        this.generateManagingFunctions();
+        this.state = _.assign({ multiforms: this.multiforms || null }, this.props.initialState || opts.initialState);
       };
 
       componentWillMount() {
@@ -363,14 +389,29 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
 
         if(form.checkValidity()) {
           e.preventDefault();
-          var data = _(this.state)
+          var multiforms = {};
+          _.forEach(this.state.multiforms, (val, key) => {
+            var items = _.map(val.items, (item) => {
+              return item.item; //ignore id here.
+            });
+
+            console.log(items);
+
+            multiforms[val.statePath] = items;
+          });
+          var data = _(_.assign(this.state, multiforms))
           .pick(opts.pickAttributes)
           .mapValues((obj) => {
-            var data =  _.chain(obj).mapValues((v) => _.toString(v)).omitBy(_.isEmpty).value();
+            if(_.isArray(obj)){
+              return obj;
+            }
+            var data =  _.chain(obj).mapValues((v) => _.isObject(v) ? v : _.toString(v)).omitBy(_.isEmpty).value();
             return data;
           })
           .omitBy(_.isEmpty)
           .value();
+
+          console.log(data);
 
           this.setState(_.assign({}, this.props.initialState || opts.initialState))
           this.props.addUpdateItem(data);
@@ -378,26 +419,95 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
 
       }
 
-      generateHandles() {
+      generateMultiform(form) {
+        if(!form.multiple) {
+          return; // Just in case.
+        }
+
+        var currentState = this.props.initialState || opts.initialState;
+        var currentItems = {};
+        var idGenerator = form.multiple.initialId || 0;
+
+        if(form.multiple.statePath) {
+          currentItems = _.get(currentState, form.multiple.statePath);
+          /**
+           * Represent how items are actually present in the state.
+           */
+          var statefulItems = _.map(currentItems, (item) => {
+            return {
+              id: idGenerator++,
+              item
+            }
+          });
+
+          var formState =  {
+            nextId: idGenerator,
+            items: statefulItems,
+            statePath: form.multiple.statePath
+          }
+
+          // Create item function
+          formState.addItem = () => {
+            var multiforms = this.state.multiforms;
+
+            if(!multiforms[form.name]) {
+              multiforms[form.name] = formState;
+            }
+
+            multiforms[form.name].items.push({
+              id: formState.nextId++,
+              item: _.assign({}, form.multiple.stateTemplate)
+            })
+
+            this.setState({ multiforms });
+          };
+          // Remove item function.
+          formState.removeItem = (id) => {
+            var multiforms = this.state.multiforms;
+
+            if(!multiforms[form.name]) {
+              multiforms[form.name] = formState;
+            }
+            multiforms[form.name].items = _.filter(multiforms[form.name].items, (item) => !(item.id === id));
+
+            this.setState({ multiforms });
+          };
+
+          return formState;
+
+        }
+
+
+      }
+
+      /**
+       * Generated function creator.
+       */
+      generateManagingFunctions() {
         var handlers = {};
-        _.forEach(opts.forms, (form) => {
-           handlers[form.name] = (e) => { this.handleForm(e, form.stateName) }
-        })
-
-        this.handlers = handlers;
-      }
-
-      generateTogglers() {
         var togglers = {};
+        var multiFormHandlers = {};
+
         _.forEach(opts.forms, (form) => {
-           if(form.toggler) {
-             togglers[form.name] = (e) => { this.showToggler(e, form.toggler) }
-           }
+          // Hadlers
+          handlers[form.name] = (e) => { this.handleForm(e, form.stateName) };
+          // Togglers.
+          if(form.toggler) {
+            togglers[form.name] = (e) => { this.showToggler(e, form.toggler) }
+          }
+          // Multiple forms.
+          if(form.multiple) {
+            multiFormHandlers[form.name] = this.generateMultiform(form);
+          }
         })
-
+        this.handlers = handlers;
         this.togglers = togglers;
+        this.multiforms = multiFormHandlers;
       }
-
+      /**
+       * e -> Event data.
+       * type -> State name & Path/
+       */
       handleForm(e, type) {
         var name = e.target.getAttribute('name');
         var data = this.state[type] || this.state;
@@ -411,11 +521,63 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
         this.setState({ [type]: show });
       }
 
-      generateForms() {
+      generateMultiformDisplay(form) {
+        var Component = form.component;
+        var handler = this.state.multiforms[form.name];
+        var generateItems = () => {
+          return _.map(handler.items, (elem) => {
+            var onChange = (id, e) => {
+              var multiforms = this.state.multiforms;
+              var updatedItems = _.map(multiforms[form.name].items, (item) =>  {
+                if(item.id === id) {
+                  item.item[e.target.getAttribute('name')] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+                }
+
+                return item;
+              });
+
+              var updatedForm = _.assign(multiforms[form.name], { items: updatedItems });
+              multiforms = _.assign(multiforms, { [form.name]: updatedForm });
+              this.setState({ multiforms });
+            }
+
+            return (
+              <div key={elem.id}>
+                <Component {...elem.item}
+                           handleFormChange={onChange.bind(this, elem.id)} />
+                <button className='btn btn-block m-red' onClick={(e) => {
+                  e.preventDefault();
+                  handler.removeItem(elem.id)
+                }}>
+                Remove
+                </button>
+              </div>
+            );
+          })
+        }
+        return (
+          <div className='row'>
+           <div className='col-xs-12'>
+             <h3> {_.capitalize(form.name)} </h3>
+             <button className='btn btn-block m-light-green' onClick={(e) => {
+               e.preventDefault();
+               handler.addItem();
+             }} >
+                Add new element of {_.capitalize(form.name)}
+             </button>
+             <br/>
+             {generateItems()}
+           </div>
+          </div>
+        )
+      }
+
+      generateFormsDisplay() {
        var forms = _.map(opts.forms, (form) => {
          var Component = form.component;
+
          var displayToggler = () => {
-           var display = (
+           var display = form.multiple ? this.generateMultiformDisplay(form) : (
              <div className='row'>
               <div className='col-xs-12'>
                 <h3> {_.capitalize(form.name)} </h3>
@@ -455,7 +617,6 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
                  <hr/>
                </div>
              ) : ''}
-
              {displayToggler()}
               <hr/>
            </div>
@@ -489,7 +650,7 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
                   ) : '' }
                   <form className='form' action='/api/{url}' ref='form' onSubmit={this.performActionWithItem.bind(this)}>
 
-                    {this.generateForms()}
+                    {this.generateFormsDisplay()}
 
                     <div className='form-group'>
                       <div className='col-xs-6 col-xs-offset-3'>
@@ -512,27 +673,6 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
   return CreateUpdate;
 }
 
-/**
- * - Forms -> What forms are to be included. (toggler/name/component)
- * - pickAttributes -> which attributes will be sent to the server
- * - initialState -> Initial component state
- */
-
-
-/**
- * Creates an Add component to create items.
- * crateOpts contains:
-   {
-    forms: Each form that will be included in the add of the new item. (It might be composed of more than 1.),
-    forms are composed by:
-      {
-      toggler: an UNIQUE name which allows this form to be included or not.
-      name: The title name to be displayed.
-      stateName: What name does this form has in the state.
-      component: Form component.
-    }
-  }
- */
 var generateAdd = ({ displayName, pluralDisplayName, createOpts, actions, url }) => {
   const { create: createItem, createClear: createItemClear } = actions;
 

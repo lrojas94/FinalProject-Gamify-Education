@@ -6,7 +6,7 @@ const actions = actionGenerator({
   constants: problemConstants,
   baseUrl: 'problems/',
   resultObjectName: 'problem',
-  attributes: ['problem','soltions']
+  attributes: ['problem','solutions']
 });
 
 export default actions;

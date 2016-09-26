@@ -11,7 +11,7 @@ import problemActions from './../../actions/problems';
 import { LinkColumn } from './../general/linkColumn';
 import { Route } from './../../models/route';
 import ProblemsForm from './form';
-import PersonForm from './../persons/form';
+import SolutionForm from './../solutions/form';
 
 const initialState = {
   problem: {
@@ -58,6 +58,19 @@ const generatedFeatures = componentGenerator({
         component: ProblemsForm,
         stateName: 'problem'
       },
+      {
+        name: 'solutions',
+        component: SolutionForm,
+        stateName: 'solutions',
+        multiple: {
+          statePath: 'solutions',
+          stateTemplate: {
+            id: '',
+            solution: '',
+            isCorrect: false
+          }
+        }
+      }
     ],
     initialState,
     pickAttributes: ['problem', 'solutions']
@@ -70,6 +83,19 @@ const generatedFeatures = componentGenerator({
         component: ProblemsForm,
         stateName: 'problem'
       },
+      {
+        name: 'solutions',
+        component: SolutionForm,
+        stateName: 'solutions',
+        multiple: {
+          statePath: 'solutions',
+          stateTemplate: {
+            id: '',
+            solution: '',
+            isCorrect: false
+          }
+        }
+      }
     ],
     pickAttributes: ['problem', 'solutions'],
     viewAttributesToState: [
