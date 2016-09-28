@@ -20,11 +20,10 @@ export default class Boot extends Phaser.State {
 
     let text = this.add.text(this.world.centerX, this.world.centerY, 'Loading Fonts..', {
       font: '16px Arial',
-      fill: '#dddddd',
+      fill: '#000000',
       align: 'center'
     });
 
-    axios.defaults.headers.common['Authorization'] = constants.JWT_TOKEN;
 
     text.anchor.setTo(0.5, 0.5);
 

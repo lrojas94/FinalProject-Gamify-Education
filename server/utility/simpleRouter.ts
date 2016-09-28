@@ -1,16 +1,16 @@
 /**
  * This simple router provides basic API CRUD.
- * It should be used for models with no dependencies (Addresses, phones, etc...).
- *
- * Do NOT use this router when a model has or could use some dependencies as it would not
- * be of help there.
+ * It allows to insert other items related to other routers too, given that right parameters are provided,
+ * and the request body contains those values.
  *
  * This router provides:
- * 		- Table query (Get by page - no search allowed)
+ * 		- Table query (Get by page)
  * 		- Get/View single
  * 		- Create.
  * 		- Update
  * 		- Delete
+ *
+ * @author: Luis E. Rojas Cabrera (2016)
  */
 
 import * as _ from 'lodash';
@@ -145,27 +145,32 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
           var promises = [];
           if (opts.upsert.include) {
             _.forEach(opts.upsert.include, (include) => {
-              promises.push(new Promise((resolve, reject) => {
-                include.upsert({
-                  req,
-                  path: include.bodyPath
-                })
-                .then((newUpsertData) => {
-                  if (include.isAssociation) {
-                    data[`set${include.associationName}${_.isArray(newUpsertData) ? 's' : ''}`](newUpsertData, { transaction: transaction })
-                    .then(() => {
-                      resolve(data);
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                      reject(err);
-                    });
-                  }
-                  else {
-                    resolve(newUpsertData);
-                  }
-                });
-              }));
+              if (req.body[include.bodyPath]) {
+                // check if that was actually included:
+                promises.push(new Promise((resolve, reject) => {
+                  include.upsert({
+                    req,
+                    path: include.bodyPath,
+                    transaction: transaction
+                  })
+                  .then((newUpsertData) => {
+                    if (include.isAssociation) {
+                      data[`set${include.associationName}${_.isArray(newUpsertData) ? 's' : ''}`](newUpsertData, { transaction: transaction })
+                      .then(() => {
+                        resolve(data);
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                        reject(err);
+                      });
+                    }
+                    else {
+                      resolve(newUpsertData);
+                    }
+                  })
+                  .catch((err) => reject(err));
+                }));
+              }
             });
             return Promise.all(promises);
           }

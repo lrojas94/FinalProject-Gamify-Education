@@ -3,17 +3,9 @@ import axios from 'axios';
 import { centerGameObjects } from '../utils';
 import constants from '../constants';
 
-export default class Splash extends Phaser.State {
+export default class Login extends Phaser.State {
   init (problem) {
     this.keysToLoad = [];
-    if(problem){
-      this.loadProblemData(problem);
-      this.shouldSelectProblem = false;
-    }
-    else{
-      this.problem = null;
-      this.shouldSelectProblem = true;
-    }
   }
 
   preload () {
@@ -34,7 +26,7 @@ export default class Splash extends Phaser.State {
   }
 
   create(){
-    this.state.start('ProblemLoader');
+    this.state.start('Login');
   }
 
 }
