@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Route } from './../../models/route';
+import MathTextField from './../general/mathTextField';
 
 
 /**
@@ -24,15 +25,14 @@ class ProblemForm extends Component {
             <div className="form-group">
               { this.props.id ? (<input type='hidden' name='id' value={this.props.id}/>) : '' }
               <label htmlFor="input-problem" className="control-label">Problem *</label>
-              <input type="text" className="form-control" id="input-problem" onChange={this.props.handleFormChange}
-              value={this.props.problem} name='problem' required/>
+              <MathTextField id="input-problem" handleFormChange="" />
+              /**
+               * TODO: Pass handleFormChange to MathTextField
+               */
             </div>
           </div>
         </div>
       );
     }
 };
-/**
- * TODO: This form should contain a MATHQUILL input. Create that.
- */
 export default ProblemForm;
