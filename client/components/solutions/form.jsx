@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Route } from './../../models/route';
+import MathTextField from './../general/mathTextField';
 
 
 /**
@@ -24,8 +25,11 @@ class SolutionForm extends Component {
             <div className="form-group">
               { this.props.id ? (<input type='hidden' name='id' value={this.props.id}/>) : '' }
               <label htmlFor="input-solution{this.props.customId||''}" className="control-label">Solution *</label>
-              <input type="text" className="form-control" id="input-solution{this.props.customId||''}" onChange={this.props.handleFormChange}
-              value={this.props.solution} name='solution' required/>
+              <MathTextField
+              name='solution'
+              id="input-solution{this.props.customId||''}"
+              value={this.props.solution}
+              handleFormChange={this.props.handleFormChange} />
             </div>
           </div>
           <div className='col-xs-2'>

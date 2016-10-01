@@ -377,7 +377,7 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
       constructor(props) {
         super(props);
         this.generateManagingFunctions();
-        this.state = _.assign({ multiforms: this.multiforms || null }, this.props.initialState || opts.initialState);
+        this.state = _.assign({ multiforms: this.multiforms || [] }, this.props.initialState || opts.initialState);
       };
 
       componentWillMount() {
