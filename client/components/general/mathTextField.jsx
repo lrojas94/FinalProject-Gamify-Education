@@ -34,7 +34,7 @@ export class MathTextField extends Component {
         return (
             <div>
                 <input type='hidden' ref='mathInput' name={this.props.name || 'mathInput'}/>
-                <span ref='mathField' class='form-control' onKeyUp={this.expressionChange.bind(this)} style={{
+                <span ref='mathField' className='form-control mq-input' onKeyUp={this.expressionChange.bind(this)} style={{
                     color: 'black',
                     minWidth: '200px'
                 }}></span>

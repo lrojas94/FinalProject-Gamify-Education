@@ -192,3 +192,8 @@ label, th {
 
 .btn-fab-sm { @include material-fab(37px) }
 .btn-fab { @include material-fab(55px) }
+
+.mq-input {
+  min-height: 34px!important;
+  height: auto!important;
+}
