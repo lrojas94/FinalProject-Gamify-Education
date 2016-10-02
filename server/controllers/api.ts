@@ -9,6 +9,7 @@ import studentRouter from './students';
 import problemRouter from './problems';
 import answerRouter from './answer';
 import teacherRouter from './teachers';
+import difficultyRouter from './difficulties';
 
 
 var router = express.Router();
@@ -64,36 +65,11 @@ router.use(passport.authenticate('jwt', { session: false }));
  * @param  {[string]} '/'         [Route]
  * @param  {[callback]} (req,res) [Request and Response Headers]
  */
-router.get('/', (req, res) => {
-    console.log(req.query); // This is for a GET
-    res.json({ 'data': 'Working' });
-});
-
-/**
- * POST: http://localhost:3000/api
- * @param  {[string]} '/'         [Route]
- * @param  {[callback]} (req,res) [Request and Response Headers]
- */
-router.post('/', (req, res) => {
-    console.log(req.body); // This is for a Post
-    console.log(req.user);
-    res.json({ 'data': 'Working' });
-});
-
-/**
- * POST: http:localhost:3000/api/profile
- * @param  {[string]}  '/profile'          [Route]
- * @param  {[callback]}  (req,res)         [Request and Response Headers]
- */
-router.post('/profile', (req, res) => {
-    res.json({
-        success: 'You finally have access to your request!'
-    });
-});
 
 router.use('/students', studentRouter);
 router.use('/problems', problemRouter);
 router.use('/answers', answerRouter);
 router.use('/teachers', teacherRouter.router);
+router.use('/difficulties', difficultyRouter.router);
 
 export default router;

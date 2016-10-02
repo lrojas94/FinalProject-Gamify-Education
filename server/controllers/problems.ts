@@ -4,7 +4,7 @@ import * as sequelize from 'sequelize';
 import * as rp from 'request-promise';
 import { constants } from './../constants';
 import { Pojo as SolutionPojo } from '../models/solution';
-import { Student, Problem, Solution, Teacher, Answer, DB } from './../models/db';
+import { Student, Problem, Solution, Teacher, Answer, Difficulty, DB } from './../models/db';
 import { ResponseMessage, QueryStatus } from './../constants';
 import simpleRouter from './../utility/simpleRouter';
 import solutionRouter from './solutions';
@@ -24,7 +24,12 @@ var router = simpleRouter({
         searchAttributes: ['problem', 'url']
       },
       view: {
-        include: [{ model: Solution, as: 'solutions' }, { model: Teacher, as: 'teacher' }, { model: Answer, as: 'answers'}]
+        include: [
+          { model: Solution, as: 'solutions' },
+          { model: Teacher, as: 'teacher' },
+          { model: Answer, as: 'answers'},
+          { model: Difficulty, as: 'difficulty'}
+        ]
       },
       upsert: {
         onUpsert: (data: any) => {

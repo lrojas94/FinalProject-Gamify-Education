@@ -709,10 +709,13 @@ var generateUpdate = ({ displayName, pluralDisplayName, update, actions, url }) 
     var view = props[pluralDisplayName].view[displayName];
     _.forEach(update.viewAttributesToState, (attr) => {
       if(view && view.data) {
-
-        initialState[attr.name] = _.merge(initialState[attr.name], attr.path ? view.data[attr.path] : view.data);
+        console.log(initialState);
+        initialState[attr.name] = attr.path ? view.data[attr.path] : view.data;
+        console.log(initialState);
       }
     })
+
+    // console.log(initialState);
 
     return {
       session: props.session.session,
