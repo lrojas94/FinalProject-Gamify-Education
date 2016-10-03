@@ -16,6 +16,8 @@ import { HomeIndexModule as HomeIndex } from './components/home/index';
 import { LoginModule as Login } from './components/home/login';
 import Teachers from './components/teachers/index';
 import Problems from './components/problems/index';
+import Topics from './components/topics/index';
+import Difficulties from './components/difficulties/index';
 const routerMiddlewareInstance = routerMiddleware(browserHistory)
 
 const store = createStore(
@@ -55,6 +57,31 @@ ReactDOM.render((
             <Route path='delete/:problemId' component={Problems.Delete}/>
           </Route>
         </Route>
+
+        <Route path='topics' component={Topics.Main}>
+          <IndexRoute component={Topics.Index}/>
+          <Router path='add' component={Topics.Add}/>
+          <Route path='view/:topicId' component={Topics.View}/>
+          <Route component={Topics.View}>
+            <Route path='edit/:topicId' component={Topics.Edit}/>
+          </Route>
+          <Route component={Topics.View}>
+            <Route path='delete/:topicId' component={Topics.Delete}/>
+          </Route>
+        </Route>
+
+        <Route path='difficultys' component={Difficulties.Main}>
+          <IndexRoute component={Difficulties.Index}/>
+          <Router path='add' component={Difficulties.Add}/>
+          <Route path='view/:difficultyId' component={Difficulties.View}/>
+          <Route component={Difficulties.View}>
+            <Route path='edit/:difficultyId' component={Difficulties.Edit}/>
+          </Route>
+          <Route component={Difficulties.View}>
+            <Route path='delete/:difficultyId' component={Difficulties.Delete}/>
+          </Route>
+        </Route>
+
       </Route>
     </Router>
   </Provider>

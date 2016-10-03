@@ -10,6 +10,7 @@ import problemRouter from './problems';
 import answerRouter from './answer';
 import teacherRouter from './teachers';
 import difficultyRouter from './difficulties';
+import topicsRouter from './topics';
 
 
 var router = express.Router();
@@ -70,6 +71,7 @@ router.use('/students', studentRouter);
 router.use('/problems', problemRouter);
 router.use('/answers', answerRouter);
 router.use('/teachers', teacherRouter.router);
-router.use('/difficulties', difficultyRouter.router);
+router.use('/difficultys', difficultyRouter.router);
+router.use('/topics', topicsRouter.router);
 
 export default router;

@@ -5,11 +5,15 @@ import session from './session';
 import navbar from './navbar';
 import teachers from './teachers';
 import problems from './problems';
+import topics from './topics';
+import difficultys from './difficulties';
 
 export default combineReducers({
   session,
   navbar,
   routing: routerReducer,
   teachers,
-  problems
+  problems,
+  topics,
+  difficultys
 });

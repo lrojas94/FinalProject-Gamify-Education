@@ -93,7 +93,7 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
       where: {
         id: req.params.id
       },
-      include: opts.view.include
+      include: opts.view ? opts.view.include : []
     })
     .then((data) => {
       res.json({

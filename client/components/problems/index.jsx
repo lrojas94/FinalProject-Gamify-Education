@@ -12,6 +12,7 @@ import { LinkColumn } from './../general/linkColumn';
 import { Route } from './../../models/route';
 import ProblemsForm from './form';
 import SolutionForm from './../solutions/form';
+import ImageComponent from './../general/imageComponent'
 
 const initialState = {
   problem: {
@@ -29,7 +30,7 @@ const generatedFeatures = componentGenerator({
   view: {
     title: 'Problem',
     elements: [
-      { title: '', properties: ['problem'], element: 'problems.view.problem.data'  },
+      { title: '', properties: [{template: ImageComponent, path: 'url', name: 'Problem'}], element: 'problems.view.problem.data'  },
       // { title: 'person', template: ShowAddress, element: 'problems.view.problem.data.address' },
       // { title: 'phone', template: ShowPhone, element: 'problems.view.problem.data.phone' }
     ]
