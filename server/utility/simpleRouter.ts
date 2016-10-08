@@ -289,6 +289,7 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
       });
     })
     .catch((err) => {
+      console.log(err);
       res.json({
         status: 1,
         message: 'It seems like something happened while trying to delete this address. Maybe it did not exist, but there\'s a chance it was our fault. Please check again later.',

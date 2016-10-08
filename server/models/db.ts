@@ -257,15 +257,55 @@ export function syncAll() {
     .then(() => Topic.sync({force})
     .then(() => Group.sync({force})
     .then(() => Teacher.sync({force})
-    .then(() => Student.sync({force})
-    .then(() => Difficulty.sync({force})
-    .then(() => Problem.sync({force})
-    .then(() => Solution.sync({force})
-    .then(() => Achievement.sync({force})
-    .then(() => Answer.sync({force})
-    .then(() => resolve())
+    .then(() => {
+      // Create admin user:
+        Teacher.findOne({
+          where: {
+            username: 'admin'
+          }
+        })
+        .then((teacher) => {
+          console.log(teacher);
+          if (!teacher) {
+            return DB.transaction((t) => {
+              return Person.create({
+                name: 'Admin',
+                lastName: 'Admin',
+                gender: 'm',
+                birthDay: new Date()
+              }, { transaction: t })
+              .then((person) => {
+                return Teacher.create({
+                  username: 'admin',
+                  password: 'admin',
+                  degree: 'Master in All',
+                  personId: null
+                }, {
+                  transaction: t
+                })
+                .then((teacher) => {
+                  return teacher['setPerson'](person, { transaction: t });
+                })
+                .catch((err) => { console.log(err); });
+
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+            });
+          }
+      });
+
+      Student.sync({force})
+      .then(() => Difficulty.sync({force})
+      .then(() => Problem.sync({force})
+      .then(() => Solution.sync({force})
+      .then(() => Achievement.sync({force})
+      .then(() => Answer.sync({force})
+      .then(() => resolve()))))));
+    }
       // These have no dependency, so they can be created all together.
-    ))))))))))
+    )))))
     .catch(e => reject(e));
   });
 

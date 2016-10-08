@@ -6,6 +6,7 @@ export interface Pojo {
   lastName: string;
   birthDay: Date;
   gender: string;
+  id?: number;
 }
 
 export interface Instance extends Sequelize.Instance<Pojo>, Pojo {};

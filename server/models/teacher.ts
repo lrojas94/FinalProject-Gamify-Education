@@ -25,7 +25,7 @@ export function define(sequelize: Sequelize.Sequelize): Model {
       allowNull: false,
       validate: {
         notEmpty: true,
-        len: [6, 256]
+        len: [5, 256]
       }
     },
     password: {
@@ -33,7 +33,7 @@ export function define(sequelize: Sequelize.Sequelize): Model {
       allowNull: false,
       validate: {
         notEmpty: true,
-        len: [6, 256]
+        len: [5, 256]
       }
     },
     degree: {
@@ -47,7 +47,7 @@ export function define(sequelize: Sequelize.Sequelize): Model {
         key: 'id',
       },
       unique: true,
-      allowNull: false
+      allowNull: true
     }
   }, {
     freezeTableName: true, // TeacherModel tableName will be the same as the model name
