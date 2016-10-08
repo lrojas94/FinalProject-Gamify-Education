@@ -100,7 +100,7 @@ class DifficultysMain extends Component {
           <div>
           <SectionTitle
             title={'Difficultys'}
-            background={'http://uconn-today.universityofconn.netdna-cdn.com/wp-content/uploads/2014/05/MaleMathDifficulty.jpg'}
+            background={'https://wallpaperscraft.com/image/climber_extreme_silhouette_climbing_rock_difficulties_sunset_79975_3840x2160.jpg'}
             customContent={''}
           />
           <br/>

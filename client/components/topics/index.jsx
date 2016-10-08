@@ -100,7 +100,7 @@ class TopicsMain extends Component {
           <div>
           <SectionTitle
             title={'Topics'}
-            background={'http://uconn-today.universityofconn.netdna-cdn.com/wp-content/uploads/2014/05/MaleMathTopic.jpg'}
+            background={'http://media.gettyimages.com/videos/hexagon-orange-background-loopable-video-id513620464?s=640x640'}
             customContent={''}
           />
           <br/>
