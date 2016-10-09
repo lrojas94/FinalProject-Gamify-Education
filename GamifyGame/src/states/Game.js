@@ -30,7 +30,10 @@ export default class Game extends Phaser.State {
             overFrame: 'red_boxCross.png',
             downFrame: 'red_boxCross.png',
             callback: () => {
-                this.state.start('Menu');
+                let response = confirm('Are you sure you want to quit? All progress in this session will be lost.');
+                if (response === true) {
+                    this.state.start('Menu');
+                }
             },
             callbackContext: this
         });
@@ -93,6 +96,7 @@ export default class Game extends Phaser.State {
                 },
                 callbackContext: this
             });
+            button.anchor.setTo(0.5);
 
             this.game.add.existing(button);
             this.solutionButtons.push(button);

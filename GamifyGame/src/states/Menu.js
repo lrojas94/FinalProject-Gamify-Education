@@ -18,11 +18,21 @@ export default class Menu extends Phaser.State {
     create() {
         let menu = this;
 
-        this.background = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
-        this.background.anchor.setTo(0.5, 0.5);
+        this.stage.backgroundColor = '#34495e';
+        // this.background = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
+        // this.background.anchor.setTo(0.5, 0.5);
 
-        this.title = this.add.text(this.game.world.centerX, this.game.world.centerY - 180, "Gamify Education");
-        this.title.anchor.setTo(0.5, 0.5);
+        this.menuTitle = this.add.sprite(this.game.world.centerX, this.game.world.centerY - 150, 'yellow_btn');
+        this.menuTitle.anchor.setTo(0.5);
+        this.menuTitle.scale.setTo(1.5);
+
+        this.menuPanel = this.add.sprite(0, 0, 'panel').alignTo(this.menuTitle, Phaser.BOTTOM_CENTER, -92, -15);
+        this.menuPanel.width = this.menuTitle.width;
+        this.menuPanel.height = 250;
+
+        let style = { fill: "#FFFFFF", align: "center" };
+        this.title = this.add.text(this.game.world.centerX, this.game.world.centerY - 150, "Gamify Education", style);
+        this.title.anchor.setTo(0.5);
 
         this.menuButtons = this.game.add.group();
 
@@ -30,7 +40,7 @@ export default class Menu extends Phaser.State {
             game: this.game,
             text: "Play",
             x: this.game.world.centerX,
-            y: this.game.world.centerY - 50,
+            y: this.game.world.centerY - 70,
             key: 'ui-green',
             upFrame: 'green_button05.png',
             outFrame: 'green_button02.png',
