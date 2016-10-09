@@ -48,6 +48,9 @@ export interface ISimpleRouterOpts {
       as?: string
     }[]
   };
+  options?: {
+    attributes?: string[]
+  };
 }
 
 export interface IUpsert {
@@ -87,7 +90,7 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
     });
   });
 
-  router.get('/:id', (req, res) => {
+  router.get('/:id(\\d+)', (req, res) => {
 
     model.findOne({
       where: {
@@ -297,6 +300,25 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
       });
     });
 
+  });
+
+  router.get('/options', (req, res) => {
+    queryHelpers.selectQuery({
+      req,
+      attributes: opts.options ? opts.options.attributes : [],
+      model: model
+    })
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({
+        status: 'error',
+        message: `There was an error querying for ${modelName} options`,
+        errorData: err
+      });
+    });
   });
 
 
