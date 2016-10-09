@@ -3,7 +3,7 @@ import axios from 'axios';
 import { centerGameObjects } from '../utils';
 import constants from '../constants';
 
-export default class Login extends Phaser.State {
+export default class Splash extends Phaser.State {
   init (problem) {
     this.keysToLoad = [];
   }
