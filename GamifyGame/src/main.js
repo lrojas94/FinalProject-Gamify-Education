@@ -6,6 +6,7 @@ import SplashState from './states/Splash';
 import GameState from './states/Game';
 import ProblemLoaderState from './states/ProblemLoader';
 import LoginState from './states/Login';
+import MenuState from './states/Menu';
 
 class Game extends Phaser.Game {
 
@@ -20,6 +21,7 @@ class Game extends Phaser.Game {
     this.state.add('ProblemLoader', ProblemLoaderState, false);
     this.state.add('Game', GameState, false);
     this.state.add('Login', LoginState, false);
+    this.state.add('Menu', MenuState, false);
 
 
     this.state.start('Boot');
