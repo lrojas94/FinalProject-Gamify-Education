@@ -14,7 +14,7 @@ var router = simpleRouter({
     model: Problem,
     url: '/problems',
     modelName: 'Problem',
-    attributes: ['id', 'problem', 'url'],
+    attributes: ['id', 'problem', 'url', 'topicId', 'difficultyId'],
     opts: {
       list: {
         model: Problem,

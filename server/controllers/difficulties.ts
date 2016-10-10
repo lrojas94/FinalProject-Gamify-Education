@@ -13,6 +13,9 @@ var router = simpleRouter({
         attributes: ['id', 'name', 'description'],
         url: '/difficulties',
         searchAttributes: ['name']
+      },
+      options: {
+        attributes: ['name']
       }
     }
 });

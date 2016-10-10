@@ -395,7 +395,6 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
               return item.item; //ignore id here.
             });
 
-            console.log(items);
 
             multiforms[val.statePath] = items;
           });
@@ -410,8 +409,6 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
           })
           .omitBy(_.isEmpty)
           .value();
-
-          console.log(data);
 
           this.setState(_.assign({}, this.props.initialState || opts.initialState))
           this.props.addUpdateItem(data);
@@ -709,13 +706,9 @@ var generateUpdate = ({ displayName, pluralDisplayName, update, actions, url }) 
     var view = props[pluralDisplayName].view[displayName];
     _.forEach(update.viewAttributesToState, (attr) => {
       if(view && view.data) {
-        console.log(initialState);
         initialState[attr.name] = attr.path ? view.data[attr.path] : view.data;
-        console.log(initialState);
       }
     })
-
-    // console.log(initialState);
 
     return {
       session: props.session.session,

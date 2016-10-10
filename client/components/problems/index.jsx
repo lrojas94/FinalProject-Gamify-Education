@@ -18,9 +18,11 @@ const initialState = {
   problem: {
     id: '',
     problem: '',
+    difficultyId: '',
+    topicId: ''
   },
   solutions: {
-    // tbd
+    // Are a thing of their own kind xD...
   }
 };
 

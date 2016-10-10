@@ -33,24 +33,24 @@ export class AutoFillSelectBox extends Component {
     }
 
     itemSelected(e) {
-      console.log(e.target);
       this.setState({ selected: { id: e.target.value, text: e.target.dataset.text }});
     }
 
     render() {
       // search box:
       return (
-        <div>
+        <div className='form-group'>
           {this.props.searchTitle ? (<label htmlFor={this.props.searchId || 'search-selectable'}>{this.props.searchTitle || 'Search'}</label>) : ""}
           <input id={this.props.searchId || 'search-selectable'} onChange={this.searchChange.bind(this)}
           type='text' className='form-control search' placeholder='Type in here to filter information...'></input>
           <br/>
           <select size={this.props.size || 5 }
             className='form-control' name={this.props.name||'selectableOption'}
-            value={this.props.defaultValue}
+            value={this.props.selected ? this.props.selected.id : this.props.defaultValue}
             onChange={this.props.handleFormChange}
+            required = {this.props.required || false}
             >
-            {this.state.selected ? (<option value={this.state.selected.id}>{this.state.selected.text}</option>) : ''}
+            {this.state.selected ? (<option value={this.state.selected.id}>Selected: {this.state.selected.text}</option>) : ''}
             {this.renderOptions()}
           </select>
 
