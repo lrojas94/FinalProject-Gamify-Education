@@ -37,17 +37,13 @@ import MathTextField from './../general/mathTextField';
 class ProblemForm extends Component {
     constructor(props) {
       super(props);
+      console.log(props);
 
     };
 
     componentWillMount(){
       this.props.fetchDifficultyOptions();
       this.props.fetchTopicOptions();
-    }
-
-    componentWillReceiveProps(props) {
-      console.log('-----------------------');
-      console.log(this.props);
     }
 
     render() {

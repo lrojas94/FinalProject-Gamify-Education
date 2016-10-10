@@ -11,10 +11,35 @@ import * as _ from 'lodash'
 export class AutoFillSelectBox extends Component {
     constructor(props) {
       super(props);
+      this.selectedWasConverted = false;
+
       this.state = {
-        selected: null || this.props.selected
+        selected: null
       }
     };
+
+    setSelected(props) {
+      if(!this.selectedWasConverted && this.props.selected && !_.isObject(this.state.selected) && props.items) {
+        var item = _.filter(props.items, (item) => {
+          return item.id === this.props.selected;
+        });
+        console.log(item);
+        this.setState({
+          selected: item[0]
+        })
+        if(item[0]) {
+          this.selectedWasConverted = true;
+        }
+      }
+    }
+
+    componentWillMount() {
+      this.setSelected(this.props);
+    }
+
+    componentWillReceiveProps(props) {
+      this.setSelected(props);
+    }
 
     componentWillMount() {
       this.findResults = _.debounce((query) => {
@@ -46,7 +71,7 @@ export class AutoFillSelectBox extends Component {
           <br/>
           <select size={this.props.size || 5 }
             className='form-control' name={this.props.name||'selectableOption'}
-            value={this.props.selected ? this.props.selected.id : this.props.defaultValue}
+            value={this.state.selected ? this.state.selected.id : this.props.defaultValue}
             onChange={this.props.handleFormChange}
             required = {this.props.required || false}
             >
