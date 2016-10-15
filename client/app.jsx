@@ -17,6 +17,8 @@ import { LoginModule as Login } from './components/home/login';
 import Teachers from './components/teachers/index';
 import Problems from './components/problems/index';
 import Topics from './components/topics/index';
+import Schools from './components/schools/index';
+import Groups from './components/groups/index';
 import Difficulties from './components/difficulties/index';
 const routerMiddlewareInstance = routerMiddleware(browserHistory)
 
@@ -67,6 +69,28 @@ ReactDOM.render((
           </Route>
           <Route component={Topics.View}>
             <Route path='delete/:topicId' component={Topics.Delete}/>
+          </Route>
+        </Route>
+        <Route path='schools' component={Schools.Main}>
+          <IndexRoute component={Schools.Index}/>
+          <Router path='add' component={Schools.Add}/>
+          <Route path='view/:schoolId' component={Schools.View}/>
+          <Route component={Schools.View}>
+            <Route path='edit/:schoolId' component={Schools.Edit}/>
+          </Route>
+          <Route component={Schools.View}>
+            <Route path='delete/:topicId' component={Schools.Delete}/>
+          </Route>
+        </Route>
+        <Route path='groups' component={Groups.Main}>
+          <IndexRoute component={Groups.Index}/>
+          <Router path='add' component={Groups.Add}/>
+          <Route path='view/:groupId' component={Groups.View}/>
+          <Route component={Groups.View}>
+            <Route path='edit/:groupId' component={Groups.Edit}/>
+          </Route>
+          <Route component={Groups.View}>
+            <Route path='delete/:topicId' component={Groups.Delete}/>
           </Route>
         </Route>
 

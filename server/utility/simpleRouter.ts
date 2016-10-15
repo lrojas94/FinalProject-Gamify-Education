@@ -51,6 +51,13 @@ export interface ISimpleRouterOpts {
   options?: {
     attributes?: string[]
   };
+  middlewares?: {
+    list?: (req: any, res: any, next: Function) => any;
+    get?: (req: any, res: any, next: Function) => any;
+    create?: (req: any, res: any, next: Function) => any;
+    update?: (req: any, res: any, next: Function) => any;
+    delete?: (req: any, res: any, next: Function) => any;
+  };
 }
 
 export interface IUpsert {
@@ -62,9 +69,13 @@ export interface IUpsert {
 
 export default ({ model, url, modelName, resultObjectName, attributes, opts }: ISimpleRouter ) => {
   resultObjectName = resultObjectName || _.camelCase(modelName);
+  opts.middlewares = opts.middlewares || {};
 
   var router = express.Router();
 
+  if (opts.middlewares.list) {
+    router.use('/', opts.middlewares.list);
+  }
 
   router.get('/', (req: any, res: any) => {
 
@@ -90,6 +101,10 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
     });
   });
 
+
+  if (opts.middlewares.get) {
+    router.use('/:id(\\d+)', opts.middlewares.get);
+  }
   router.get('/:id(\\d+)', (req, res) => {
 
     model.findOne({
@@ -221,7 +236,9 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
     });
   };
 
-
+  if (opts.middlewares.create) {
+    router.use('/', opts.middlewares.create);
+  }
   router.post('/', (req: any, res) => {
     upsertModel({
       req,
@@ -246,7 +263,9 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
     });
 
   });
-
+  if (opts.middlewares.update) {
+    router.use('/:id', opts.middlewares.update);
+  }
   router.put('/:id', (req, res) => {
 
     upsertModel({
@@ -271,6 +290,9 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
     });
   });
 
+  if (opts.middlewares.delete) {
+    router.use('/:id', opts.middlewares.delete);
+  }
   router.delete('/:id', (req, res) => {
     if (req.params.id === 'undefined' || req.params.id === '') {
       res.json({

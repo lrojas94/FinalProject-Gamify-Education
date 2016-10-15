@@ -37,6 +37,9 @@ var router = simpleRouter({
           }
         ],
         onUpsert: null
+      },
+      options: {
+        attributes: ['username']
       }
     }
 });
