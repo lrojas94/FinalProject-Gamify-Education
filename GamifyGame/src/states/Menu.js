@@ -30,7 +30,8 @@ export default class Menu extends Phaser.State {
         this.title = this.add.text(this.game.world.centerX, this.game.world.centerY - 150, "Gamify Education", style);
         this.title.anchor.setTo(0.5);
 
-        this.menuPanel = this.add.sprite(0, 0, 'panel');
+        this.menuPanel = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'panel');
+        this.menuPanel.anchor.setTo(0.5);
         this.menuPanel.width = this.menuTitle.width;
         this.menuPanel.height = 250;
 

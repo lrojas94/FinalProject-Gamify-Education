@@ -15,19 +15,33 @@ export default class Login extends Phaser.State {
      * passwordField => TextField for password input.
      *
      */
+     preload() {
+         this.load.image('rect-panel', './assets/images/grey_rect_panel.png');
+         this.load.image('title-container', './assets/images/yellow_title_container.png');
+     }
+
     create() {
         this.game.plugins.add(Fabrique.Plugins.InputField);
         let login = this;
 
-        this.background = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
-        this.background.anchor.setTo(0.5);
+        this.stage.backgroundColor = '#34495e';
+        // this.background = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
+        // this.background.anchor.setTo(0.5, 0.5);
 
-        this.title = this.add.text(this.game.world.centerX, this.game.world.centerY - 180, "Gamify Education");
+        this.menuTitle = this.add.sprite(this.game.world.centerX, this.game.world.centerY - 150, 'title-container');
+        this.menuTitle.anchor.setTo(0.5);
+        this.menuTitle.width = 400;
+        this.menuTitle.height = 50;
+
+        let style = { fill: "#FFFFFF", align: "center" };
+        this.title = this.add.text(this.game.world.centerX, this.game.world.centerY - 150, "Gamify Education", style);
         this.title.anchor.setTo(0.5);
-        this.loginMsg = this.add.text(this.game.world.centerX, this.game.world.centerY - 140, "", {
-            fill: 'red',
-        });
-        this.loginMsg.anchor.setTo(0.5);
+
+        this.menuPanel = this.add.sprite(this.game.world.centerX, this.game.world.centerY - 30, 'rect-panel');
+        this.menuPanel.anchor.setTo(0.5);
+        this.menuPanel.width = this.menuTitle.width;
+        this.menuPanel.height = 200;
+
         var inputWidth = 300;
         var inputHeight = 20;
 
@@ -36,15 +50,16 @@ export default class Login extends Phaser.State {
             padding: 8,
             width: inputWidth,
             borderRadius: 5,
-            placeHolder: 'Username',
-            // type: Fabrique.InputType.password
+            borderWidth: 2,
+            placeHolder: 'Username'
         });
 
-        this.passwordField = this.add.inputField(this.game.world.centerX - (inputWidth + 16) / 2, this.game.world.centerY - 60, {
+        this.passwordField = this.add.inputField(this.game.world.centerX - (inputWidth + 16) / 2, this.game.world.centerY - 55, {
             height: inputHeight,
             padding: 8,
             width: inputWidth,
             borderRadius: 5,
+            borderWidth: 2,
             placeHolder: 'Password',
             type: Fabrique.InputType.password
         });
