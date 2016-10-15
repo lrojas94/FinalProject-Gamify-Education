@@ -11,6 +11,8 @@ import answerRouter from './answer';
 import teacherRouter from './teachers';
 import difficultyRouter from './difficulties';
 import topicsRouter from './topics';
+import schoolsRouter from './schools';
+import groupsRouter from './groups';
 
 
 var router = express.Router();
@@ -73,5 +75,7 @@ router.use('/answers', answerRouter);
 router.use('/teachers', teacherRouter.router);
 router.use('/difficultys', difficultyRouter.router);
 router.use('/topics', topicsRouter.router);
+router.use('/groups', groupsRouter.router);
+router.use('/schools', schoolsRouter.router);
 
 export default router;

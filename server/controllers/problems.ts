@@ -9,12 +9,28 @@ import { ResponseMessage, QueryStatus } from './../constants';
 import simpleRouter from './../utility/simpleRouter';
 import solutionRouter from './solutions';
 
+var assignSchoolIdAndTeacherId = (req, res, next) => {
+  var teacher = req.user;
+
+  if (req.body.problem) {
+    req.body.problem.teacherId = teacher.id;
+  }
+  else {
+    req.body.teacherId = teacher.id;
+  }
+
+  console.log('------------------------------- PRE CREATE -------------------------');
+  console.log(req.body);
+  console.log(req.teacherId);
+  console.log('------------------------------- PRE CREATE -------------------------');
+  next();
+};
 
 var router = simpleRouter({
     model: Problem,
     url: '/problems',
     modelName: 'Problem',
-    attributes: ['id', 'problem', 'url', 'topicId', 'difficultyId'],
+    attributes: ['id', 'problem', 'url','groupId', 'teacherId', 'topicId', 'difficultyId'],
     opts: {
       list: {
         model: Problem,
@@ -66,8 +82,39 @@ var router = simpleRouter({
           bodyPath: 'solutions',
           associationName: 'Solution',
         }]
+      },
+      middlewares: {
+        create: assignSchoolIdAndTeacherId,
+        list: (req, res, next) => {
+          var teacher = req.user;
+          teacher.getGroups()
+          .then((groups: any) => {
+            var groupIds = _.map(groups, (group) => {
+              return group['id'];
+            });
+
+            req.where = {
+              $or: [{
+                teacherId: teacher.id
+              }, {
+                groupId: {
+                  $in: groupIds
+                }
+              }]
+            };
+
+            next();
+          })
+          .catch((err) => {
+            console.log(err);
+            return res.json({
+              status: 1,
+              message: `There's been an error looking for teacher groups.`
+            });
+          });
+        }
       }
-    }
+    },
 });
 
 

@@ -6,17 +6,33 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Route } from './../../models/route';
 import MathTextField from './../general/mathTextField';
+import groupActions from './../../actions/groups';
+import AutoFillSelectBox from './../general/autoFillSelectBox';
 
 
-/**
- * This method does not bother createing the form. Instead, it will return the fields so that they can be
- * added anywhere they seem to be needed.
- */
+function mapStateToProps(props) {
+  return {
+    groups: {
+      options: props.groups.options
+    }
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchGroupOptions: (search) => dispatch(groupActions.fetchOptions(search))
+  };
+}
+
+
 class TopicForm extends Component {
     constructor(props) {
       super(props);
-
     };
+
+    componentWillMount() {
+      this.props.fetchGroupOptions();
+    }
 
     render() {
       return (
@@ -41,9 +57,22 @@ class TopicForm extends Component {
               handleFormChange={this.props.handleFormChange} />
             </div>
           </div>
+          <div className='col-xs-12'>
+            <div className="form-group">
+              <AutoFillSelectBox
+                searchTitle={'Group this topic belongs to*'}
+                fetch={this.props.fetchGroupOptions}
+                handleFormChange={this.props.handleFormChange}
+                name={'groupId'}
+                selected={this.props.groupId}
+                items={this.props.groups.options.data}
+                required={true}
+                />
+            </div>
+          </div>
         </div>
       );
     }
 };
 
-export default TopicForm;
+export default connect(mapStateToProps, mapDispatchToProps)(TopicForm);

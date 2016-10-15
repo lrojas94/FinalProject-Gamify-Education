@@ -7,75 +7,79 @@ import { push } from 'react-router-redux';
 import { login, logout } from './../../actions/session';
 import SectionTitle from './../general/sectionTitle';
 import componentGenerator from './../../helpers/generateComponents';
-import topicActions from './../../actions/topics';
+import groupActions from './../../actions/groups';
 import { LinkColumn } from './../general/linkColumn';
 import { Route } from './../../models/route';
-import TopicsForm from './form';
+import GroupForm from './form';
 
 const initialState = {
-  topic: {
+  group: {
     id: '',
-    name: '',
-    description: '',
-    example: '',
-    groupId: ''
+    year: '',
+    grade: '',
+    schoolId: ''
   }
 };
 
 const generatedFeatures = componentGenerator({
-  displayName: 'topic',
-  pluralDisplayName: 'topics',
+  displayName: 'group',
+  pluralDisplayName: 'groups',
   view: {
-    title: 'Topic',
+    title: 'Group',
     elements: [
-      { title: '', properties: ['name', 'description', 'example'], element: 'topics.view.topic.data' },
+      { title: '', properties: ['grade', 'year'], element: 'groups.view.group.data' },
+      // { title: 'School', template: SchoolView, element: 'groups.view.group.data.school' },
     ]
   },
   list: {
     metadata: [
       {
-        columnName: 'name',
-        displayName: 'Name',
+        columnName: 'id',
+        displayName: 'Identifier',
         customComponent: LinkColumn.bind(this),
         session: null,
-        route: new Route('/topics/view/<%= data %>', 'view'),
+        route: new Route('/groups/view/<%= data %>', 'view'),
         path: 'id',
       },
       {
-        columnName: 'description',
-        displayName: 'Description'
-      }
+        columnName: 'year',
+        displayName: 'Year'
+      },
+      {
+        columnName: 'grade',
+        displayName: 'Grade'
+      },
     ],
-    queryKeys: ['name', 'description'],
-    columns: ['name', 'description']
+    queryKeys: ['year', 'grade'],
+    columns: ['year', 'grade']
   },
   createOpts: {
     forms: [
       {
-        name: 'topic',
-        component: TopicsForm,
-        stateName: 'topic'
+        name: 'group',
+        component: GroupForm,
+        stateName: 'group'
       }
     ],
     initialState,
-    pickAttributes: ['topic']
+    pickAttributes: ['group']
   },
   update: {
     initialState,
     forms: [
       {
-        name: 'topic',
-        component: TopicsForm,
-        stateName: 'topic'
+        name: 'group',
+        component: GroupForm,
+        stateName: 'group'
       }
     ],
-    pickAttributes: ['topic'],
+    pickAttributes: ['group'],
     viewAttributesToState: [
-      { name: 'topic' }, //Will assume path as root.
+      { name: 'group' }, //Will assume path as root.
     ]
   },
-  actions: topicActions,
-  url: 'topics'
+  actions: groupActions,
+  url: 'groups'
 });
 
 function mapStateToProps(props) {
@@ -89,7 +93,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-class TopicsMain extends Component {
+class GroupMain extends Component {
     constructor(props) {
       super(props);
     };
@@ -98,7 +102,7 @@ class TopicsMain extends Component {
         return (
           <div>
           <SectionTitle
-            title={'Topics'}
+            title={'Group'}
             background={'http://media.gettyimages.com/videos/hexagon-orange-background-loopable-video-id513620464?s=640x640'}
             customContent={''}
           />
@@ -110,7 +114,7 @@ class TopicsMain extends Component {
 };
 
 const module = {
-  Main: connect(mapStateToProps, mapDispatchToProps)(TopicsMain),
+  Main: connect(mapStateToProps, mapDispatchToProps)(GroupMain),
   Index: generatedFeatures.list,
   View: generatedFeatures.view,
   Edit: generatedFeatures.update,

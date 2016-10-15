@@ -6,6 +6,8 @@ import navbar from './navbar';
 import teachers from './teachers';
 import problems from './problems';
 import topics from './topics';
+import schools from './schools';
+import groups from './groups';
 import difficultys from './difficulties';
 
 export default combineReducers({
@@ -15,5 +17,7 @@ export default combineReducers({
   teachers,
   problems,
   topics,
+  schools,
+  groups,
   difficultys
 });

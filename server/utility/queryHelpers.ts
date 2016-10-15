@@ -135,7 +135,6 @@ var queryHelper = {
           };
         });
 
-        console.log(data);
 
         resolve({
           status: 0,
@@ -181,6 +180,7 @@ var queryHelper = {
     console.log(path);
 
     var upsert = (data) => {
+      console.log(data);
       return new Promise((resolve, reject) => {
         if (data.id) {
           // this is an update
@@ -228,14 +228,14 @@ var queryHelper = {
 
     if (_.isArray(data)) {
       var promises = [];
-      console.log('-------------------- IMPORTANT ---------------- MULTIPLE ITEMS --------------------');
+      // console.log('-------------------- IMPORTANT ---------------- MULTIPLE ITEMS --------------------');
       _.map(data, (itemData) => {
           promises.push(upsert(itemData));
       });
       return Promise.all(promises);
     }
     else if (data && !_.isEmpty(data)) {
-      console.log('-------------------- IMPORTANT ---------------- SINGLE ITEM --------------------');
+      // console.log('-------------------- IMPORTANT ---------------- SINGLE ITEM --------------------');
       return upsert(data);
     }
     else return new Promise((resolve, reject) => { reject(new Error('No data was provided.')); }) ;

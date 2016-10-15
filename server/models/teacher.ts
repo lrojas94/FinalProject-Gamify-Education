@@ -34,7 +34,8 @@ export function define(sequelize: Sequelize.Sequelize): Model {
       validate: {
         notEmpty: true,
         len: [5, 256]
-      }
+      },
+      defaultValue: 'default'
     },
     degree: {
       type: Sequelize.STRING,

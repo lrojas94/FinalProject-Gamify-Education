@@ -15,7 +15,7 @@ var router = simpleRouter({
     model: Teacher,
     url: '/teachers',
     modelName: 'Teacher',
-    attributes: ['id', 'username', 'password', 'degree', 'personId'],
+    attributes: ['id', 'username', 'password', 'degree', 'personId', 'schoolId'],
     opts: {
       list: {
         model: Teacher,
@@ -37,6 +37,9 @@ var router = simpleRouter({
           }
         ],
         onUpsert: null
+      },
+      options: {
+        attributes: ['username']
       }
     }
 });

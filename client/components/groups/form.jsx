@@ -7,33 +7,37 @@ import { push } from 'react-router-redux';
 import { Route } from './../../models/route';
 import AutoFillSelectBox from './../general/autoFillSelectBox';
 import schoolActions from './../../actions/schools';
+import difficultyActions from './../../actions/difficulties';
+import MathTextField from './../general/mathTextField';
+
 
 /**
  * This method does not bother createing the form. Instead, it will return the fields so that they can be
  * added anywhere they seem to be needed.
  */
+ function mapStateToProps(props) {
+   return {
+     schools: {
+       options: props.schools.options
+     }
+   };
+ }
+
+ function mapDispatchToProps(dispatch) {
+   return {
+     fetchSchoolOptions: (search) => dispatch(schoolActions.fetchOptions(search)),
+   };
+ }
 
 
-function mapStateToProps(props) {
-  return {
-    schools: {
-      options: props.schools.options
-    }
-  }
-};
-
-function mapDispatchToProps(dispatch) {
-  return {
-    fetchSchoolOptions: (search) => dispatch(schoolActions.fetchOptions(search))
-  }
-};
-
-class TeacherForm extends Component {
+class GroupForm extends Component {
     constructor(props) {
       super(props);
+      console.log(props);
+
     };
 
-    componentWillMount() {
+    componentWillMount(){
       this.props.fetchSchoolOptions();
     }
 
@@ -43,20 +47,19 @@ class TeacherForm extends Component {
           <div className='col-xs-12'>
             <div className="form-group">
               { this.props.id ? (<input type='hidden' name='id' value={this.props.id}/>) : '' }
-              <label htmlFor="input-teacher-username" className="control-label">Username *</label>
-              <input type="text" className="form-control" id="input-teacher-username" onChange={this.props.handleFormChange}
-              value={this.props.username} name='username' required/>
+              <label htmlFor="input-group-year" className="control-label">Group Year *</label>
+              <input type="number" className="form-control" id="input-group-year" onChange={this.props.handleFormChange}
+              value={this.props.year} name='year' required/>
             </div>
-            <div className='form-group'>
-              <label htmlFor="input-teacher-degree" className="control-label">Degree *</label>
-              <input type="text" className="form-control" id="input-teacher-degree" onChange={this.props.handleFormChange}
-              value={this.props.degree} name='degree' required/>
+            <div className="form-group">
+              { this.props.id ? (<input type='hidden' name='id' value={this.props.id}/>) : '' }
+              <label htmlFor="input-group-grade" className="control-label">Group Grade *</label>
+              <input type="text" className="form-control" placeholder="8th, 9th, etc..." id="input-group-grade" onChange={this.props.handleFormChange}
+              value={this.props.grade} name='grade' required/>
             </div>
-          </div>
-          <div className='col-xs-12'>
             <div className="form-group">
               <AutoFillSelectBox
-                searchTitle={'School this teacher belongs to *'}
+                searchTitle={'School *'}
                 fetch={this.props.fetchSchoolOptions}
                 handleFormChange={this.props.handleFormChange}
                 name={'schoolId'}
@@ -70,5 +73,4 @@ class TeacherForm extends Component {
       );
     }
 };
-
-export default connect(mapStateToProps, mapDispatchToProps)(TeacherForm);
+export default connect(mapStateToProps, mapDispatchToProps)(GroupForm);

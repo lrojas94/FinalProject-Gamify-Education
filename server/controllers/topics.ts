@@ -6,7 +6,7 @@ var router = simpleRouter({
     model: Topic,
     url: '/topics',
     modelName: 'Topic',
-    attributes: ['id', 'name', 'description', 'example'],
+    attributes: ['id', 'name', 'description', 'example', 'groupId'],
     opts: {
       list: {
         model: Topic,

@@ -184,7 +184,7 @@ function createSolutionRelations() {
 function createGroupRelations() {
   Group.hasMany(Student, {
     as: 'students',
-    foreignKey: 'studentId',
+    foreignKey: 'groupId',
     constraints: false
   });
 
@@ -195,6 +195,19 @@ function createGroupRelations() {
   Group.belongsTo(Teacher, {
     as: 'teacher'
   });
+
+  Group.hasMany(Topic, {
+    as: 'topics',
+    foreignKey: 'groupId',
+    constraints: false
+  });
+
+  Group.hasMany(Difficulty, {
+    as: 'difficulties',
+    foreignKey: 'groupId',
+    constraints: false
+  });
+
 }
 
 function createSchoolRelations() {
@@ -229,6 +242,10 @@ function createTopicRelations() {
     foreignKey: 'topicId',
     constraints: false
   });
+
+  Topic.belongsTo(Group, {
+    as: 'group'
+  });
 }
 
 function createAchievementRelations() {
@@ -242,6 +259,10 @@ function createDifficultyRelations() {
     as: 'problems',
     foreignKey: 'difficultyId',
     constraints: false
+  });
+
+  Difficulty.belongsTo(Group, {
+    as: 'group',
   });
 }
 

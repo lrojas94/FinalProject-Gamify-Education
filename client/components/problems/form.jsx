@@ -7,6 +7,7 @@ import { push } from 'react-router-redux';
 import { Route } from './../../models/route';
 import AutoFillSelectBox from './../general/autoFillSelectBox'
 import topicActions from './../../actions/topics';
+import groupActions from './../../actions/groups';
 import difficultyActions from './../../actions/difficulties';
 import MathTextField from './../general/mathTextField';
 
@@ -22,6 +23,9 @@ import MathTextField from './../general/mathTextField';
      },
      topics: {
        options: props.topics.options
+     },
+     groups: {
+       options: props.groups.options
      }
    };
  }
@@ -30,6 +34,7 @@ import MathTextField from './../general/mathTextField';
    return {
      fetchDifficultyOptions: (search) => dispatch(difficultyActions.fetchOptions(search)),
      fetchTopicOptions: (search) => dispatch(topicActions.fetchOptions(search)),
+     fetchGroupOptions: (search) => dispatch(groupActions.fetchOptions(search)),
    };
  }
 
@@ -37,18 +42,31 @@ import MathTextField from './../general/mathTextField';
 class ProblemForm extends Component {
     constructor(props) {
       super(props);
-      console.log(props);
 
     };
 
     componentWillMount(){
       this.props.fetchDifficultyOptions();
       this.props.fetchTopicOptions();
+      this.props.fetchGroupOptions();
     }
 
     render() {
       return (
         <div className='row'>
+          <div className='col-xs-12'>
+            <div className="form-group">
+            <AutoFillSelectBox
+              searchTitle={'Group *'}
+              fetch={this.props.fetchGroupOptions}
+              handleFormChange={this.props.handleFormChange}
+              name={'groupId'}
+              selected={this.props.groupId}
+              items={this.props.groups.options.data}
+              required={true}
+              />
+            </div>
+          </div>
           <div className='col-xs-12 col-sm-6'>
             <div className="form-group">
             <AutoFillSelectBox

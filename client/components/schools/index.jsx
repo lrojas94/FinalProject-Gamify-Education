@@ -7,28 +7,30 @@ import { push } from 'react-router-redux';
 import { login, logout } from './../../actions/session';
 import SectionTitle from './../general/sectionTitle';
 import componentGenerator from './../../helpers/generateComponents';
-import topicActions from './../../actions/topics';
+import schoolActions from './../../actions/schools';
 import { LinkColumn } from './../general/linkColumn';
 import { Route } from './../../models/route';
-import TopicsForm from './form';
+import SchoolForm from './form';
 
 const initialState = {
-  topic: {
+  school: {
     id: '',
     name: '',
-    description: '',
-    example: '',
-    groupId: ''
+    address: '',
+    telephone: '',
+    website: '',
+    // TO ADD:
+    // schoolId / schoolId
   }
 };
 
 const generatedFeatures = componentGenerator({
-  displayName: 'topic',
-  pluralDisplayName: 'topics',
+  displayName: 'school',
+  pluralDisplayName: 'schools',
   view: {
-    title: 'Topic',
+    title: 'School',
     elements: [
-      { title: '', properties: ['name', 'description', 'example'], element: 'topics.view.topic.data' },
+      { title: '', properties: ['name', 'address', 'telephone', 'website'], element: 'schools.view.school.data' },
     ]
   },
   list: {
@@ -38,44 +40,44 @@ const generatedFeatures = componentGenerator({
         displayName: 'Name',
         customComponent: LinkColumn.bind(this),
         session: null,
-        route: new Route('/topics/view/<%= data %>', 'view'),
+        route: new Route('/schools/view/<%= data %>', 'view'),
         path: 'id',
       },
       {
-        columnName: 'description',
-        displayName: 'Description'
+        columnName: 'website',
+        displayName: 'Website'
       }
     ],
-    queryKeys: ['name', 'description'],
-    columns: ['name', 'description']
+    queryKeys: ['name', 'website'],
+    columns: ['name', 'website']
   },
   createOpts: {
     forms: [
       {
-        name: 'topic',
-        component: TopicsForm,
-        stateName: 'topic'
+        name: 'school',
+        component: SchoolForm,
+        stateName: 'school'
       }
     ],
     initialState,
-    pickAttributes: ['topic']
+    pickAttributes: ['school']
   },
   update: {
     initialState,
     forms: [
       {
-        name: 'topic',
-        component: TopicsForm,
-        stateName: 'topic'
+        name: 'school',
+        component: SchoolForm,
+        stateName: 'school'
       }
     ],
-    pickAttributes: ['topic'],
+    pickAttributes: ['school'],
     viewAttributesToState: [
-      { name: 'topic' }, //Will assume path as root.
+      { name: 'school' }, //Will assume path as root.
     ]
   },
-  actions: topicActions,
-  url: 'topics'
+  actions: schoolActions,
+  url: 'schools'
 });
 
 function mapStateToProps(props) {
@@ -89,7 +91,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-class TopicsMain extends Component {
+class SchoolMain extends Component {
     constructor(props) {
       super(props);
     };
@@ -98,7 +100,7 @@ class TopicsMain extends Component {
         return (
           <div>
           <SectionTitle
-            title={'Topics'}
+            title={'School'}
             background={'http://media.gettyimages.com/videos/hexagon-orange-background-loopable-video-id513620464?s=640x640'}
             customContent={''}
           />
@@ -108,9 +110,8 @@ class TopicsMain extends Component {
         );
     }
 };
-
 const module = {
-  Main: connect(mapStateToProps, mapDispatchToProps)(TopicsMain),
+  Main: connect(mapStateToProps, mapDispatchToProps)(SchoolMain),
   Index: generatedFeatures.list,
   View: generatedFeatures.view,
   Edit: generatedFeatures.update,

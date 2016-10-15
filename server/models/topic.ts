@@ -1,11 +1,13 @@
 import * as Sequelize from 'sequelize';
 import * as Problem from './problem';
+import * as Group from './group';
 
 export interface Pojo {
   name: string;
   description: string;
   example: string;
-  problems: Problem.Pojo[];
+  problems?: Problem.Pojo[];
+  group?: Group.Pojo;
 }
 
 export interface Instance extends Sequelize.Instance<Pojo>, Pojo {};
@@ -28,7 +30,7 @@ export function define(sequelize: Sequelize.Sequelize): Model {
     example: {
       type: Sequelize.STRING,
       allowNull: false
-    }
+    },
   }, {
     freezeTableName: true, // Model tableName will be the same as the model name
   });

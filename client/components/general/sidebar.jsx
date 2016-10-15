@@ -65,6 +65,16 @@ class NavBarContent extends Component {
                 Topics
               </div>
             </Link>
+            <Link to='/groups'>
+              <div className='nav-link-container'>
+                Groups
+              </div>
+            </Link>
+            <Link to='/schools'>
+              <div className='nav-link-container'>
+                Schools
+              </div>
+            </Link>
             <Link to='/difficultys'>
               <div className='nav-link-container'>
                 Difficulties
