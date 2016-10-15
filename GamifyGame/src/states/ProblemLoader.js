@@ -5,7 +5,7 @@ import constants from '../constants';
 
 var stateManager;
 
-export default class Splash extends Phaser.State {
+export default class ProblemLoader extends Phaser.State {
   init (problem) {
 
     this.filesToLoad = {};

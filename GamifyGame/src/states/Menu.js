@@ -26,7 +26,10 @@ export default class Menu extends Phaser.State {
         this.menuTitle.anchor.setTo(0.5);
         this.menuTitle.scale.setTo(1.5);
 
-        let style = { fill: "#FFFFFF", align: "center" };
+        let style = {
+            fill: "#FFFFFF",
+            align: "center"
+        };
         this.title = this.add.text(this.game.world.centerX, this.game.world.centerY - 150, "Gamify Education", style);
         this.title.anchor.setTo(0.5);
 
@@ -48,7 +51,7 @@ export default class Menu extends Phaser.State {
             overFrame: 'green_button04.png',
             downFrame: 'green_button04.png',
             callback: () => {
-                menu.state.start('ProblemLoader');
+                menu.state.start('TopicLoader');
             },
             callbackContext: this
         });
@@ -95,5 +98,4 @@ export default class Menu extends Phaser.State {
 
         this.game.add.existing(this.menuButtons);
     }
-
 }
