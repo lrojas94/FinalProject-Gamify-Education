@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Route } from './../../models/route';
-import AutoFillSelectBox from './../general/autoFillSelectBox'
+import AutoFillSelectBox from './../general/autoFillSelectBox';
 import schoolActions from './../../actions/schools';
 import difficultyActions from './../../actions/difficulties';
 import MathTextField from './../general/mathTextField';

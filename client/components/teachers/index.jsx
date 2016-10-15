@@ -19,9 +19,10 @@ const initialState = {
     id: '',
     username: '',
     degree: '',
+    schoolId: '',
     password: '',
     password_2: '',
-    personId: ''
+    personId: '',
   },
   person: {
     id: '',

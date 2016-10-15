@@ -5,17 +5,37 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Route } from './../../models/route';
-
+import AutoFillSelectBox from './../general/autoFillSelectBox';
+import schoolActions from './../../actions/schools';
 
 /**
  * This method does not bother createing the form. Instead, it will return the fields so that they can be
  * added anywhere they seem to be needed.
  */
+
+
+function mapStateToProps(props) {
+  return {
+    schools: {
+      options: props.schools.options
+    }
+  }
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchSchoolOptions: (search) => dispatch(schoolActions.fetchOptions(search))
+  }
+};
+
 class TeacherForm extends Component {
     constructor(props) {
       super(props);
-
     };
+
+    componentWillMount() {
+      this.props.fetchSchoolOptions();
+    }
 
     render() {
       return (
@@ -23,13 +43,27 @@ class TeacherForm extends Component {
           <div className='col-xs-12'>
             <div className="form-group">
               { this.props.id ? (<input type='hidden' name='id' value={this.props.id}/>) : '' }
-              <label htmlFor="input-teacher-username" className="control-label">Nombre de Usuario *</label>
+              <label htmlFor="input-teacher-username" className="control-label">Username *</label>
               <input type="text" className="form-control" id="input-teacher-username" onChange={this.props.handleFormChange}
               value={this.props.username} name='username' required/>
-
-              <label htmlFor="input-teacher-degree" className="control-label">Diplomado *</label>
+            </div>
+            <div className='form-group'>
+              <label htmlFor="input-teacher-degree" className="control-label">Degree *</label>
               <input type="text" className="form-control" id="input-teacher-degree" onChange={this.props.handleFormChange}
               value={this.props.degree} name='degree' required/>
+            </div>
+          </div>
+          <div className='col-xs-12'>
+            <div className="form-group">
+              <AutoFillSelectBox
+                searchTitle={'School this teacher belongs to *'}
+                fetch={this.props.fetchSchoolOptions}
+                handleFormChange={this.props.handleFormChange}
+                name={'schoolId'}
+                selected={this.props.schoolId}
+                items={this.props.schools.options.data}
+                required={true}
+                />
             </div>
           </div>
         </div>
@@ -37,4 +71,4 @@ class TeacherForm extends Component {
     }
 };
 
-export default TeacherForm;
+export default connect(mapStateToProps, mapDispatchToProps)(TeacherForm);
