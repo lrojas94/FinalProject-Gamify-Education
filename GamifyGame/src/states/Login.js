@@ -28,19 +28,19 @@ export default class Login extends Phaser.State {
         // this.background = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
         // this.background.anchor.setTo(0.5, 0.5);
 
-        this.menuTitle = this.add.sprite(this.game.world.centerX, this.game.world.centerY - 150, 'title-container');
+        this.menuPanel = this.add.sprite(this.game.world.centerX, this.game.world.centerY - 30, 'rect-panel');
+        this.menuPanel.anchor.setTo(0.5);
+        this.menuPanel.width = 400;
+        this.menuPanel.height = 200;
+
+        this.menuTitle = this.add.sprite(this.game.world.centerX, this.game.world.centerY - 140, 'title-container');
         this.menuTitle.anchor.setTo(0.5);
         this.menuTitle.width = 400;
         this.menuTitle.height = 50;
 
         let style = { fill: "#FFFFFF", align: "center" };
-        this.title = this.add.text(this.game.world.centerX, this.game.world.centerY - 150, "Gamify Education", style);
+        this.title = this.add.text(this.game.world.centerX, this.game.world.centerY - 140, "Gamify Education", style);
         this.title.anchor.setTo(0.5);
-
-        this.menuPanel = this.add.sprite(this.game.world.centerX, this.game.world.centerY - 30, 'rect-panel');
-        this.menuPanel.anchor.setTo(0.5);
-        this.menuPanel.width = this.menuTitle.width;
-        this.menuPanel.height = 200;
 
         var inputWidth = 300;
         var inputHeight = 20;

@@ -46,7 +46,7 @@ export default class Topic extends Phaser.State {
         titleText.fill = '#F0F0F0';
         titleText.anchor.setTo(0.5);
 
-        // Solutions:
+        // Topics:
         let buttonImg = this.game.cache.getFrameByName('ui-grey', 'grey_button00.png');
         let padding = 5;
         this.topicButton = [];
@@ -63,8 +63,9 @@ export default class Topic extends Phaser.State {
                 outFrame: 'grey_button01.png',
                 overFrame: 'grey_button03.png',
                 downFrame: 'grey_button02.png',
+                style: { font: "20px Arial", fill: "#34495e", align: "center" },
                 callback: () => {
-                    //Answer question:
+                    // Select Topic:
                     if (this.topicSelected) {
                         return;
                     }

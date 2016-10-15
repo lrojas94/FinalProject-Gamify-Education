@@ -22,7 +22,12 @@ export default class Menu extends Phaser.State {
         // this.background = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
         // this.background.anchor.setTo(0.5, 0.5);
 
-        this.menuTitle = this.add.sprite(this.game.world.centerX, this.game.world.centerY - 150, 'yellow_btn');
+        this.menuPanel = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'panel');
+        this.menuPanel.anchor.setTo(0.5);
+        this.menuPanel.width = 285;
+        this.menuPanel.height = 250;
+
+        this.menuTitle = this.add.sprite(this.game.world.centerX, this.game.world.centerY - 145, 'yellow_btn');
         this.menuTitle.anchor.setTo(0.5);
         this.menuTitle.scale.setTo(1.5);
 
@@ -30,13 +35,8 @@ export default class Menu extends Phaser.State {
             fill: "#FFFFFF",
             align: "center"
         };
-        this.title = this.add.text(this.game.world.centerX, this.game.world.centerY - 150, "Gamify Education", style);
+        this.title = this.add.text(this.game.world.centerX, this.game.world.centerY - 145, "Gamify Education", style);
         this.title.anchor.setTo(0.5);
-
-        this.menuPanel = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'panel');
-        this.menuPanel.anchor.setTo(0.5);
-        this.menuPanel.width = this.menuTitle.width;
-        this.menuPanel.height = 250;
 
         this.menuButtons = this.game.add.group();
 
