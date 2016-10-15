@@ -10,15 +10,19 @@ import simpleRouter from './../utility/simpleRouter';
 import solutionRouter from './solutions';
 
 var assignSchoolIdAndTeacherId = (req, res, next) => {
-  var teacher = req.user();
+  var teacher = req.user;
 
-  if (req.problem) {
-    req.problem.teacherId = teacher.id;
+  if (req.body.problem) {
+    req.body.problem.teacherId = teacher.id;
   }
   else {
-    req.teacherId = teacher.id;
+    req.body.teacherId = teacher.id;
   }
-  console.log('call next T.T');
+
+  console.log('------------------------------- PRE CREATE -------------------------');
+  console.log(req.body);
+  console.log(req.teacherId);
+  console.log('------------------------------- PRE CREATE -------------------------');
   next();
 };
 
@@ -26,7 +30,7 @@ var router = simpleRouter({
     model: Problem,
     url: '/problems',
     modelName: 'Problem',
-    attributes: ['id', 'problem', 'url', 'topicId', 'difficultyId'],
+    attributes: ['id', 'problem', 'url', 'teacherId', 'topicId', 'difficultyId'],
     opts: {
       list: {
         model: Problem,
