@@ -30,6 +30,8 @@ export default class Boot extends Phaser.State {
     this.load.image('loaderBg', './assets/images/loader-bg.png');
     this.load.image('loaderBar', './assets/images/loader-bar.png');
     this.load.image('background', './assets/images/background.png');
+    this.load.image('yellow_btn', './assets/images/yellow_button.png');
+    this.load.image('panel', './assets/images/grey_panel.png');
   }
 
   render () {
