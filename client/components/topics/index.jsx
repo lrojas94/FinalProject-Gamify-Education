@@ -18,8 +18,7 @@ const initialState = {
     name: '',
     description: '',
     example: '',
-    // TO ADD:
-    // schoolId / topicId
+    groupId: ''
   }
 };
 
