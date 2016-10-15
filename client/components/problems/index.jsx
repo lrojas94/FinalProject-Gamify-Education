@@ -19,7 +19,8 @@ const initialState = {
     id: '',
     problem: '',
     difficultyId: '',
-    topicId: ''
+    topicId: '',
+    groupId: ''
   },
   solutions: {
     // Are a thing of their own kind xD...
