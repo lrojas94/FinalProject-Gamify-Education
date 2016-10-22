@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import axios from 'axios';
+import 'phaser-state-transition';
 import {
     centerGameObjects
 } from '../utils';
@@ -21,6 +22,8 @@ export default class Login extends Phaser.State {
      }
 
     create() {
+        console.log(Phaser.Plugin.StateTransition.Out);
+
         this.game.plugins.add(Fabrique.Plugins.InputField);
         let login = this;
 
@@ -97,7 +100,9 @@ export default class Login extends Phaser.State {
                         if (data.status === 0) {
                             //login was SUCCESS
                             axios.defaults.headers.common.Authorization = `JWT ${data.data.token}`;
-                            login.state.start('Menu');
+                            var transitionOut = Phaser.Plugin.StateTransition.Out.SlideLeft;
+                            var transitionIn = Phaser.Plugin.StateTransition.In.SlideLeft;
+                            login.state.start('Menu', transitionOut, transitionIn);
                         } else {
                             /*
                             TODO:
