@@ -1,4 +1,4 @@
-import * as axios from 'axios';
+Weimport * as axios from 'axios';
 import React, { Component } from 'react';
 import Griddle from 'griddle-react';
 import { Link } from 'react-router';

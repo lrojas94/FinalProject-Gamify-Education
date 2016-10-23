@@ -6,6 +6,8 @@ import {
 import constants from '../constants';
 import ButtonWithText from './../sprites/ButtonWithText';
 import * as Fabrique from 'phaser-input';
+import Background from './../sprites/Background';
+
 
 export default class Menu extends Phaser.State {
     /**

@@ -6,6 +6,7 @@ import {
 import constants from '../constants';
 import ButtonWithText from './../sprites/ButtonWithText';
 import * as Fabrique from 'phaser-input';
+import Background from './../sprites/Background';
 
 export default class Login extends Phaser.State {
     /**
@@ -15,18 +16,14 @@ export default class Login extends Phaser.State {
      * passwordField => TextField for password input.
      *
      */
-     preload() {
-         this.load.image('rect-panel', './assets/images/grey_rect_panel.png');
-         this.load.image('title-container', './assets/images/yellow_title_container.png');
-     }
 
     create() {
         this.game.plugins.add(Fabrique.Plugins.InputField);
         let login = this;
-
         this.stage.backgroundColor = '#34495e';
-        // this.background = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
-        // this.background.anchor.setTo(0.5, 0.5);
+
+        var bg = new Background({ game: this.game });
+        // this.game.add.existing(bg);
 
         this.menuPanel = this.add.sprite(this.game.world.centerX, this.game.world.centerY - 30, 'rect-panel');
         this.menuPanel.anchor.setTo(0.5);
