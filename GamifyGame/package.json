@@ -27,6 +27,7 @@
   "dependencies": {
     "axios": "0.12.0",
     "phaser": "^2.5.0",
-    "phaser-input": "^1.2.5"
+    "phaser-input": "^1.2.5",
+    "phaser-state-transition": "^2.3.2"
   }
 }

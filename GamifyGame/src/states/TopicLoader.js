@@ -23,7 +23,9 @@ export default class TopicLoader extends Phaser.State {
 
     loadComplete(topics) {
         console.log(topics);
-        this.state.start('Topics', true, false, topics);
+        var transitionOut = Phaser.Plugin.StateTransition.Out.SlideTop;
+        var transitionIn = Phaser.Plugin.StateTransition.In.SlideTop;
+        this.state.start('Topics', transitionOut, transitionIn, true, false, topics);
     }
     create() {
         console.log('creating topics loader');
