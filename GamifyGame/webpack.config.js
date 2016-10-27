@@ -9,7 +9,7 @@ var phaser = path.join(phaserModule, 'build/custom/phaser-split.js');
 var pixi = path.join(phaserModule, 'build/custom/pixi.js');
 var p2 = path.join(phaserModule, 'build/custom/p2.js');
 var phaserInput = path.join(__dirname, '/node_modules/phaser-input/build/phaser-input.js');
-var phaserTransitions = path.join(__dirname, '/node_modules/phaser-state-transition/dist/phaser-state-transition.js');
+var phaserTransitions = path.join(__dirname, '/src/phaser-state-transition.min.js');
 
 var definePlugin = new webpack.DefinePlugin({
     __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))

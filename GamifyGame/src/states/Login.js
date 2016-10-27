@@ -23,7 +23,7 @@ export default class Login extends Phaser.State {
 
         this.game.plugins.add(Fabrique.Plugins.InputField);
         let login = this;
-        this.stage.backgroundColor = '#34495e';
+        // this.stage.backgroundColor = '#34495e';
 
         var bg = new Background({ game: this.game });
         // this.game.add.existing(bg);
@@ -99,7 +99,10 @@ export default class Login extends Phaser.State {
                             axios.defaults.headers.common.Authorization = `JWT ${data.data.token}`;
                             var transitionOut = Phaser.Plugin.StateTransition.Out.SlideLeft;
                             var transitionIn = Phaser.Plugin.StateTransition.In.SlideLeft;
-                            login.state.start('Menu', transitionOut, transitionIn);
+                            transitionIn.noStage = true;
+                            transitionOut.noStage = true;
+
+                            login.state.start('Menu', transitionOut, null, true, false);
                         } else {
                             /*
                             TODO:

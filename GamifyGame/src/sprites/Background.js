@@ -21,10 +21,10 @@ export default class extends Phaser.Sprite {
     //
     var numClouds = randomInt(5,15);
     var layers = randomInt(2,4);
-    var finalLayers = [];
+    var finalCloudsprites = [];
 
     for(var l = 0; l < layers;l++) {
-      finalLayers.push([]);
+      finalCloudsprites.push([]);
     };
 
     for(var i = 0; i < numClouds;i++) {
@@ -37,28 +37,27 @@ export default class extends Phaser.Sprite {
       var sprite = game.make.sprite(posX,posY,'bg-assets',cloudSprite);
       var spriteLayer = randomInt(0, layers);
       sprite.scale.setTo(0.3+Math.random());
-      finalLayers[spriteLayer].push(this.addChild(sprite));
+      finalCloudsprites[spriteLayer].push(this.addChild(sprite));
 
     }
 
-    this.items = finalLayers;
+    this.clouds = finalCloudsprites;
     this.main = this.addChild(game.make.sprite(0,0, 'bg-main'));
     this.main.anchor.setTo(0.5);
     scaleFitScreen(this.main, game);
   }
 
   update() {
-    for(var i = 0; i < this.items.length; i++) {
-      var items = this.items[i];
+    //Moving clouds:
+    for(var i = 0; i < this.clouds.length; i++) {
+      var items = this.clouds[i];
       for(var j = 0; j < items.length; j++) {
-        // console.log( (items[j].scale.x * 100)*(this.game.time.elapsed/1000))
         items[j].x -= (25/items[j].scale.x)*(this.game.time.elapsed/1000);
         if(items[j].x + items[j].width < this.main.x - this.main.width/2) {
           var posY = randomInt(-this.back.height/2, 0);
           items[j].x = this.main.x + this.main.width/2 + items[j].width/2;
           items[j].y = posY;
           items[j].scale.setTo(0.3+Math.random());
-
         }
       }
     }

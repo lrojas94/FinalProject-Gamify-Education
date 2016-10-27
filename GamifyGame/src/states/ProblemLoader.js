@@ -48,7 +48,7 @@ export default class ProblemLoader extends Phaser.State {
       }
     }
     if(changeState){
-      stateManager.state.start('Game', true, false, stateManager.problem);
+      stateManager.state.start('Game',null,null, true, false, stateManager.problem);
     }
     else if (stateManager.load.hasLoaded) {
       //Check which files are NOT loading:

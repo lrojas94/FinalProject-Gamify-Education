@@ -22,6 +22,7 @@ export default class Splash extends Phaser.State {
     this.load.image('bg-back', './assets/background/BG-Back.png');
     this.load.image('bg-main', './assets/background/BG1.png');
 
+    this.load.atlasJSONHash('ui','./assets/images/UI/ui.png','./assets/images/UI/ui.json');
     this.load.atlasXML('ui-blue','./assets/images/UI/blueSheet.png','./assets/images/UI/blueSheet.xml');
     this.load.atlasXML('ui-green','./assets/images/UI/greenSheet.png','./assets/images/UI/greenSheet.xml');
     this.load.atlasXML('ui-red','./assets/images/UI/redSheet.png','./assets/images/UI/redSheet.xml');

@@ -9,12 +9,12 @@ import {
     centerGameObjects
 } from '../utils';
 
-export default class Topic extends Phaser.State {
+export default class Difficulty extends Phaser.State {
     init() {
-        this.topicsButton = [];
-        this.topicSelected = false;
+        this.difficultysButton = [];
+        this.difficultySelected = false;
         this.page = 1;
-        this.initTopics.bind(this);
+        this.initDifficulties.bind(this);
     }
     preload() {
 
@@ -23,10 +23,10 @@ export default class Topic extends Phaser.State {
     loadPage(page) {
       this.loadingText.setText("Loading...");
       this.load.crossOrigin = 'anonymous';
-      let topicLoader = this;
+      let difficultyLoader = this;
 
 
-      axios.get(`${constants.API_URL}topics/`, {
+      axios.get(`${constants.API_URL}difficultys/`, {
           page: page,
           limit: 10
       }).then((response) => {
@@ -36,8 +36,8 @@ export default class Topic extends Phaser.State {
               throw Error(data.message);
           } else {
               // Remove loading text
-              topicLoader.loadingText.setText("");
-              topicLoader.initTopics(data);
+              difficultyLoader.loadingText.setText("");
+              difficultyLoader.initDifficulties(data);
           }
       }).catch((err) => {
           console.log(err);
@@ -68,14 +68,14 @@ export default class Topic extends Phaser.State {
         this.closeButton.anchor.setTo(0.5);
 
         // Load title text.
-        let titleText = this.add.text(this.game.world.centerX, 150, 'Choose a Topic');
+        let titleText = this.add.text(this.game.world.centerX, 150, 'Choose a Difficulty');
         titleText.font = 'Lato';
         titleText.fontSize = 40;
         titleText.fontWeight = 100;
         titleText.fill = '#F0F0F0';
         titleText.anchor.setTo(0.5);
 
-        let loadingText = this.add.text(this.game.world.centerX, 300, 'Loading topics...');
+        let loadingText = this.add.text(this.game.world.centerX, 300, 'Loading difficultys...');
         loadingText.font = 'Lato';
         loadingText.fontSize = 40;
         loadingText.fontWeight = 100;
@@ -89,15 +89,15 @@ export default class Topic extends Phaser.State {
         this.game.add.existing(this.closeButton);
     }
 
-    initTopics(topics) {
+    initDifficulties(difficultys) {
       let buttonImg = this.game.cache.getFrameByName('ui-grey', 'grey_button00.png');
       let padding = 5;
 
-      topics.data.map((topic, index) => {
+      difficultys.data.map((difficulty, index) => {
 
           let button = new ButtonWithText({
               game: this.game,
-              text: topic.name,
+              text: difficulty.name,
               x: this.game.world.centerX,
               y: this.game.world.centerY + index * (buttonImg.height + padding),
               key: 'ui-grey',
@@ -107,20 +107,20 @@ export default class Topic extends Phaser.State {
               downFrame: 'grey_button02.png',
               style: { font: "20px Arial", fill: "#34495e", align: "center" },
               callback: () => {
-                  // Select Topic:
-                  if (this.topicSelected) {
+                  // Select Difficulty:
+                  if (this.difficultySelected) {
                       return;
                   }
 
-                  this.topicSelected = true;
-                  this.state.start('Difficulties');
+                  this.difficultySelected = true;
+                  this.state.start('ProblemLoader');
               },
               callbackContext: this
           });
           button.anchor.setTo(0.5);
 
           this.game.add.existing(button);
-          this.topicsButton.push(button);
+          this.difficultysButton.push(button);
       });
     }
 

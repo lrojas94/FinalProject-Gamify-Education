@@ -8,7 +8,8 @@ import ProblemLoaderState from './states/ProblemLoader';
 import LoginState from './states/Login';
 import MenuState from './states/Menu';
 import TopicsState from './states/Topics';
-import TopicLoaderState from './states/TopicLoader';
+import DifficultiesState from './states/Difficulties';
+// import TopicLoaderState from './states/TopicLoader';
 
 class Game extends Phaser.Game {
 
@@ -18,6 +19,7 @@ class Game extends Phaser.Game {
 
         super(width, height, Phaser.AUTO, 'content', null);
         console.log(this.plugins);
+        this.transparent = true;
         this.state.add('Boot', BootState, false);
         this.state.add('Splash', SplashState, false);
         this.state.add('ProblemLoader', ProblemLoaderState, false);
@@ -25,7 +27,8 @@ class Game extends Phaser.Game {
         this.state.add('Login', LoginState, false);
         this.state.add('Menu', MenuState, false);
         this.state.add('Topics', TopicsState, false);
-        this.state.add('TopicLoader', TopicLoaderState, false);
+        this.state.add('Difficulties', DifficultiesState, false);
+        // this.state.add('TopicLoader', TopicLoaderState, false);
 
         this.state.start('Boot');
     }

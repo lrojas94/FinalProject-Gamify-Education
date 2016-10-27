@@ -21,8 +21,10 @@ export default class Menu extends Phaser.State {
         let menu = this;
         var transitionOut = Phaser.Plugin.StateTransition.Out.SlideTop;
         var transitionIn = Phaser.Plugin.StateTransition.In.SlideTop;
+        transitionIn.noStage = true;
+        transitionOut.noStage = true;
 
-        this.stage.backgroundColor = '#34495e';
+        // this.stage.backgroundColor = '#34495e';
         // this.background = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
         // this.background.anchor.setTo(0.5, 0.5);
 
@@ -55,7 +57,7 @@ export default class Menu extends Phaser.State {
             overFrame: 'green_button04.png',
             downFrame: 'green_button04.png',
             callback: () => {
-                menu.state.start('TopicLoader', transitionOut, transitionIn);
+                menu.state.start('Topics', transitionOut, null);
             },
             callbackContext: this
         });
@@ -71,7 +73,7 @@ export default class Menu extends Phaser.State {
             overFrame: 'blue_button04.png',
             downFrame: 'blue_button04.png',
             callback: () => {
-                menu.state.start('Menu', transitionOut, transitionIn);
+                menu.state.start('Menu', transitionOut, null);
             },
             callbackContext: this
         }).alignTo(this.playButton, Phaser.BOTTOM_CENTER, 0, 16);

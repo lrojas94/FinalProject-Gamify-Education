@@ -17,7 +17,7 @@ export default class Game extends Phaser.State {
 
     create() {
         // load bg:
-        this.background = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
+        // this.background = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
 
         this.closeButton = new ButtonWithText({
             game: this.game,
@@ -37,7 +37,15 @@ export default class Game extends Phaser.State {
             },
             callbackContext: this
         });
+
         this.closeButton.anchor.setTo(0.5);
+
+        this.bg = this.add.sprite(this.game.world.centerX, this.game.world.centerY,'panel');
+        // bg.smoothed = false;
+        this.bg.anchor.setTo(0.5);
+        this.bg.scale.y = 0.5;
+        this.bg.scale.x = 0.55;
+        // this.bg.smoothed = false;
 
         // Load title text.
         let titleText = this.add.text(this.game.world.centerX, 150, 'Resuelva el Siguiente Problema');
@@ -60,11 +68,11 @@ export default class Game extends Phaser.State {
                 solution: solution,
                 x: this.game.world.centerX,
                 y: this.game.world.centerY + index * (buttonImg.height + padding),
-                key: 'ui-grey',
-                upFrame: 'grey_button04.png',
-                outFrame: 'grey_button01.png',
-                overFrame: 'grey_button03.png',
-                downFrame: 'grey_button02.png',
+                key: 'ui-blue',
+                upFrame: 'blue_button05.png',
+                outFrame: 'blue_button02.png',
+                overFrame: 'blue_button04.png',
+                downFrame: 'blue_button04.png',
                 callback: () => {
                     //Answer question:
                     if (this.solutionSelected) {
@@ -103,16 +111,10 @@ export default class Game extends Phaser.State {
         });
 
         this.game.add.existing(this.closeButton);
-
-        // set the sprite width to 30% of the game width
-        setResponsiveWidth(this.background, 100, this.game.world);
-        centerGameObjects([this.background, this.problemSprite]);
     }
 
     render() {
-        // if (__DEV__) {
-        //   this.game.debug.spriteInfo(this.mushroom, 32, 32);
-        // }
+        this.bg.smoothed = !this.bg.smoothed;
     }
 
 }

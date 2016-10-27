@@ -6,17 +6,17 @@ import constants from './../constants';
 export default class Boot extends Phaser.State {
   init () {
     this.stage.backgroundColor = '#EDEEC9';
-    this.fontsReady = false;
+    this.fontsReady = true;
     this.fontsLoaded = this.fontsLoaded.bind(this);
   }
 
   preload () {
-    WebFont.load({
-      google: {
-        families: ['Nunito', 'Lato']
-      },
-      active: this.fontsLoaded
-    });
+    // WebFont.load({
+    //   google: {
+    //     families: ['Nunito', 'Lato']
+    //   },
+    //   active: this.fontsLoaded
+    // });
 
     let text = this.add.text(this.world.centerX, this.world.centerY, 'Loading Fonts..', {
       font: '16px Arial',
