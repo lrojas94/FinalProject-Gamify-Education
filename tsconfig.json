@@ -21,6 +21,7 @@
         "./customTypings/redux-thunk-fsa/index.d.ts",
         "./server/app.ts",
         "./server/constants.ts",
+        "./server/controllers/achievements.ts",
         "./server/controllers/answer.ts",
         "./server/controllers/api.ts",
         "./server/controllers/difficulties.ts",
@@ -89,8 +90,8 @@
         "./typings/globals/serve-static/index.d.ts",
         "./typings/globals/validator/index.d.ts",
         "./typings/index.d.ts",
-        "./GamifyGame/node_modules/browser-sync/node_modules/bs-recipes/recipes/webpack.typescript.react/src/components/HelloWorld.tsx",
-        "./GamifyGame/node_modules/browser-sync/node_modules/bs-recipes/recipes/webpack.typescript.react/src/main.tsx"
+        "./GamifyGame/node_modules/bs-recipes/recipes/webpack.typescript.react/src/components/HelloWorld.tsx",
+        "./GamifyGame/node_modules/bs-recipes/recipes/webpack.typescript.react/src/main.tsx"
     ],
     "compileOnSave": false,
     "atom": {

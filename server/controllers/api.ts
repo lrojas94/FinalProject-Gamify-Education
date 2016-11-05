@@ -13,6 +13,7 @@ import difficultyRouter from './difficulties';
 import topicsRouter from './topics';
 import schoolsRouter from './schools';
 import groupsRouter from './groups';
+import achievementsRouter from './achievements';
 
 
 var router = express.Router();
@@ -77,5 +78,6 @@ router.use('/difficultys', difficultyRouter.router);
 router.use('/topics', topicsRouter.router);
 router.use('/groups', groupsRouter.router);
 router.use('/schools', schoolsRouter.router);
+router.use('/achievements', achievementsRouter.router);
 
 export default router;

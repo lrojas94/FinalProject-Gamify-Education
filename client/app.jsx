@@ -20,6 +20,7 @@ import Topics from './components/topics/index';
 import Schools from './components/schools/index';
 import Groups from './components/groups/index';
 import Difficulties from './components/difficulties/index';
+import Achievements from './components/achievements/index';
 const routerMiddlewareInstance = routerMiddleware(browserHistory)
 
 const store = createStore(
@@ -103,6 +104,18 @@ ReactDOM.render((
           </Route>
           <Route component={Difficulties.View}>
             <Route path='delete/:difficultyId' component={Difficulties.Delete}/>
+          </Route>
+        </Route>
+
+        <Route path='achievements' component={Achievements.Main}>
+          <IndexRoute component={Achievements.Index}/>
+          <Router path='add' component={Achievements.Add}/>
+          <Route path='view/:achievementId' component={Achievements.View}/>
+          <Route component={Achievements.View}>
+            <Route path='edit/:achievementId' component={Achievements.Edit}/>
+          </Route>
+          <Route component={Achievements.View}>
+            <Route path='delete/:achievementId' component={Achievements.Delete}/>
           </Route>
         </Route>
 

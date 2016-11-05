@@ -1,5 +1,6 @@
 import * as Sequelize from 'sequelize';
 import * as Topic from './topic';
+import * as Group from './group';
 
 export interface Pojo {
   name: string;

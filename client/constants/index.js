@@ -5,6 +5,7 @@ import problems from './problems';
 import topics from './topics';
 import schools from './schools';
 import groups from './groups';
+import achievements from './achievements';
 import difficultys from './difficulties';
 
 export default {
@@ -15,5 +16,6 @@ export default {
   topics,
   schools,
   groups,
+  achievements,
   difficultys
 };
