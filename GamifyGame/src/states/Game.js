@@ -40,7 +40,7 @@ export default class Game extends Phaser.State {
 
         this.closeButton.anchor.setTo(0.5);
 
-        this.bg = this.add.sprite(this.game.world.centerX, this.game.world.centerY,'panel');
+        this.bg = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'panel');
         // bg.smoothed = false;
         this.bg.anchor.setTo(0.5);
         this.bg.scale.y = 0.5;
@@ -58,6 +58,7 @@ export default class Game extends Phaser.State {
         this.problemSprite = this.add.sprite(this.game.world.centerX, this.game.world.centerY - 100, `p${this.problem.id}`);
         this.problemSprite.anchor.setTo(0.5);
         // Solutions:
+        this.solutionButtons = this.game.add.group();
         let buttonImg = this.game.cache.getFrameByName('ui-grey', 'grey_button00.png');
         let padding = 5;
         this.solutionButtons = [];
@@ -67,8 +68,8 @@ export default class Game extends Phaser.State {
             let button = new SolutionButton({
                 game: this.game,
                 solution: solution,
-                x: this.game.world.centerX,
-                y: this.game.world.centerY + index * (buttonImg.height + padding),
+                x: index * (buttonImg.width + padding),
+                y: 0,
                 key: 'ui-blue',
                 upFrame: 'blue_button05.png',
                 outFrame: 'blue_button02.png',
@@ -107,10 +108,12 @@ export default class Game extends Phaser.State {
             });
             button.anchor.setTo(0.5);
 
-            this.game.add.existing(button);
-            this.solutionButtons.push(button);
+            this.solutionButtons.add(button);
         });
 
+        this.solutionButtons.x = this.game.world.centerX + buttonImg.width / 2 - this.solutionButtons.width / 2 ;
+        this.solutionButtons.y = this.game.world.centerY;
+        this.game.add.existing(this.solutionButtons);
         this.game.add.existing(this.closeButton);
     }
 
