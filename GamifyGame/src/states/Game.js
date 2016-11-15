@@ -61,7 +61,6 @@ export default class Game extends Phaser.State {
         this.solutionButtons = this.game.add.group();
         let buttonImg = this.game.cache.getFrameByName('ui-grey', 'grey_button00.png');
         let padding = 5;
-        this.solutionButtons = [];
         this.solutionSelected = false;
         this.problem.solutions.map((solution, index) => {
 
