@@ -1,6 +1,7 @@
 import * as axios from 'axios';
 import React, { Component } from 'react';
 import Griddle from 'griddle-react';
+import FileBase64 from './../general/base64';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
@@ -9,6 +10,7 @@ import MathTextField from './../general/mathTextField';
 import difficultyActions from './../../actions/difficulties';
 import topicActions from './../../actions/topics';
 import AutoFillSelectBox from './../general/autoFillSelectBox';
+
 
 
 function mapStateToProps(props) {
@@ -33,6 +35,9 @@ function mapDispatchToProps(dispatch) {
 class TopicForm extends Component {
     constructor(props) {
       super(props);
+      this.state = {
+        files: [],
+      };
     };
 
     componentWillMount() {
@@ -40,9 +45,23 @@ class TopicForm extends Component {
       this.props.fetchTopicOptions();
     }
 
+    getFiles(files) {
+      console.log(files);
+    }
+
     render() {
       return (
         <div className='row'>
+          <div className='col-xs-12'>
+            <label htmlFor="input-topic-name" className="control-label">Test</label>
+            <FileBase64
+              multiple={ false }
+              onDone={ this.getFiles.bind(this) }
+              elementProps= { {
+                className:'btn btn-block m-light-blue'
+              } }
+              handleFormChange = { this.props.handleFormChange } />
+          </div>
           <div className='col-xs-12'>
             <div className="form-group">
               { this.props.id ? (<input type='hidden' name='id' value={this.props.id}/>) : '' }

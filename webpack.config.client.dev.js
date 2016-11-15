@@ -31,6 +31,9 @@ module.exports = {
             query  : {
                 mimeType: "application/octet-stream"
             }
+        }, {
+          test: /\.scss$/,
+          loaders: ["style", "css", "sass"]
         }]
     },
     resolve: {

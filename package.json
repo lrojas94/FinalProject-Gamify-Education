@@ -70,8 +70,11 @@
     "gulp": "3.9.1",
     "gulp-inject": "4.1.0",
     "mocha": "2.5.3",
+    "node-sass": "^3.11.2",
     "nodemon": "1.9.2",
+    "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
-    "tslint": "3.11.0"
+    "tslint": "3.11.0",
+    "webpack": "^1.13.1"
   }
 }

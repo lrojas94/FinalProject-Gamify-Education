@@ -56,6 +56,7 @@ export default class Game extends Phaser.State {
         titleText.anchor.setTo(0.5);
         // Problem:
         this.problemSprite = this.add.sprite(this.game.world.centerX, this.game.world.centerY - 100, `p${this.problem.id}`);
+        this.problemSprite.anchor.setTo(0.5);
         // Solutions:
         let buttonImg = this.game.cache.getFrameByName('ui-grey', 'grey_button00.png');
         let padding = 5;
@@ -68,11 +69,11 @@ export default class Game extends Phaser.State {
                 solution: solution,
                 x: this.game.world.centerX,
                 y: this.game.world.centerY + index * (buttonImg.height + padding),
-                key: 'ui-blue',
-                upFrame: 'blue_button05.png',
-                outFrame: 'blue_button02.png',
-                overFrame: 'blue_button04.png',
-                downFrame: 'blue_button04.png',
+                key: 'ui-grey',
+                upFrame: 'grey_button05.png',
+                outFrame: 'grey_button02.png',
+                overFrame: 'grey_button04.png',
+                downFrame: 'grey_button04.png',
                 callback: () => {
                     //Answer question:
                     if (this.solutionSelected) {
