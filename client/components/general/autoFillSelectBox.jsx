@@ -23,7 +23,6 @@ export class AutoFillSelectBox extends Component {
         var item = _.filter(props.items, (item) => {
           return item.id === this.props.selected;
         });
-        console.log(item);
         this.setState({
           selected: item[0]
         })

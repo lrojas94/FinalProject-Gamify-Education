@@ -69,11 +69,11 @@ export default class Game extends Phaser.State {
                 solution: solution,
                 x: this.game.world.centerX,
                 y: this.game.world.centerY + index * (buttonImg.height + padding),
-                key: 'ui-grey',
-                upFrame: 'grey_button05.png',
-                outFrame: 'grey_button02.png',
-                overFrame: 'grey_button04.png',
-                downFrame: 'grey_button04.png',
+                key: 'ui-blue',
+                upFrame: 'blue_button05.png',
+                outFrame: 'blue_button02.png',
+                overFrame: 'blue_button04.png',
+                downFrame: 'blue_button04.png',
                 callback: () => {
                     //Answer question:
                     if (this.solutionSelected) {

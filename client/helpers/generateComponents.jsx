@@ -6,6 +6,8 @@ import Griddle from 'griddle-react';
 import {
     Link
 } from 'react-router';
+
+var observe =  require('observe');
 import {
     connect
 } from 'react-redux';
@@ -373,15 +375,23 @@ var generateList = ({ actions, displayName, pluralDisplayName, list, url }) => {
  */
 
 var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
+  const initialState = _.assign({}, opts.initialState);
+  console.log(initialState);
   class CreateUpdate extends Component {
       constructor(props) {
         super(props);
-        this.generateManagingFunctions();
-        this.state = _.assign({ multiforms: this.multiforms || [] }, this.props.initialState || opts.initialState);
       };
 
       componentWillMount() {
         this.props.clearItem();
+        this.generateManagingFunctions();
+        this.setState(_.assign({}, { multiforms: this.multiforms || [] }, this.props.initialState || initialState));
+      }
+
+      componentWillReceiveProps(props) {
+        if(props[pluralDisplayName].status === 'success' ) {
+          return this.props.push(`/${pluralDisplayName}`);
+        }
       }
 
       performActionWithItem(e) {
@@ -398,7 +408,7 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
 
             multiforms[val.statePath] = items;
           });
-          var data = _(_.assign(this.state, multiforms))
+          var data = _(_.assign({}, this.state, multiforms))
           .pick(opts.pickAttributes)
           .mapValues((obj) => {
             if(_.isArray(obj)){
@@ -410,7 +420,7 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
           .omitBy(_.isEmpty)
           .value();
 
-          this.setState(_.assign({}, this.props.initialState || opts.initialState))
+          this.setState(_.assign({}, this.state, this.props.initialState || initialState))
           this.props.addUpdateItem(data);
         }
 
@@ -421,7 +431,7 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
           return; // Just in case.
         }
 
-        var currentState = this.props.initialState || opts.initialState;
+        var currentState = _.assign({}, this.props.initialState || initialState);
         var currentItems = {};
         var idGenerator = form.multiple.initialId || 0;
 
@@ -507,7 +517,7 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
        */
       handleForm(e, type) {
         var name = e.target.getAttribute('name');
-        var data = this.state[type] || this.state;
+        var data = _.assign({}, this.state[type] || this.state);
         data[name] = e.target.value;
         this.setState({ [type]: data });
       }
@@ -533,8 +543,8 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
                 return item;
               });
 
-              var updatedForm = _.assign(multiforms[form.name], { items: updatedItems });
-              multiforms = _.assign(multiforms, { [form.name]: updatedForm });
+              var updatedForm = _.assign({}, multiforms[form.name], { items: updatedItems });
+              multiforms = _.assign({}, multiforms, { [form.name]: updatedForm });
               this.setState({ multiforms });
             }
 
@@ -625,6 +635,7 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
 
 
       render() {
+
         return (
           <div className='padded-content'>
             <div className='row'>
@@ -683,7 +694,8 @@ var generateAdd = ({ displayName, pluralDisplayName, createOpts, actions, url })
   function mapDispatchToProps(dispatch) {
     return {
       addUpdateItem: (data) => dispatch(createItem(data)),
-      clearItem: () => dispatch(createItemClear())
+      clearItem: () => dispatch(createItemClear()),
+      push: (path) => dispatch(push(path))
     };
   }
 
@@ -723,7 +735,8 @@ var generateUpdate = ({ displayName, pluralDisplayName, update, actions, url }) 
         var id = data.id || data[displayName].id;
         dispatch(updateItem(id, data))
       },
-      clearItem: () => { return; }
+      clearItem: () => { return; },
+      push: (path) => dispatch(push(path))
     };
   }
 
