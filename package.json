@@ -11,6 +11,7 @@
     "build:client": "webpack --colors --config webpack.config.client.production.js",
     "watch:client": "webpack --colors --config webpack.config.client.dev.js --watch",
     "build:server": "tsc ./server/app.ts --outDir ./www/",
+    "build:langs": "babel-node client/helpers/translator.js",
     "watch:server": "tsc ./server/app.ts --outDir ./www/ --watch",
     "watch:build": "nodemon ./www/app.js",
     "test": "npm run test:server",
@@ -46,6 +47,7 @@
     "pg-hstore": "2.3.2",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
+    "react-intl": "^2.1.5",
     "react-redux": "4.4.5",
     "react-router": "2.4.1",
     "react-router-redux": "4.0.5",
@@ -64,6 +66,7 @@
     "webpack": "1.13.1"
   },
   "devDependencies": {
+    "babel-plugin-react-intl": "^2.2.0",
     "chai": "3.5.0",
     "chai-as-promised": "5.3.0",
     "concurrently": "2.1.0",
