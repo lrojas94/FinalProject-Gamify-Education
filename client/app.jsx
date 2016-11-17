@@ -12,7 +12,6 @@ import thunk from 'redux-thunk-fsa';
 import loggerMiddleware  from 'redux-logger';
 import { routerMiddleware, push } from 'react-router-redux'
 
-
 import reducers from './reducers';
 //Components:
 import { AppModule as App } from './components/app';
