@@ -1,39 +1,47 @@
 import * as express from 'express';
-import { Student, Person } from './../models/db';
+import { Student, Person, Group } from './../models/db';
 import { ResponseMessage, QueryStatus } from './../constants';
+import simpleRouter from './../utility/simpleRouter';
+import personRouter from './person';
 
-
-var router = express.Router();
 /**
- * POST: http://localhost:3000/api/students/
+ * http://localhost:3000/api/students/
  * @param  {[string]} '/'   [Route]
  * @param  {[callback]} (req,res)       [Request and Response Headers]
  * @return {[json]}         [List of all students.]
  */
-router.post('/', (req, res) => {
-    var result: ResponseMessage = {};
 
-    Student.findAll({
-        attributes: ['id', 'username'],
-        include: [{
-            model: Person,
-            as: 'person'
-        }]
-    })
-    .then((users) => {
-        result.status = QueryStatus.SUCCESS;
-        result.message = 'Successful query.';
-        result.data = users;
-
-        res.json(result);
-    })
-    .catch((err) => {
-        console.log(err);
-        result.status = QueryStatus.ERROR;
-        result.message = 'There was an error querying all the users.';
-        result.data = err;
-        res.json(result);
-    });
+var router = simpleRouter({
+    model: Student,
+    url: '/students',
+    modelName: 'Student',
+    attributes: ['id', 'username', 'password', 'personId', 'groupId'],
+    opts: {
+      list: {
+        model: Student,
+        attributes: ['id', 'username', 'personId', 'groupId'],
+        url: '/students',
+        include: [{ model: Person, as: 'person', required: true}],
+        searchAttributes: ['username', 'person.name', 'person.lastName']
+      },
+      view: {
+        include: [{ model: Person, as: 'person' }, { model: Group, as: 'group' }]
+      },
+      upsert: {
+        include: [
+          {
+            bodyPath: 'person',
+            upsert: personRouter.upsert,
+            isAssociation: true,
+            associationName: 'Person'
+          }
+        ],
+        onUpsert: null
+      },
+      options: {
+        attributes: ['username']
+      }
+    }
 });
 
 export default router;

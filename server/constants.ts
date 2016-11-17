@@ -46,6 +46,7 @@ export interface JWTTokenValues {
     username: string;
     name: string;
     jwt_token?: string;
+    type?: string;
 }
 
 export var constants = process.env.NODE_ENV === 'production' ? prod : dev;

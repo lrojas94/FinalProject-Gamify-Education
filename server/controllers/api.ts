@@ -24,7 +24,6 @@ var router = express.Router();
  */
 router.post('/authenticate', (req, res) => {
     var result: ResponseMessage = {};
-    console.log(req.body);
     Teacher.findOne({
         where: {
             username: req.body.username,
@@ -39,13 +38,51 @@ router.post('/authenticate', (req, res) => {
         // Generate token values
         var tokenValues: JWTTokenValues = {
             name: teacher.person.name,
-            username: teacher.username
+            username: teacher.username,
+            type: 'TEACHER',
         };
 
         // Create token
         var token = jwt.sign(tokenValues, constants.JWT_SECRET);
-
         var json = _.assign(tokenValues, { token, name: teacher.person.name, lastName: teacher.person.lastName });
+
+        result.status = QueryStatus.SUCCESS;
+        result.message = 'Login Successful';
+        result.data = json;
+
+        res.json(result);
+    })
+    .catch((err) => {
+        console.log(err);
+        result.status = QueryStatus.ERROR;
+        result.message = 'Login Unsuccessful. Wrong username or password.';
+        result.data = err;
+        res.json(result);
+    });
+});
+
+router.post('/authenticate-est', (req, res) => {
+    var result: ResponseMessage = {};
+    Student.findOne({
+        where: {
+            username: req.body.username,
+            password: req.body.password
+        },
+        include: [{
+            model: Person,
+            as: 'person'
+        }]
+    })
+    .then((student) => {
+        // Generate token values
+        var tokenValues: JWTTokenValues = {
+            name: student.person.name,
+            username: student.username,
+            type: 'STUDENT',
+        };
+        // Create token
+        var token = jwt.sign(tokenValues, constants.JWT_SECRET);
+        var json = _.assign(tokenValues, { token, name: student.person.name, lastName: student.person.lastName });
 
         result.status = QueryStatus.SUCCESS;
         result.message = 'Login Successful';
@@ -70,7 +107,7 @@ router.use(passport.authenticate('jwt', { session: false }));
  * @param  {[callback]} (req,res) [Request and Response Headers]
  */
 
-router.use('/students', studentRouter);
+router.use('/students', studentRouter.router);
 router.use('/problems', problemRouter);
 router.use('/answers', answerRouter);
 router.use('/teachers', teacherRouter.router);

@@ -1,4 +1,5 @@
 import * as _ from  'lodash';
+import * as util from 'util';
 
 
 export interface ITableQuery {
@@ -21,15 +22,21 @@ var queryHelper = {
 
     var or = [];
     _(elements).forEach((e) => {
+      var split = e.split('.');
+      console.log(split);
       if (req.query[e] || forcedQuery) {
+        var attr = e;
+        if (split.length > 1) {
+          attr = `$${e}$`;
+        }
         or.push({
-          [e]: {
+          [attr]: {
             $like: `%${req.query[e] || forcedQuery}%`
           }
         });
       }
     });
-
+    console.log(or);
     return or;
   },
 
@@ -65,10 +72,12 @@ var queryHelper = {
     var where = {};
 
     if (or.length !== 0) {
-      where = {
+      where = _.merge(where, {
         $or: or
-      };
+      });
     }
+
+    console.log(util.inspect(where, {showHidden: false, depth: null}));
 
     return new Promise((resolve, reject) => {
       where = _.merge(where, includeInWhere);
@@ -77,8 +86,8 @@ var queryHelper = {
         attributes: attributes || true,
         offset: parseInt(`${page * limit}`),
         limit: parseInt(limit),
+        include: include || [],
         where,
-        include: include || []
       })
       .then((data) => {
         var nextPage = page * limit + limit > data.count ? 1 : page + 2;

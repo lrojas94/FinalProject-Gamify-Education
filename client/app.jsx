@@ -15,6 +15,7 @@ import { AppModule as App } from './components/app';
 import { HomeIndexModule as HomeIndex } from './components/home/index';
 import { LoginModule as Login } from './components/home/login';
 import Teachers from './components/teachers/index';
+import Students from './components/students/index';
 import Problems from './components/problems/index';
 import Topics from './components/topics/index';
 import Schools from './components/schools/index';
@@ -46,6 +47,18 @@ ReactDOM.render((
           </Route>
           <Route component={Teachers.View}>
             <Route path='delete/:teacherId' component={Teachers.Delete}/>
+          </Route>
+        </Route>
+
+        <Route path='students' component={Students.Main}>
+          <IndexRoute component={Students.Index}/>
+          <Router path='add' component={Students.Add}/>
+          <Route path='view/:studentId' component={Students.View}/>
+          <Route component={Students.View}>
+            <Route path='edit/:studentId' component={Students.Edit}/>
+          </Route>
+          <Route component={Students.View}>
+            <Route path='delete/:studentId' component={Students.Delete}/>
           </Route>
         </Route>
 

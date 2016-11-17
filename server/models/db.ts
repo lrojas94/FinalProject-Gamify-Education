@@ -86,10 +86,6 @@ function createStudentRelations() {
   Student.belongsTo(Group, {
     as: 'group'
   });
-
-  Student.belongsTo(School, {
-    as: 'school'
-  });
 };
 
 function createTeacherRelations() {
@@ -219,12 +215,6 @@ function createSchoolRelations() {
 
   School.hasMany(Teacher, {
     as: 'teachers',
-    foreignKey: 'schoolId',
-    constraints: false
-  });
-
-  School.hasMany(Student, {
-    as: 'students',
     foreignKey: 'schoolId',
     constraints: false
   });

@@ -54,10 +54,14 @@ class NavBarContent extends Component {
                 Achievements
               </div>
             </Link>
-
             <Link to='/teachers'>
               <div className='nav-link-container'>
                 Teachers
+              </div>
+            </Link>
+            <Link to='/students'>
+              <div className='nav-link-container'>
+                Students
               </div>
             </Link>
             <Link to='/problems'>

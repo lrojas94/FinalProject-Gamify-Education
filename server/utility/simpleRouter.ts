@@ -19,6 +19,7 @@ import * as jwt from 'jsonwebtoken';
 import Sequelize from 'sequelize';
 import passport from './passport';
 import queryHelpers from './queryHelpers';
+import { DB } from './../models/db';
 import { ITableQuery } from './queryHelpers';
 
 export interface ISimpleRouter {
@@ -142,7 +143,7 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
      */
     path = path || resultObjectName;
     return new Promise((resolve, reject) => {
-      queryHelpers.upsert({
+      return queryHelpers.upsert({
         req: req,
         attributes: attributes,
         path: path,
@@ -175,15 +176,15 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
                     if (include.isAssociation) {
                       data[`set${include.associationName}${_.isArray(newUpsertData) ? 's' : ''}`](newUpsertData, { transaction: transaction })
                       .then(() => {
-                        resolve(data);
+                        return resolve(data);
                       })
                       .catch((err) => {
                         console.log(err);
-                        reject(err);
+                        return reject(err);
                       });
                     }
                     else {
-                      resolve(newUpsertData);
+                      return resolve(newUpsertData);
                     }
                   })
                   .catch((err) => reject(err));
@@ -198,40 +199,40 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
         };
 
         if (opts.upsert.include) {
-          addIncludes(data)
+          return addIncludes(data)
           .then((something) => {
             if (opts.upsert.onUpsert) {
-              opts.upsert.onUpsert(data)
+              return opts.upsert.onUpsert(data)
               .then(() => {
-                resolve(data);
+                return resolve(data);
               })
               .catch((err) => {
-                reject(err);
+                return reject(err);
               });
             }
             else {
-              resolve(data);
+              return resolve(data);
             }
           })
           .catch((err) => {
-            reject(err);
+            return reject(err);
           });
         }
         else if (opts.upsert.onUpsert) {
-          opts.upsert.onUpsert(data)
+          return opts.upsert.onUpsert(data)
           .then(() => {
-            resolve(data);
+            return resolve(data);
           })
           .catch((err) => {
-            reject(err);
+            return reject(err);
           });
         }
         else {
-          resolve(data);
+          return resolve(data);
         }
       })
       .catch((err) => {
-        reject(err);
+        return reject(err);
       });
     });
   };
@@ -240,10 +241,12 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
     router.use('/', opts.middlewares.create);
   }
   router.post('/', (req: any, res) => {
-    upsertModel({
-      req,
-      path: resultObjectName,
-      transaction: null
+    DB.transaction((t) => {
+      return upsertModel({
+        req,
+        path: resultObjectName,
+        transaction: t
+      });
     })
     .then((data) => {
       return res.json({
@@ -263,29 +266,32 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
     });
 
   });
+
   if (opts.middlewares.update) {
     router.use('/:id', opts.middlewares.update);
   }
-  router.put('/:id', (req, res) => {
 
-    upsertModel({
-      req,
-      path: resultObjectName,
-      transaction: null
-    })
-    .then((data) => {
-      return res.json({
-        status: 0,
-        message: `${modelName} was successfuly added to our servers.`,
-        [resultObjectName]: data
-      });
-    })
-    .catch((err) => {
-      return res.json({
-        status: 1,
-        message: `${modelName} could not be updated.`,
-        // errorData: errorsHelper(err),
-        errorCode: null
+  router.put('/:id', (req, res) => {
+    DB.transaction((t) => {
+      return upsertModel({
+        req,
+        path: resultObjectName,
+        transaction: t
+      })
+      .then((data) => {
+        return res.json({
+          status: 0,
+          message: `${modelName} was successfuly added to our servers.`,
+          [resultObjectName]: data
+        });
+      })
+      .catch((err) => {
+        return res.json({
+          status: 1,
+          message: `${modelName} could not be updated.`,
+          // errorData: errorsHelper(err),
+          errorCode: null
+        });
       });
     });
   });

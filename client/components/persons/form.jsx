@@ -40,7 +40,7 @@ class PersonForm extends Component {
 
             <div className='form-group'>
               <label htmlFor="input-person-gender" className="control-label">Gender *</label>
-              <select id='input-person-gender' value={this.props.gender || 'm'} className='form-control'
+              <select id='input-person-gender' value={this.props.gender} defaultValue={'m'} className='form-control'
               onChange={this.props.handleFormChange} name='gender' required>
                 <option value='m'> Hombre </option>
                 <option value='h'> Mujer </option>

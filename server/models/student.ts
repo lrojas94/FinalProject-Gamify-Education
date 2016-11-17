@@ -1,17 +1,14 @@
 import * as Sequelize from 'sequelize';
 import * as Person from './person';
 import * as Group from './group';
-import * as School from './school';
 import * as Answer from './answer';
 
 export interface Pojo {
     username: string;
     password: string;
-    studentId?: string;
     person?: Person.Pojo;
     personId?: number;
     group?: Group.Pojo;
-    school?: School.Pojo;
     answers?: Answer.Pojo[];
 }
 
@@ -35,20 +32,12 @@ export function define(sequelize: Sequelize.Sequelize): Model {
             validate: {
                 notEmpty: true,
                 len: [3, 256]
-            }
-        },
-        studentId: {
-            type: Sequelize.STRING,
-            allowNull: false,
-            unique: true,
-            validate: {
-                notEmpty: true,
-                min: 7
-            }
+            },
+            defaultValue: 'default'
         },
         personId: {
             type: Sequelize.INTEGER,
-            allowNull: false,
+            allowNull: true,
             unique: true,
             references: {
                 model: 'Person',
