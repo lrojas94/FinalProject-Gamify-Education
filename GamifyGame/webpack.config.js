@@ -47,8 +47,8 @@ module.exports = {
     module: {
         loaders: [{
             test: /\.js$/,
-            loader: 'babel',
-            include: path.join(__dirname, 'src')
+            loader: 'babel-loader',
+            exclude : [/node_modules/, /typings/, /www/],
         }, {
             test: /pixi\.js/,
             loader: 'expose?PIXI'

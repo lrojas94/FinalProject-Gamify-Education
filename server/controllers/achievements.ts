@@ -1,5 +1,6 @@
 import * as express from 'express';
-import { Achievement } from './../models/db';
+import * as _ from 'lodash';
+import { Achievement, Topic } from './../models/db';
 import simpleRouter from './../utility/simpleRouter';
 
 var router = simpleRouter({
@@ -12,12 +13,26 @@ var router = simpleRouter({
         model: Achievement,
         attributes: ['id', 'name', 'description', 'thresholdPercent', 'thresholdQuantity', 'iconUrl', 'difficultyId', 'topicId'],
         url: '/achievements',
-        searchAttributes: ['name', 'description', 'thresholdPercent', 'thresholdQuantity']
+        searchAttributes: ['name', 'description', 'thresholdPercent', 'thresholdQuantity'],
+        include: [{model: Topic, as: 'topic', required: true}]
       },
       options: {
         attributes: ['name']
+      },
+      middlewares: {
+        list: (req, res, next) => {
+          if (req['userType'] === 'STUDENT') {
+            var student = req.user;
+            // return only the ones for his group:
+            req.where = {
+              '$topic.groupId$' : student.groupId
+            };
+          }
+
+          next();
+        }
       }
-    }
+    },
 });
 
 

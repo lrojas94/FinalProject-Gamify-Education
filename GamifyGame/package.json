@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "axios": "0.12.0",
+    "lodash": "^4.17.2",
     "phaser": "^2.6.0",
     "phaser-input": "^1.2.5",
     "phaser-state-transition": "^2.3.2"

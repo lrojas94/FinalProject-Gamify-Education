@@ -379,12 +379,12 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
   class CreateUpdate extends Component {
       constructor(props) {
         super(props);
+        this.generateManagingFunctions();
         this.state = _.assign({}, { multiforms: this.multiforms || [] }, this.props.initialState || initialState);
       };
 
       componentWillMount() {
         this.props.clearItem();
-        this.generateManagingFunctions();
       }
 
       componentWillReceiveProps(props) {
