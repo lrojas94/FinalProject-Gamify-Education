@@ -23,5 +23,5 @@ export default combineReducers({
   groups,
   achievements,
   difficultys,
-  students
+  students,
 });

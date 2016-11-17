@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 import { Provider, connect } from 'react-redux';
-import {IntlProvider, addLocaleData} from 'react-intl';
+import {addLocaleData, IntlProvider} from 'react-intl';
 import en from 'react-intl/locale-data/en';
 import es from 'react-intl/locale-data/es';
-import localeData from './build/locales/data.json';
+import localeData from './i18n';
 
 import thunk from 'redux-thunk-fsa';
 import loggerMiddleware  from 'redux-logger';
@@ -28,26 +28,18 @@ import Difficulties from './components/difficulties/index';
 import Achievements from './components/achievements/index';
 const routerMiddlewareInstance = routerMiddleware(browserHistory)
 
-const store = createStore(reducers, applyMiddleware(thunk, routerMiddlewareInstance));
-
-addLocaleData([...en, ...es]);
-
+addLocaleData([...en,...es]);
 // Define user's language. Different browsers have the user locale defined
 // on different fields on the `navigator` object, so we make sure to account
 // for these different by checking all of them
 const language = (navigator.languages && navigator.languages[0]) ||
                      navigator.language ||
                      navigator.userLanguage;
-
-console.log(language);
-
 // Split locales with a region code
 const languageWithoutRegionCode = language.toLowerCase().split(/[_-]+/)[0];
-
 // Try full locale, fallback to locale without region code, fallback to en
 const messages = localeData[languageWithoutRegionCode] || localeData[language] || localeData.en;
-
-console.log(Teachers);
+const store = createStore(reducers, applyMiddleware(thunk, routerMiddlewareInstance),);
 
 ReactDOM.render((
     <Provider store={store}>

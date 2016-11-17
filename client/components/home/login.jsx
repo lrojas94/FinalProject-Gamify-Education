@@ -1,7 +1,7 @@
 import * as axios from 'axios';
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import {FormattedMessage} from 'react-intl'
+import {FormattedMessage,injectIntl} from 'react-intl'
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider, connect} from 'react-redux';
 import {push, replace} from 'react-router-redux';
@@ -35,10 +35,6 @@ class Login extends Component {
             return (
                 <div>
                     <h3 style={{background: ('')}}>Gamify Education</h3>
-                    <p>
-                        <FormattedMessage id='test.translation'
-                            defaultMessage='Testing translations' />
-                    </p>
                     <div id='form-container'>
                         <div style={{position: 'relative'}}>
                             <form method='POST' onSubmit={this.authenticate.bind(this)}>
@@ -49,18 +45,18 @@ class Login extends Component {
                                     )
                                     : ''}
                                 <div className='form-group'>
-                                    <label htmlFor='username'>Username</label><br/>
+                                    <label htmlFor='username'><FormattedMessage id='login.username' /></label><br/>
                                     <input className='form-control' type='text' ref='usernameInput' id='username' name='username'/>
                                 </div>
 
                                 <div className='form-group'>
-                                    <label htmlFor='password'>Password</label><br/>
+                                    <label htmlFor='password'><FormattedMessage id='login.password' /></label><br/>
                                     <input className='form-control' type='password' ref='passwordInput' id='password' name='password'/>
                                 </div>
 
                                 <input type='submit' className='btn btn-default btn-block' value={this.props.session && this.props.session.isLoggingIn
                                     ? 'Authenticating...'
-                                    : 'Login'}/>
+                                    : this.props.intl.messages['login']}/>
 
                             </form>
                         </div>
@@ -95,4 +91,4 @@ class Login extends Component {
     };
 };
 
-export const LoginModule = connect(mapStateToProps, mapDispatchToProps)(Login);
+export const LoginModule = connect(mapStateToProps, mapDispatchToProps)(injectIntl(Login));

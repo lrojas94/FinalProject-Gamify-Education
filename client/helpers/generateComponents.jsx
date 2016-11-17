@@ -376,7 +376,6 @@ var generateList = ({ actions, displayName, pluralDisplayName, list, url }) => {
 
 var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
   const initialState = _.assign({}, opts.initialState);
-  console.log(initialState);
   class CreateUpdate extends Component {
       constructor(props) {
         super(props);
