@@ -8,9 +8,10 @@ const jwtStrategy = passportJwt.Strategy;
 const jwtPassportOpts: passportJwt.StrategyOptions = {
     jwtFromRequest: passportJwt.ExtractJwt.fromAuthHeader(),
     secretOrKey: constants.JWT_SECRET,
+    passReqToCallback: true
 };
 
-passport.use(new jwtStrategy(jwtPassportOpts, (jwt: JWTTokenValues, done) => {
+passport.use(new jwtStrategy(jwtPassportOpts, (req, jwt: JWTTokenValues, done) => {
     switch (jwt.type) {
       case 'STUDENT':
         Student.findOne({
@@ -23,6 +24,7 @@ passport.use(new jwtStrategy(jwtPassportOpts, (jwt: JWTTokenValues, done) => {
           }]
         })
         .then((student) => {
+          req.userType = 'STUDENT';
           done(null, student);
         })
         .catch((err) => {
@@ -40,6 +42,7 @@ passport.use(new jwtStrategy(jwtPassportOpts, (jwt: JWTTokenValues, done) => {
           }]
         })
         .then((teacher) => {
+          req.userType = 'TEACHER';
           done(null, teacher);
         })
         .catch((err) => {

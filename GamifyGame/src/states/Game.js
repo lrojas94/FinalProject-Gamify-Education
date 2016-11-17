@@ -81,11 +81,12 @@ export default class Game extends Phaser.State {
                     }
 
                     this.solutionSelected = true;
+                    console.log(this.game.user);
                     var answerData = {
                         jwt_token: constants.JWT_TOKEN,
                         solutionId: solution.id,
                         problemId: solution.problemId,
-                        studentId: 1
+                        studentId: this.game.user.id
                     };
 
                     axios.post(`${constants.API_URL}answers/add`, answerData)

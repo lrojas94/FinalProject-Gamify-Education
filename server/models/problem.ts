@@ -45,9 +45,11 @@ export function define(sequelize: Sequelize.Sequelize): Model {
     }, {
         paranoid: true,
         classMethods: {
-          Random: function() {
+          Random: function(req?) {
             return new Promise<Instance>((resolve, reject) => {
+              var where = req.where || {};
               this.findAll({
+                where,
                 include: [{
                   model: SolutionModel,
                   as: 'solutions'

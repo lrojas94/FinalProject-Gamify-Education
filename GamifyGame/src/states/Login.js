@@ -65,6 +65,7 @@ export default class Login extends Phaser.State {
         });
 
         this.logginIn = false;
+        var game = this.game;
         this.loginButton = new ButtonWithText({
             game: this.game,
             text: "Login Now",
@@ -89,7 +90,7 @@ export default class Login extends Phaser.State {
                 console.log(data);
 
                 login.loginButton.setText('Authenticating...');
-                axios.post(`${constants.API_URL}authenticate`, data)
+                axios.post(`${constants.API_URL}authenticate-est `, data)
                     .then((res) => {
                         data = res.data;
                         console.log(data);
@@ -97,6 +98,7 @@ export default class Login extends Phaser.State {
                         if (data.status === 0) {
                             //login was SUCCESS
                             axios.defaults.headers.common.Authorization = `JWT ${data.data.token}`;
+                            game.user = data.data;
                             var transitionOut = Phaser.Plugin.StateTransition.Out.SlideLeft;
                             var transitionIn = Phaser.Plugin.StateTransition.In.SlideLeft;
                             transitionIn.noStage = true;

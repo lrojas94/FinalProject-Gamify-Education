@@ -30,7 +30,7 @@ var router = simpleRouter({
     model: Problem,
     url: '/problems',
     modelName: 'Problem',
-    attributes: ['id', 'problem', 'url','groupId', 'teacherId', 'topicId', 'difficultyId'],
+    attributes: ['id', 'problem', 'url', 'groupId', 'teacherId', 'topicId', 'difficultyId'],
     opts: {
       list: {
         model: Problem,
@@ -86,32 +86,53 @@ var router = simpleRouter({
       middlewares: {
         create: assignSchoolIdAndTeacherId,
         list: (req, res, next) => {
-          var teacher = req.user;
-          teacher.getGroups()
-          .then((groups: any) => {
-            var groupIds = _.map(groups, (group) => {
-              return group['id'];
+          if(req.userType === 'TEACHER') {
+            var teacher = req.user;
+            teacher.getGroups()
+            .then((groups: any) => {
+              var groupIds = _.map(groups, (group) => {
+                return group['id'];
+              });
+              req.where = {
+                $or: [{
+                  teacherId: teacher.id
+                }, {
+                  groupId: {
+                    $in: groupIds
+                  }
+                }]
+              };
+              next();
+            })
+            .catch((err) => {
+              console.log(err);
+              return res.json({
+                status: 1,
+                message: `There's been an error looking for teacher groups.`
+              });
             });
-
-            req.where = {
-              $or: [{
-                teacherId: teacher.id
-              }, {
+          }
+          else {
+            // Is student:
+            var student = req.user;
+            student.getGroup()
+            .then((group) => {
+              req.where = {
                 groupId: {
-                  $in: groupIds
+                  $eq: group.id
                 }
-              }]
-            };
+              };
 
-            next();
-          })
-          .catch((err) => {
-            console.log(err);
-            return res.json({
-              status: 1,
-              message: `There's been an error looking for teacher groups.`
+              next();
+            })
+            .catch((err) => {
+              console.log(err);
+              return res.json({
+                status: 1,
+                message: `There's been an error looking for teacher groups.`
+              });
             });
-          });
+          }
         }
       }
     },
@@ -121,7 +142,7 @@ var router = simpleRouter({
 router.router.post('/random', (req, res) => {
   var result: ResponseMessage = {};
   // should be good to actually send in the request the id's of ones solved.
-  Problem.Random()
+  Problem.Random(req)
   .then((problem) => {
     result = {
       status: QueryStatus.SUCCESS,

@@ -83,7 +83,7 @@ router.post('/authenticate-est', (req, res) => {
         // Create token
         var token = jwt.sign(tokenValues, constants.JWT_SECRET);
         var json = _.assign(tokenValues, { token, name: student.person.name, lastName: student.person.lastName });
-
+        json['id'] = student['id'];
         result.status = QueryStatus.SUCCESS;
         result.message = 'Login Successful';
         result.data = json;

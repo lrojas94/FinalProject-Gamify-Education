@@ -69,7 +69,7 @@ var queryHelper = {
     var limit = req.query.limit && req.query.limit < 25 ? req.query.limit : 10;
     var page = req.query.page - 1 || 0;
     var or = queryHelper.generateOr(req, searchAttributes);
-    var where = {};
+    var where = req.where || {};
 
     if (or.length !== 0) {
       where = _.merge(where, {
@@ -77,11 +77,11 @@ var queryHelper = {
       });
     }
 
-    console.log(util.inspect(where, {showHidden: false, depth: null}));
 
     return new Promise((resolve, reject) => {
       where = _.merge(where, includeInWhere);
       includeInSearchQuery = includeInSearchQuery || {};
+      console.log(util.inspect(where, {showHidden: false, depth: null}));
       model.findAndCountAll({
         attributes: attributes || true,
         offset: parseInt(`${page * limit}`),
