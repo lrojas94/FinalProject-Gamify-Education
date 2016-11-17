@@ -15,7 +15,7 @@ var router = express.Router();
  * @param  {[callback]} (req,res)       [Request and Response Headers]
  * @return {[json]}         [List of all problems.]
  */
-router.post('/', (req, res) => {
+router.get('/', (req, res) => {
     var result: ResponseMessage = {};
 
     Answer.findAll({

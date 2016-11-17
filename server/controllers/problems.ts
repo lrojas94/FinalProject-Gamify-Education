@@ -10,20 +10,17 @@ import simpleRouter from './../utility/simpleRouter';
 import solutionRouter from './solutions';
 
 var assignSchoolIdAndTeacherId = (req, res, next) => {
-  var teacher = req.user;
-
-  if (req.body.problem) {
-    req.body.problem.teacherId = teacher.id;
+  if (req['userType'] === 'TEACHER') {
+    var teacher = req.user;
+    if (req.body.problem) {
+      req.body.problem.teacherId = teacher.id;
+    }
+    else {
+      req.body.teacherId = teacher.id;
+    }
   }
-  else {
-    req.body.teacherId = teacher.id;
-  }
-
-  console.log('------------------------------- PRE CREATE -------------------------');
-  console.log(req.body);
-  console.log(req.teacherId);
-  console.log('------------------------------- PRE CREATE -------------------------');
   next();
+
 };
 
 var router = simpleRouter({
@@ -86,7 +83,7 @@ var router = simpleRouter({
       middlewares: {
         create: assignSchoolIdAndTeacherId,
         list: (req, res, next) => {
-          if(req.userType === 'TEACHER') {
+          if (req.userType === 'TEACHER') {
             var teacher = req.user;
             teacher.getGroups()
             .then((groups: any) => {

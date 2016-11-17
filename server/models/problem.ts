@@ -7,6 +7,7 @@ import * as Topic from './topic';
 import * as Difficulty from './difficulty';
 import { Solution as SolutionModel } from './db';
 import { constants } from './../constants';
+import * as _ from 'lodash';
 
 export interface Pojo {
     problem: string;
@@ -22,7 +23,7 @@ export interface Pojo {
 
 export interface Instance extends Sequelize.Instance<Pojo>, Pojo {};
 export interface Model extends Sequelize.Model<Instance, Pojo> {
-  Random: () => Promise<Instance>;
+  Random: (request?) => Promise<Instance>;
 };
 
 export function define(sequelize: Sequelize.Sequelize): Model {
@@ -47,7 +48,8 @@ export function define(sequelize: Sequelize.Sequelize): Model {
         classMethods: {
           Random: function(req?) {
             return new Promise<Instance>((resolve, reject) => {
-              var where = req.where || {};
+              var where = req ? req.where || {} : {};
+              where = _.pick(where, ['groupId', 'difficultyId', 'topicId']);
               this.findAll({
                 where,
                 include: [{
