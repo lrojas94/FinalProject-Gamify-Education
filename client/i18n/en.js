@@ -73,5 +73,15 @@ export default {
      * Solutions Form
      */
      "form.solution": "Solution",
-     "form.correct": "Correct?"
+     "form.correct": "Correct?",
+
+     /**
+      * Teachers Form
+      */
+     "form.degree": "Degree",
+
+     /**
+      * Topics Form
+      */
+     "form.exampleProblem": "Example Problem"
 };

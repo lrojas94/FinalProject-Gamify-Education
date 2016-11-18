@@ -73,5 +73,15 @@ export default {
      * Solutions Form
      */
      "form.solution": "Solución",
-     "form.correct": "Respuesta Correcta?"
+     "form.correct": "Respuesta Correcta?",
+
+     /**
+      * Teachers Form
+      */
+     "form.degree": "Título de Grado",
+
+     /**
+      * Topics Form
+      */
+     "form.exampleProblem": "Problema de Ejemplo"
 };
