@@ -11,6 +11,7 @@ import achievementActions from './../../actions/achievements';
 import { LinkColumn } from './../general/linkColumn';
 import { Route } from './../../models/route';
 import AchievementsForm from './form';
+import {FormattedMessage, injectIntl} from 'react-intl';
 
 const initialState = {
   achievement: {
@@ -105,7 +106,7 @@ class AchievementsMain extends Component {
         return (
           <div>
           <SectionTitle
-            title={'Achievements'}
+            title={this.props.intl.messages['sidebar.achievements']}
             background={'http://media.gettyimages.com/videos/hexagon-orange-background-loopable-video-id513620464?s=640x640'}
             customContent={''}
           />
@@ -117,7 +118,7 @@ class AchievementsMain extends Component {
 };
 
 const module = {
-  Main: connect(mapStateToProps, mapDispatchToProps)(AchievementsMain),
+  Main: connect(mapStateToProps, mapDispatchToProps)(injectIntl(AchievementsMain)),
   Index: generatedFeatures.list,
   View: generatedFeatures.view,
   Edit: generatedFeatures.update,

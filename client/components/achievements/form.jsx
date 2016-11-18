@@ -14,8 +14,8 @@ import {FormattedMessage, injectIntl} from 'react-intl';
 
 function mapStateToProps(props) {
     return {
-        difficultys: {
-            options: props.difficultys.options
+        difficulties: {
+            options: props.difficulties.options
         },
         topics: {
             options: props.topics.options
@@ -108,7 +108,7 @@ class AchievementForm extends Component {
                             handleFormChange={this.props.handleFormChange}
                             name={'difficultyId'}
                             selected={this.props.difficultyId}
-                            items={this.props.difficultys.options.data}
+                            items={this.props.difficulties.options.data}
                             required={true}/>
                     </div>
                 </div>

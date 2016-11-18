@@ -13,6 +13,7 @@ import { Route } from './../../models/route';
 import ProblemsForm from './form';
 import SolutionForm from './../solutions/form';
 import ImageComponent from './../general/imageComponent'
+import {FormattedMessage, injectIntl} from 'react-intl';
 
 const initialState = {
   problem: {
@@ -131,7 +132,7 @@ class ProblemsMain extends Component {
         return (
           <div>
           <SectionTitle
-            title={'Problems'}
+            title={this.props.intl.messages['sidebar.problems']}
             background={'http://cdnstatic.visualizeus.com/thumbs/a2/11/abstract,art,background,baloon,banner,bubbles-a211623f282ca898144110754adb21ef_h.jpg'}
             customContent={''}
           />
@@ -143,7 +144,7 @@ class ProblemsMain extends Component {
 };
 
 const module = {
-  Main: connect(mapStateToProps, mapDispatchToProps)(ProblemsMain),
+  Main: connect(mapStateToProps, mapDispatchToProps)(injectIntl(ProblemsMain)),
   Index: generatedFeatures.list,
   View: generatedFeatures.view,
   Edit: generatedFeatures.update,
