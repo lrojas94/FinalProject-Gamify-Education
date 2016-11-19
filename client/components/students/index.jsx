@@ -15,6 +15,7 @@ import StudentsForm from './form';
 import PersonForm from './../persons/form';
 // import ShowGroup from './../groups/show';
 import DateComponent from './../general/dateComponent';
+import {FormattedMessage, injectIntl} from 'react-intl';
 
 const initialState = {
   student: {
@@ -136,7 +137,7 @@ class StudentsMain extends Component {
         return (
           <div>
           <SectionTitle
-            title={'Students'}
+            title={this.props.intl.messages['sidebar.students']}
             background={'http://uconn-today.universityofconn.netdna-cdn.com/wp-content/uploads/2014/05/MaleMathStudent.jpg'}
             customContent={''}
           />
@@ -148,7 +149,7 @@ class StudentsMain extends Component {
 };
 
 const module = {
-  Main: connect(mapStateToProps, mapDispatchToProps)(StudentsMain),
+  Main: connect(mapStateToProps, mapDispatchToProps)(injectIntl(StudentsMain)),
   Index: generatedFeatures.list,
   View: generatedFeatures.view,
   Edit: generatedFeatures.update,

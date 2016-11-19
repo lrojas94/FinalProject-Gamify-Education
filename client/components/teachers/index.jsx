@@ -13,6 +13,7 @@ import { Route } from './../../models/route';
 import TeachersForm from './form';
 import PersonForm from './../persons/form';
 import DateComponent from './../general/dateComponent';
+import {FormattedMessage, injectIntl} from 'react-intl';
 
 const initialState = {
   teacher: {
@@ -127,7 +128,7 @@ class TeachersMain extends Component {
         return (
           <div>
           <SectionTitle
-            title={'Teachers'}
+            title={this.props.intl.messages['sidebar.teachers']}
             background={'http://uconn-today.universityofconn.netdna-cdn.com/wp-content/uploads/2014/05/MaleMathTeacher.jpg'}
             customContent={''}
           />
@@ -139,7 +140,7 @@ class TeachersMain extends Component {
 };
 
 const module = {
-  Main: connect(mapStateToProps, mapDispatchToProps)(TeachersMain),
+  Main: connect(mapStateToProps, mapDispatchToProps)(injectIntl(TeachersMain)),
   Index: generatedFeatures.list,
   View: generatedFeatures.view,
   Edit: generatedFeatures.update,
