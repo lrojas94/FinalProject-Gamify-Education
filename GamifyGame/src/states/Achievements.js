@@ -46,6 +46,7 @@ export default class Achievement extends Phaser.State {
     create() {
         // load bg:
         this.stage.backgroundColor = '#34495e';
+        this.achievementsGroup = this.game.add.group();
         // this.background = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
         // this.background.anchor.setTo(0.5, 0.5);
 
@@ -89,22 +90,42 @@ export default class Achievement extends Phaser.State {
     }
 
     initAchievements(achievements) {
-      let achievementImg = this.game.cache.getFrameByName('panel');
-      let padding = 5;
-
+      let keys = this.game.cache.getKeys();
+      let achievementImg = this.game.make.sprite(0,0,'panel');
+      console.log(keys);
+      console.log(achievementImg);
+      achievementImg.scale.setTo(0.2);
+      let padding = 20;
+      let count = achievements.data.length;
+      // 5 items per row.
+      let rows = 1;
+      if(count > 5) {
+        rows  = Math.ceil(count/5);
+      }
       achievements.data.map((achievement, index) => {
+          let y = null;
+          let row = 0;
+
+          if(rows !== 1) {
+            // need to rows.
+            row = Math.floor((index + 1) / 5);
+          }
 
           let achievementSprite = new AchievementSprite({
               game: this.game,
-              x: this.game.world.centerX,
-              y: this.game.world.centerY + index * (20),
+              x: index * (achievementImg.width +  padding),
+              y: row * (achievementImg.height + padding),
               achievement
           });
           achievementSprite.anchor.setTo(0.5);
 
-          this.game.add.existing(achievementSprite);
-          this.sprites.push(achievementSprite);
+          this.achievementsGroup.add(achievementSprite);
+          // this.sprites.push(achievementSprite);
       });
+
+      this.achievementsGroup.x = this.game.world.centerX - this.achievementsGroup.width / 2 ;
+      this.achievementsGroup.y = this.game.world.centerY;
+
     }
 
 }

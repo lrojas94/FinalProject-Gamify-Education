@@ -19,9 +19,10 @@ export default class AchievementSprite extends Phaser.Button {
       wordWrap : true,
       wordWrapWidth: this.background.width - 20,
       font: 'Lato',
-      fontSize: 20
+      fontSize: 20,
+      align: 'center',
     }
-    this.achievementTitle = this.addChild(this.game.make.text(0,0, this.achievement.name, _.merge({ fontWeight: 400, align: 'center' }, textOpts)));
+    this.achievementTitle = this.addChild(this.game.make.text(0,0, this.achievement.name, _.merge({ fontWeight: 700 }, textOpts)));
     this.achievementDesc = this.addChild(this.game.make.text(0,this.achievementTitle.height + 10, this.achievement.description, _.merge({ fontWeight: 400, fontSize: 15 }, textOpts)));
     this.achievementTitle.anchor.setTo(0.5);
     this.achievementDesc.anchor.setTo(0.5);

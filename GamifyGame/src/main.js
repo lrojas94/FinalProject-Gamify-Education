@@ -8,6 +8,7 @@ import ProblemLoaderState from './states/ProblemLoader';
 import LoginState from './states/Login';
 import MenuState from './states/Menu';
 import TopicsState from './states/Topics';
+import AchievementsState from './states/Achievements';
 import DifficultiesState from './states/Difficulties';
 // import TopicLoaderState from './states/TopicLoader';
 
@@ -28,6 +29,7 @@ class Game extends Phaser.Game {
         this.state.add('Menu', MenuState, false);
         this.state.add('Topics', TopicsState, false);
         this.state.add('Difficulties', DifficultiesState, false);
+        this.state.add('Achievements', AchievementsState, false);
         // this.state.add('TopicLoader', TopicLoaderState, false);
 
         this.state.start('Boot');

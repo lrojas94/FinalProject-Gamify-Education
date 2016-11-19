@@ -89,7 +89,7 @@ export default class Menu extends Phaser.State {
             overFrame: 'red_button01.png',
             downFrame: 'red_button01.png',
             callback: () => {
-                menu.state.start('Menu', transitionOut, transitionIn);
+                menu.state.start('Achievements', transitionOut, transitionIn);
             },
             callbackContext: this
         }).alignTo(this.profileButton, Phaser.BOTTOM_CENTER, 0, 16);
