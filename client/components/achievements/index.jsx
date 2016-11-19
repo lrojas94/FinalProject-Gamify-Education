@@ -33,10 +33,7 @@ const generatedFeatures = componentGenerator({
     title: 'Achievement',
     elements: [
       { title: '', properties: ['name',
-        'description',
-        { name: 'Percent of correct problems Required', path: 'thresholdPercent' },
-        { name: 'Minimum Problems to solve Required', path: 'thresholdQuantity' }
-      ], element: 'achievements.view.achievement.data' },
+        'description', 'thresholdPercent', 'thresholdQuantity'], element: 'achievements.view.achievement.data' },
     ]
   },
   list: {

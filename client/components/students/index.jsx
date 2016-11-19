@@ -42,8 +42,8 @@ const generatedFeatures = componentGenerator({
     title: 'Student',
     elements: [
       { title: '', properties: ['username'], element: 'students.view.student.data' },
-      { title: 'Personal Information',
-        properties: ['name', {name: 'Last Name', path: 'lastName'}, {template: DateComponent, path: 'birthDay', name: 'Birth Date'}, 'gender'],
+      { title: 'personalInfo',
+        properties: ['name', 'lastName', {template: DateComponent, path: 'birthDay', name: 'bday'}, 'gender'],
         element: 'students.view.student.data.person'
       }
       // { title: 'group', template: ShowGroup, element: 'students.view.student.data.group' },

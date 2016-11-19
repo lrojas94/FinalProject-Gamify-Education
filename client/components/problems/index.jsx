@@ -34,7 +34,7 @@ const generatedFeatures = componentGenerator({
   view: {
     title: 'Problem',
     elements: [
-      { title: '', properties: [{template: ImageComponent, path: 'url', name: 'Problem'}], element: 'problems.view.problem.data'  },
+      { title: '', properties: [{template: ImageComponent, path: 'url', name: 'problem'}], element: 'problems.view.problem.data'  },
       // { title: 'person', template: ShowAddress, element: 'problems.view.problem.data.address' },
       // { title: 'phone', template: ShowPhone, element: 'problems.view.problem.data.phone' }
     ]

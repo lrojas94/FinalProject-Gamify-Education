@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import * as axios from 'axios';
 import Griddle from 'griddle-react';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import {
     Link
 } from 'react-router';
@@ -69,22 +70,22 @@ var generateDelete = ({
       render() {
         return (
           <div>
-            <h3> Delete User </h3>
+            <h3><FormattedMessage id='generator.delete'/> <FormattedMessage id={_.capitalize(displayName)}/> </h3>
             <div className='container-fluid'>
               <div className='row'>
                 <div className='col-xs-12'>
-                  <h4>{this.props[pluralDisplayName].delete.status === '' ? "Are you sure you'd like to perform this action?" :
-                       this.props[pluralDisplayName].delete.status === 'loading' ? 'Deleting...' :
-                       this.props[pluralDisplayName].delete.status === 'failure' ? `There was an error: ${this.props[pluralDisplayName].delete.error.message}` : ' Delete successfull!' }</h4>
+                  <h4>{this.props[pluralDisplayName].delete.status === '' ? <FormattedMessage id='generator.confirmation'/> :
+                       this.props[pluralDisplayName].delete.status === 'loading' ? <FormattedMessage id='generator.deleting'/> :
+                       this.props[pluralDisplayName].delete.status === 'failure' ? <FormattedMessage id='generator.error' values={{error:this.props[pluralDisplayName].delete.error.message}}/> : ' -- NOT NEEDED -- WILL JUST REDIRECT --' }</h4>
                   <hr/>
                 </div>
                 {this.props[pluralDisplayName].delete.status === '' ? (
                   <div>
                     <div className='col-xs-6 form-group'>
-                      <button className='btn btn-danger btn-block form-control' onClick={this.delete.bind(this)}><i className='fa fa-trash'></i> Yes, Delete.</button>
+                      <button className='btn btn-danger btn-block form-control' onClick={this.delete.bind(this)}><i className='fa fa-trash'></i><FormattedMessage id='generator.delete.yes'/></button>
                     </div>
                     <div className='col-xs-6 form-group'>
-                      <button className='btn btn-default btn-block form-control' onClick={this.cancelDelete.bind(this)}> Cancel</button>
+                      <button className='btn btn-default btn-block form-control' onClick={this.cancelDelete.bind(this)}> <FormattedMessage id='generator.cancel'/> </button>
                     </div>
                   </div>
                 ):(<p className='text-center'> ... </p>)}
@@ -168,7 +169,7 @@ var generateView = ({pluralDisplayName, displayName, view, actions, url}) => {
               props = props.toJSON();
               return (
                 <div key={e.title}>
-                  <h3>{_.capitalize(e.title)}</h3>
+                  <h3><FormattedMessage id={`generator.${displayName}.${e.title}`}/></h3>
                     <div className='row'>
                       <div className={e.className || 'col-xs-12'}>
                         <e.template {...props}/>
@@ -183,11 +184,11 @@ var generateView = ({pluralDisplayName, displayName, view, actions, url}) => {
 
           var renderProperties = () => {
             return _.map(e.properties, (p) => {
-              var p = _.isString(p) ? { name: _.capitalize(p), path: p } : p;
+              var p = _.isString(p) ? { name: p, path: p } : p;
 
               return (
                 <div className='col-xs-12 col-sm-6' key={p.path}>
-                <h4>{ p.name }</h4>
+                <h4><FormattedMessage id={`generator.${displayName}.${p.name}`}/></h4>
                 {p.template ? (
                     <p.template data={_.get(this.props, `${elemName}.${p.path}`)} />
                 ): (
@@ -202,7 +203,7 @@ var generateView = ({pluralDisplayName, displayName, view, actions, url}) => {
 
           return (
             <div key={e.title}>
-              <h3>{_.capitalize(e.title)}</h3>
+              { e.title ? <h3><FormattedMessage id={`generator.${displayName}.${e.title}`}/></h3> : ''}
               <div className='row'>
               {renderedProperties}
               </div>
@@ -222,9 +223,9 @@ var generateView = ({pluralDisplayName, displayName, view, actions, url}) => {
               <div className='container-fluid'>
                 <div className='row'>
                   <div className='col-xs-12'>
-                    <h3> There's been an error. </h3>
+                    <h3><FormattedMessage id='generator.error.title'/></h3>
                     <hr/>
-                    <div className='alert alert-danger'> { this.props[pluralDisplayName].view.error.message }</div>
+                    <div className='alert alert-danger'> <FormattedMessage id='generator.error' value={{error: this.props[pluralDisplayName].view.error.message}}/></div>
                   </div>
                 </div>
               </div>
@@ -237,7 +238,7 @@ var generateView = ({pluralDisplayName, displayName, view, actions, url}) => {
             <div className='container-fluid'>
               <div className='row'>
                 <div className='col-xs-12'>
-                  <div className='alert alert-info'> Loading information...</div>
+                  <div className='alert alert-info'> <FormattedMessage id='generator.loading'/> </div>
                 </div>
               </div>
             </div>
@@ -258,7 +259,7 @@ var generateView = ({pluralDisplayName, displayName, view, actions, url}) => {
                 ): ''}
               </div>
             </div>
-            <h3>{view.title}</h3>
+            <h3><FormattedMessage id={_.capitalize(view.title)}/></h3>
             <div className='container-fluid'>
               {this.generateItems()}
             </div>
@@ -327,7 +328,7 @@ var generateList = ({ actions, displayName, pluralDisplayName, list, url }) => {
               </div>
             </div>
 
-            <h3> Manage Existing </h3>
+            <h3> <FormattedMessage id='generator.manageExisting'/> </h3>
             <PagedTable
               queryKeys={list.queryKeys}
               table={this.props[pluralDisplayName].table.data}
@@ -555,7 +556,7 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
                   e.preventDefault();
                   handler.removeItem(elem.id)
                 }}>
-                Remove
+                <FormattedMessage id='generator.removeBtn'/>
                 </button>
               </div>
             );
@@ -569,7 +570,7 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
                e.preventDefault();
                handler.addItem();
              }} >
-                Add new element of {_.capitalize(form.name)}
+                <FormattedMessage id='generator.addNewElement'/> <FormattedMessage id={_.capitalize(form.name)}/>
              </button>
              <br/>
              {generateItems()}
@@ -610,7 +611,7 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
            <div key={form.name}>
              {form.toggler ? (
                <div className='row'>
-                 <h3 className='text-center'> Would you like to add or edit {_.capitalize(form.name)}?</h3>
+                 <h3 className='text-center'> <FormattedMessage id="generator.addEdit"/> <FormattedMessage id={_.capitalize(form.name)}/>?</h3>
                  <div className='col-xs-6'>
                    <button type='button' className={`btn btn-block ${this.state[form.toggler] ? 'm-light-blue' : 'btn-default'}`}
                    data-show={'true'} onClick={this.togglers[form.name].bind(this)}>Yes</button>
@@ -643,17 +644,17 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
               </div>
             </div>
 
-            <h3> {opts.title} {_.capitalize(displayName)} </h3>
+            <h3> <FormattedMessage id={`generator.${opts.title}`}/> <FormattedMessage id={_.capitalize(displayName)}/> </h3>
             <div className='container-fluid'>
               <div className='row'>
                 <div className='col-xs-12'>
-                  <h4>To add a new {_.capitalize(displayName)}, just fill in the form bellow and click add.</h4>
+                  <h4><FormattedMessage id='generator.creating' value={{element: this.props.intl.messages[`${_.capitalize(displayName)}`]}}/></h4>
                   <hr/>
                   { this.props[pluralDisplayName].status === 'success' ? (
-                    <div className='alert alert-success'> {_.capitalize(displayName)} <strong>{this.props[pluralDisplayName].data.name}</strong> was created/updated successfuly </div>
+                    <div className='alert alert-success'> <FormattedMessage id={_.capitalize(displayName)}/><strong>{this.props[pluralDisplayName].data.name}</strong> <FormattedMessage id='generator.addEdit.success'/> </div>
                   ) : '' }
                   { this.props[pluralDisplayName].error && this.props[pluralDisplayName].status === 'failure' ? (
-                    <div className='alert alert-danger'> {this.props[pluralDisplayName].error.message}</div>
+                    <div className='alert alert-danger'><FormattedMessage id='generator.error' value={{ error: this.props[pluralDisplayName].error.message }}/></div>
                   ) : '' }
                   <form className='form' action='/api/{url}' ref='form' onSubmit={this.performActionWithItem.bind(this)}>
 
@@ -662,7 +663,7 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
                     <div className='form-group'>
                       <div className='col-xs-6 col-xs-offset-3'>
                         <button type='submit' onClick={this.performActionWithItem.bind(this)} className={`btn form-control m-light-green btn-block ${this.props[pluralDisplayName].loading ? 'disabled' : ''}`}>
-                          {this.props[pluralDisplayName].loading ? '{opts.loadingTitle} {displayName}....' : (<span><i className='fa fa-plus'></i> {opts.title}</span>)}
+                          {this.props[pluralDisplayName].loading ? <span><FormattedMessage id={`generator.${opts.loadingTitle}`}/> <FormattedMessage id={`generator.${_.capitalize(displayName)}`}/>...</span> : (<span><i className='fa fa-plus'></i> <FormattedMessage id={`generator.${opts.title}`}/></span>)}
                         </button>
                       </div>
                     </div>
@@ -700,12 +701,12 @@ var generateAdd = ({ displayName, pluralDisplayName, createOpts, actions, url })
 
 
 
-  return connect(mapStateToProps, mapDispatchToProps)(generateAddEdit({
+  return connect(mapStateToProps, mapDispatchToProps)(injectIntl(generateAddEdit({
     displayName,
     pluralDisplayName,
     url,
-    opts: _.merge({}, createOpts, { title: 'Add', loadingTitle: 'Creating'})
-  }));
+    opts: _.merge({}, createOpts, { title: 'add', loadingTitle: 'add.loading'})
+  })));
 
 }
 
@@ -741,12 +742,12 @@ var generateUpdate = ({ displayName, pluralDisplayName, update, actions, url }) 
 
 
 
-  return connect(mapStateToProps, mapDispatchToProps)(generateAddEdit({
+  return connect(mapStateToProps, mapDispatchToProps)(injectIntl(generateAddEdit({
     displayName,
     pluralDisplayName,
     url,
-    opts: _.merge({}, update, { title: 'Update', loadingTitle: 'Updating'})
-  }));
+    opts: _.merge({}, update, { title: 'edit', loadingTitle: 'edit.loading'})
+  })));
 
 }
 
