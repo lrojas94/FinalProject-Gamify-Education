@@ -83,5 +83,84 @@ export default {
      /**
       * Topics Form
       */
-     "form.exampleProblem": "Problema de Ejemplo"
+     "form.exampleProblem": "Problema de Ejemplo",
+     /** Generator **/
+     "generator.yes": "si",
+     "generator.no": "no",
+     "generator.cancel": "Cancelar",
+     "generator.loading": "Cargando Informaciones...",
+     "generator.confirmation": "Esta seguro que desea realizar esta operacion?",
+     "generator.delete": "Eliminar",
+     "generator.deleting": "Eliminando...",
+     "generator.delete.yes": "Estoy seguro, Eliminar",
+     "generator.removeBtn": "Remover",
+     "generator.addNewElement": "Agregar nuevo elemento del tipo ",
+     "generator.error.title": "Ha ocurrido un error.",
+     "generator.error": "Se ha presentado un error. El servidor reporta lo siguiente: {error}",
+     "generator.manageExisting": "Manejar informaciones existentes",
+     "generator.addEdit": "Desea agregar o editar el elemento de ",
+     "generator.add": "Agregar",
+     "generator.add.loading": "Agregando",
+     "generator.edit": "Actualizar",
+     "generator.edit": "Actualizando",
+     "generator.addEdit.success": "fue creado/actualizado correctamente",
+     "generator.creating": "Para agregar un nuevo elemento de {element}, Complete el formulario y presione Agregar al final de la pagina.",
+     /** Achievements */
+     "generator.achievement.name": "Nombre",
+     "generator.achievement.description": "Descripcion",
+     "generator.achievement.thresholdPercent": "Porciento minimo de problemas correctos requeridos.",
+     "generator.achievement.thresholdQuantity": "Minima Cantidad de problemas correctos requeridos.",
+     /** Diff */
+     "generator.difficulty.name": "Nombre",
+     "generator.difficulty.description": "Descripcion",
+     /** Problem **/
+     "generator.problem.problem": "Problema",
+     /** School **/
+     "generator.school.name": "Nombre de la escuela",
+     "generator.school.address": "Direccion",
+     "generator.school.telephone": "Numero de Telefono",
+     "generator.school.website": "Pagina web",
+     /** student **/
+     "generator.student.username": "Nombre de Usuario",
+     "generator.student.name": "Nombres",
+     "generator.student.lastName": "Apellidos",
+     "generator.student.bday": "Fecha de Nacimiento",
+     "generator.student.gender": "Genero",
+     "generator.student.personalInfo": "Informaciones Personales",
+     /** teacher **/
+     "generator.teacher.username": "Nombre de Usuario",
+     "generator.teacher.degree": "Diploma/Titulo",
+     "generator.teacher.name": "Nombres",
+     "generator.teacher.lastName": "Apellidos",
+     "generator.teacher.bday": "Fecha de Nacimiento",
+     "generator.teacher.gender": "Genero",
+     "generator.teacher.personalInfo": "Informaciones Personales",
+
+     /** topics **/
+     "generator.topics.name": "Nombre",
+     "generator.topics.description": "Descripcion",
+     "generator.topics.example": "Problema de Ejemplo",
+     /**
+      * General items
+      */
+     "Achievement": "Logro/Recompensa/Objetivo",
+     "Achievements": "Logros/Recompensas/Objetivos",
+     "Difficulty": "Nivel Dificultad",
+     "Difficultys": "Niveles de Dificultades",
+     "Group": "Grupo de Clase",
+     "Groups": "Grupos de Clase",
+     "Person": "Persona",
+     "Persons": "Personas",
+     "Problem": "Problema",
+     "Problems": "Problemas",
+     "School": "Escuela",
+     "Schools": "Escuelas",
+     "Solution": "Solucion",
+     "Solutions": "Soluciones",
+     "Student": "Estudiante",
+     "Students": "Estudiantes",
+     "Teacher": "Profesor",
+     "Teachers": "Profesores",
+     "Topic": "Tema",
+     "Topics": "Temas",
 };
