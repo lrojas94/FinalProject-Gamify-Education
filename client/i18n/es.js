@@ -24,7 +24,7 @@ export default {
     /**
      * Achievements Form
      */
-    "form.topicName": "Nombre del Tema",
+    "form.achievementName": "Nombre de Recompensa",
     "form.description": "Descripción",
     "form.thresholdQuantity": "Número de problemas a resolver antes de desbloquear esta recompensa",
     "form.thresholdPercent": "Porcentaje de problemas correctos antes de desbloquear esta recompensa",

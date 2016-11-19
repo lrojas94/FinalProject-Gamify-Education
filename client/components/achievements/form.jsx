@@ -14,8 +14,8 @@ import {FormattedMessage, injectIntl} from 'react-intl';
 
 function mapStateToProps(props) {
     return {
-        difficulties: {
-            options: props.difficulties.options
+        difficultys: {
+            options: props.difficultys.options
         },
         topics: {
             options: props.topics.options
@@ -62,7 +62,7 @@ class AchievementForm extends Component {
                             ? (<input type='hidden' name='id' value={this.props.id}/>)
                             : ''}
                         <label htmlFor="input-topic-name" className="control-label">
-                            <FormattedMessage id="form.topicName"/> *
+                            <FormattedMessage id="form.achievementName"/> *
                         </label>
                         <input type="text" className="form-control" id="input-topic-name" onChange={this.props.handleFormChange} value={this.props.name} name='name' required/>
                     </div>
@@ -108,7 +108,7 @@ class AchievementForm extends Component {
                             handleFormChange={this.props.handleFormChange}
                             name={'difficultyId'}
                             selected={this.props.difficultyId}
-                            items={this.props.difficulties.options.data}
+                            items={this.props.difficultys.options.data}
                             required={true}/>
                     </div>
                 </div>

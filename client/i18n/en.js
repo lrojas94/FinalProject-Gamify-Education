@@ -24,7 +24,7 @@ export default {
     /**
      * Achievements Form
      */
-    "form.topicName": "Topic Name",
+    "form.achievementName": "Achievement Name",
     "form.description": "Description",
     "form.thresholdQuantity": "Number of Problems to Solve before unlocking this achievement",
     "form.thresholdPercent": "Percent of Correct Answered Problems before unlocking this achievement",
