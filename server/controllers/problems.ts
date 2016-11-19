@@ -45,11 +45,14 @@ var router = simpleRouter({
         ]
       },
       upsert: {
-        onUpsert: (data: any) => {
+        onUpsert: (data: any, transaction) => {
           return new Promise((resolve, reject) => {
+            transaction ? transaction.commit() : transaction;
             data.getSolutions()
             .then((solutions) => {
+              console.log(solutions);
               data.setDataValue('solutions', solutions);
+              console.log(data);
               rp({
                 method: 'POST',
                 uri: `${constants.IMG_API_SERVER_ADDRESS}api/problem/create`,

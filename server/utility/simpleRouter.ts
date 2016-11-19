@@ -39,9 +39,9 @@ export interface ISimpleRouterOpts {
       upsert: (data: IUpsert) =>  Promise<any>,
       isAssociation?: boolean,
       associationName?: string,
-      onUpsert?: (data: any) => Promise<any>
+      onUpsert?: (data: any, transaction?) => Promise<any>
     }[];
-    onUpsert?: (data: any) => Promise<any>
+    onUpsert?: (data: any, transaction?) => Promise<any>
   };
   view?: {
     include: {
@@ -202,7 +202,7 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
           return addIncludes(data)
           .then((something) => {
             if (opts.upsert.onUpsert) {
-              return opts.upsert.onUpsert(data)
+              return opts.upsert.onUpsert(data, transaction)
               .then(() => {
                 return resolve(data);
               })
@@ -219,7 +219,7 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
           });
         }
         else if (opts.upsert.onUpsert) {
-          return opts.upsert.onUpsert(data)
+          return opts.upsert.onUpsert(data, transaction)
           .then(() => {
             return resolve(data);
           })
@@ -256,7 +256,13 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
       });
     })
     .catch((err) => {
-      console.log(err);
+      if (err.message === 'Transaction cannot be committed because it has been finished with state: commit') {
+        return res.json({
+          status: 0,
+          message: `${modelName} was successfuly added to our servers.`,
+        });
+      }
+
       return res.json({
         status: 1,
         message: `${modelName} could not be created.`,
