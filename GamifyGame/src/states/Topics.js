@@ -11,8 +11,7 @@ import {
 
 export default class Topic extends Phaser.State {
     init() {
-        this.topicsButton = [];
-        this.selectedTopic = false;
+        this.topicSelected = false;
         this.page = 1;
         this.initTopics.bind(this);
     }
@@ -119,11 +118,11 @@ export default class Topic extends Phaser.State {
                 description: topic.description,
                 callback: () => {
                     // Select Topic:
-                    if (this.selectedTopic) {
+                    if (this.topicSelected) {
                         return;
                     }
 
-                    this.selectedTopic = true;
+                    this.topicSelected = true;
                     this.state.start('Difficulties');
                 },
                 callbackContext: this

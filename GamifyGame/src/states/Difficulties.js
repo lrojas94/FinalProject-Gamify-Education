@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import axios from 'axios';
 import constants from '../constants';
 import ButtonWithText from './../sprites/ButtonWithText';
-import SolutionButton from '../sprites/SolutionButton';
+import PanelButton from '../sprites/PanelButton';
 import {
     setResponsiveWidth,
     centerGameObjects
@@ -11,43 +11,41 @@ import {
 
 export default class Difficulty extends Phaser.State {
     init() {
-        this.difficultysButton = [];
-        this.selectedDifficulty = false;
+        this.difficultySelected = false;
         this.page = 1;
         this.initDifficulties.bind(this);
-        console.log(this.game.topicSelected);
     }
     preload() {
 
     }
 
     loadPage(page) {
-      this.loadingText.setText("Loading...");
-      this.load.crossOrigin = 'anonymous';
-      let difficultyLoader = this;
+        this.loadingText.setText("Loading...");
+        this.load.crossOrigin = 'anonymous';
+        let difficultyLoader = this;
 
-
-      axios.get(`${constants.API_URL}difficultys/`, {
-          page: page,
-          limit: 10
-      }).then((response) => {
-          const data = response.data;
-          if (data.status === 1) {
-              // Error on server:
-              throw Error(data.message);
-          } else {
-              // Remove loading text
-              difficultyLoader.loadingText.setText("");
-              difficultyLoader.initDifficulties(data);
-          }
-      }).catch((err) => {
-          console.log(err);
-      });
+        axios.get(`${constants.API_URL}difficultys/`, {
+            page: page,
+            limit: 10
+        }).then((response) => {
+            const data = response.data;
+            if (data.status === 1) {
+                // Error on server:
+                throw Error(data.message);
+            } else {
+                // Remove loading text
+                difficultyLoader.loadingText.setText("");
+                difficultyLoader.initDifficulties(data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 
     create() {
         // load bg:
         this.stage.backgroundColor = '#34495e';
+        this.difficultiesGroup = this.game.add.group();
         // this.background = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
         // this.background.anchor.setTo(0.5, 0.5);
 
@@ -91,39 +89,51 @@ export default class Difficulty extends Phaser.State {
     }
 
     initDifficulties(difficultys) {
-      let buttonImg = this.game.cache.getFrameByName('ui-grey', 'grey_button00.png');
-      let padding = 5;
+        let keys = this.game.cache.getKeys();
+        let difficultyImg = this.game.make.sprite(0, 0, 'panel');
+        difficultyImg.scale.setTo(0.2);
+        let padding = 20;
+        let count = difficultys.data.length;
 
-      difficultys.data.map((difficulty, index) => {
+        // 5 items per row.
+        let rows = 1;
+        if (count > 5) {
+            rows = Math.ceil(count / 5);
+        }
 
-          let button = new ButtonWithText({
-              game: this.game,
-              text: difficulty.name,
-              x: this.game.world.centerX,
-              y: this.game.world.centerY + index * (buttonImg.height + padding),
-              key: 'ui-grey',
-              upFrame: 'grey_button04.png',
-              outFrame: 'grey_button01.png',
-              overFrame: 'grey_button03.png',
-              downFrame: 'grey_button02.png',
-              style: { font: "20px Arial", fill: "#34495e", align: "center" },
-              callback: () => {
-                  // Select Difficulty:
-                  if (this.selectedDifficulty) {
-                      return;
-                  }
+        difficultys.data.map((difficulty, index) => {
 
-                  this.selectedDifficulty = true;
-                  this.game.selectedDifficulty = difficulty;
-                  this.state.start('ProblemLoader');
-              },
-              callbackContext: this
-          });
-          button.anchor.setTo(0.5);
+            let y = null;
+            let row = 0;
 
-          this.game.add.existing(button);
-          this.difficultysButton.push(button);
-      });
+            if (row !== 1) {
+                row = Math.floor((index + 1) / 5);
+            }
+
+            let panelButton = new PanelButton({
+                game: this.game,
+                x: index * (difficultyImg.width + padding),
+                y: row * (difficultyImg.height + padding),
+                title: difficulty.name,
+                description: '',
+                callback: () => {
+                    // Select Difficulty:
+                    if (this.difficultySelected) {
+                        return;
+                    }
+
+                    this.difficultySelected = true;
+                    this.state.start('ProblemLoader');
+                },
+                callbackContext: this
+            });
+            panelButton.anchor.setTo(0.5);
+
+            this.difficultiesGroup.add(panelButton);
+        });
+
+        this.difficultiesGroup.x = this.game.world.centerX - this.difficultiesGroup.width / 2;
+        this.difficultiesGroup.y = this.game.world.centerY;
     }
 
 }
