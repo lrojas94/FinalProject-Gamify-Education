@@ -20,27 +20,27 @@ export default class Achievement extends Phaser.State {
     }
 
     loadPage(page) {
-      this.loadingText.setText("Loading...");
-      this.load.crossOrigin = 'anonymous';
-      let achievementLoader = this;
+        this.loadingText.setText("Loading...");
+        this.load.crossOrigin = 'anonymous';
+        let achievementLoader = this;
 
 
-      axios.get(`${constants.API_URL}achievements/`, {
-          page: page,
-          limit: 10
-      }).then((response) => {
-          const data = response.data;
-          if (data.status === 1) {
-              // Error on server:
-              throw Error(data.message);
-          } else {
-              // Remove loading text
-              achievementLoader.loadingText.setText("");
-              achievementLoader.initAchievements(data);
-          }
-      }).catch((err) => {
-          console.log(err);
-      });
+        axios.get(`${constants.API_URL}achievements/`, {
+            page: page,
+            limit: 10
+        }).then((response) => {
+            const data = response.data;
+            if (data.status === 1) {
+                // Error on server:
+                throw Error(data.message);
+            } else {
+                // Remove loading text
+                achievementLoader.loadingText.setText("");
+                achievementLoader.initAchievements(data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 
     create() {
@@ -90,41 +90,41 @@ export default class Achievement extends Phaser.State {
     }
 
     initAchievements(achievements) {
-      let keys = this.game.cache.getKeys();
-      let achievementImg = this.game.make.sprite(0,0,'panel');
-      console.log(keys);
-      console.log(achievementImg);
-      achievementImg.scale.setTo(0.2);
-      let padding = 20;
-      let count = achievements.data.length;
-      // 5 items per row.
-      let rows = 1;
-      if(count > 5) {
-        rows  = Math.ceil(count/5);
-      }
-      achievements.data.map((achievement, index) => {
-          let y = null;
-          let row = 0;
+        let keys = this.game.cache.getKeys();
+        let achievementImg = this.game.make.sprite(0, 0, 'panel');
+        console.log(keys);
+        console.log(achievementImg);
+        achievementImg.scale.setTo(0.2);
+        let padding = 20;
+        let count = achievements.data.length;
+        // 5 items per row.
+        let rows = 1;
+        if (count > 5) {
+            rows = Math.ceil(count / 5);
+        }
+        achievements.data.map((achievement, index) => {
+            let y = null;
+            let row = 0;
 
-          if(rows !== 1) {
-            // need to rows.
-            row = Math.floor((index + 1) / 5);
-          }
+            if (rows !== 1) {
+                // need to rows.
+                row = Math.floor((index + 1) / 5);
+            }
 
-          let achievementSprite = new AchievementSprite({
-              game: this.game,
-              x: index * (achievementImg.width +  padding),
-              y: row * (achievementImg.height + padding),
-              achievement
-          });
-          achievementSprite.anchor.setTo(0.5);
+            let achievementSprite = new AchievementSprite({
+                game: this.game,
+                x: index * (achievementImg.width + padding),
+                y: row * (achievementImg.height + padding),
+                achievement
+            });
+            achievementSprite.anchor.setTo(0.5);
 
-          this.achievementsGroup.add(achievementSprite);
-          // this.sprites.push(achievementSprite);
-      });
+            this.achievementsGroup.add(achievementSprite);
+            // this.sprites.push(achievementSprite);
+        });
 
-      this.achievementsGroup.x = this.game.world.centerX - this.achievementsGroup.width / 2 ;
-      this.achievementsGroup.y = this.game.world.centerY;
+        this.achievementsGroup.x = this.game.world.centerX - this.achievementsGroup.width / 2;
+        this.achievementsGroup.y = this.game.world.centerY;
 
     }
 

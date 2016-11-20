@@ -83,6 +83,8 @@ export default {
      /**
       * Topics Form
       */
+     "form.topicName": "Nombre del Tema",
+     "form.exampleProblem": "Problema de Ejemplo"
      "form.exampleProblem": "Problema de Ejemplo",
      /** Generator **/
      "generator.yes": "si",
