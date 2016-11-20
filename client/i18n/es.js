@@ -83,13 +83,15 @@ export default {
      /**
       * Topics Form
       */
+     "form.topicName": "Nombre del Tema",
      "form.exampleProblem": "Problema de Ejemplo",
+
      /** Generator **/
-     "generator.yes": "si",
-     "generator.no": "no",
+     "generator.yes": "Sí",
+     "generator.no": "No",
      "generator.cancel": "Cancelar",
      "generator.loading": "Cargando Informaciones...",
-     "generator.confirmation": "Esta seguro que desea realizar esta operacion?",
+     "generator.confirmation": "Está seguro que desea realizar esta operación?",
      "generator.delete": "Eliminar",
      "generator.deleting": "Eliminando...",
      "generator.delete.yes": "Estoy seguro, Eliminar",
@@ -103,33 +105,39 @@ export default {
      "generator.add.loading": "Agregando",
      "generator.edit": "Actualizar",
      "generator.edit": "Actualizando",
-     "generator.addEdit.success": "fue creado/actualizado correctamente",
-     "generator.creating": "Para agregar un nuevo elemento de {element}, Complete el formulario y presione Agregar al final de la pagina.",
+     "generator.addEdit.success": "Fue creado/actualizado correctamente",
+     "generator.creating": "Para agregar un nuevo elemento de {element}, Complete el formulario y presione Agregar al final de la página.",
+
      /** Achievements */
      "generator.achievement.name": "Nombre",
-     "generator.achievement.description": "Descripcion",
-     "generator.achievement.thresholdPercent": "Porciento minimo de problemas correctos requeridos.",
-     "generator.achievement.thresholdQuantity": "Minima Cantidad de problemas correctos requeridos.",
+     "generator.achievement.description": "Descripción",
+     "generator.achievement.thresholdPercent": "Porciento mínimo de problemas correctos requeridos.",
+     "generator.achievement.thresholdQuantity": "Mínima Cantidad de problemas correctos requeridos.",
+
      /** Diff */
      "generator.difficulty.name": "Nombre",
-     "generator.difficulty.description": "Descripcion",
+     "generator.difficulty.description": "Descripción",
+
      /** Problem **/
      "generator.problem.problem": "Problema",
+
      /** School **/
-     "generator.school.name": "Nombre de la escuela",
-     "generator.school.address": "Direccion",
-     "generator.school.telephone": "Numero de Telefono",
-     "generator.school.website": "Pagina web",
+     "generator.school.name": "Nombre de la Escuela",
+     "generator.school.address": "Dirección",
+     "generator.school.telephone": "Número de Teléfono",
+     "generator.school.website": "Página Web",
+
      /** student **/
      "generator.student.username": "Nombre de Usuario",
      "generator.student.name": "Nombres",
      "generator.student.lastName": "Apellidos",
      "generator.student.bday": "Fecha de Nacimiento",
-     "generator.student.gender": "Genero",
+     "generator.student.gender": "Género",
      "generator.student.personalInfo": "Informaciones Personales",
+
      /** teacher **/
      "generator.teacher.username": "Nombre de Usuario",
-     "generator.teacher.degree": "Diploma/Titulo",
+     "generator.teacher.degree": "Diploma/Título",
      "generator.teacher.name": "Nombres",
      "generator.teacher.lastName": "Apellidos",
      "generator.teacher.bday": "Fecha de Nacimiento",
@@ -138,8 +146,9 @@ export default {
 
      /** topics **/
      "generator.topics.name": "Nombre",
-     "generator.topics.description": "Descripcion",
+     "generator.topics.description": "Descripción",
      "generator.topics.example": "Problema de Ejemplo",
+
      /**
       * General items
       */
@@ -155,7 +164,7 @@ export default {
      "Problems": "Problemas",
      "School": "Escuela",
      "Schools": "Escuelas",
-     "Solution": "Solucion",
+     "Solution": "Solución",
      "Solutions": "Soluciones",
      "Student": "Estudiante",
      "Students": "Estudiantes",

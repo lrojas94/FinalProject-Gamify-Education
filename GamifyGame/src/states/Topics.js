@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import axios from 'axios';
 import constants from '../constants';
 import ButtonWithText from './../sprites/ButtonWithText';
-import SolutionButton from '../sprites/SolutionButton';
+import PanelButton from '../sprites/PanelButton';
 import {
     setResponsiveWidth,
     centerGameObjects
@@ -21,32 +21,32 @@ export default class Topic extends Phaser.State {
     }
 
     loadPage(page) {
-      this.loadingText.setText("Loading...");
-      this.load.crossOrigin = 'anonymous';
-      let topicLoader = this;
+        this.loadingText.setText("Loading...");
+        this.load.crossOrigin = 'anonymous';
+        let topicLoader = this;
 
-
-      axios.get(`${constants.API_URL}topics/`, {
-          page: page,
-          limit: 10
-      }).then((response) => {
-          const data = response.data;
-          if (data.status === 1) {
-              // Error on server:
-              throw Error(data.message);
-          } else {
-              // Remove loading text
-              topicLoader.loadingText.setText("");
-              topicLoader.initTopics(data);
-          }
-      }).catch((err) => {
-          console.log(err);
-      });
+        axios.get(`${constants.API_URL}topics/`, {
+            page: page,
+            limit: 10
+        }).then((response) => {
+            const data = response.data;
+            if (data.status === 1) {
+                // Error on server:
+                throw Error(data.message);
+            } else {
+                // Remove loading text
+                topicLoader.loadingText.setText("");
+                topicLoader.initTopics(data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 
     create() {
         // load bg:
         this.stage.backgroundColor = '#34495e';
+        this.topicsGroup = this.game.add.group();
         // this.background = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
         // this.background.anchor.setTo(0.5, 0.5);
 
@@ -90,39 +90,52 @@ export default class Topic extends Phaser.State {
     }
 
     initTopics(topics) {
-      let buttonImg = this.game.cache.getFrameByName('ui-grey', 'grey_button00.png');
-      let padding = 5;
+        let keys = this.game.cache.getKeys();
+        let topicImg = this.game.make.sprite(0, 0, 'panel');
+        topicImg.scale.setTo(0.2);
+        let padding = 20;
+        let count = topics.data.length;
 
-      topics.data.map((topic, index) => {
+        // 5 items per row.
+        let rows = 1;
+        if (count > 5) {
+            rows = Math.ceil(count / 5);
+        }
 
-          let button = new ButtonWithText({
-              game: this.game,
-              text: topic.name,
-              x: this.game.world.centerX,
-              y: this.game.world.centerY + index * (buttonImg.height + padding),
-              key: 'ui-grey',
-              upFrame: 'grey_button04.png',
-              outFrame: 'grey_button01.png',
-              overFrame: 'grey_button03.png',
-              downFrame: 'grey_button02.png',
-              style: { font: "20px Arial", fill: "#34495e", align: "center" },
-              callback: () => {
-                  // Select Topic:
-                  if (this.selectedTopic) {
-                      return;
-                  }
+        topics.data.map((topic, index) => {
 
-                  this.selectedTopic = true;
-                  this.game.selectedTopic = topic;
-                  this.state.start('Difficulties');
-              },
-              callbackContext: this
-          });
-          button.anchor.setTo(0.5);
+            let y = null;
+            let row = 0;
 
-          this.game.add.existing(button);
-          this.topicsButton.push(button);
-      });
+            if (row !== 1) {
+                row = Math.floor((index + 1) / 5);
+            }
+
+            let panelButton = new PanelButton({
+                game: this.game,
+                x: index * (topicImg.width + padding),
+                y: row * (topicImg.height + padding),
+                title: topic.name,
+                description: topic.description,
+                callback: () => {
+                    // Select Topic:
+                    if (this.selectedTopic) {
+                        return;
+                    }
+
+                    this.selectedTopic = true;
+                    this.state.start('Difficulties');
+                },
+                callbackContext: this
+            });
+            panelButton.anchor.setTo(0.5);
+
+            this.topicsGroup.add(panelButton);
+        });
+
+        this.topicsGroup.x = this.game.world.centerX - this.topicsGroup.width / 2;
+        this.topicsGroup.y = this.game.world.centerY;
+
     }
 
 }

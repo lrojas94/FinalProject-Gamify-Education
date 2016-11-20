@@ -1,20 +1,17 @@
 import Phaser from 'phaser';
 import * as _ from 'lodash';
 
+export default class PanelButton extends Phaser.Button {
 
-export default class AchievementSprite extends Phaser.Button {
-
-    constructor({game, x, y, asset, achievement}) {
-        super(game, x, y, null);
+    constructor({game, x, y, asset, callback, callbackContext, title, description}) {
+        super(game, x, y, null, callback, callbackContext);
         this.background = this.addChild(this.game.make.sprite(0, 0, asset || 'panel'));
         this.background.anchor.setTo(0.5);
         this.background.scale.setTo(0.2);
 
-        this.achievement = achievement;
         this.game = game;
         this.anchor.setTo(0.5);
-        //create solution sprite:
-        // Add achievement text:
+
         var textOpts = {
             wordWrap: true,
             wordWrapWidth: this.background.width - 20,
@@ -22,10 +19,10 @@ export default class AchievementSprite extends Phaser.Button {
             fontSize: 20,
             align: 'center',
         };
-        this.achievementTitle = this.addChild(this.game.make.text(0, 0, this.achievement.name, _.merge({
+        this.achievementTitle = this.addChild(this.game.make.text(0, 0, title, _.merge({
             fontWeight: 700
         }, textOpts)));
-        this.achievementDesc = this.addChild(this.game.make.text(0, this.achievementTitle.height + 10, this.achievement.description, _.merge({
+        this.achievementDesc = this.addChild(this.game.make.text(0, this.achievementTitle.height + 10, description, _.merge({
             fontWeight: 400,
             fontSize: 15
         }, textOpts)));

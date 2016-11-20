@@ -83,10 +83,12 @@ export default {
      /**
       * Topics Form
       */
+     "form.topicName": "Topic Name",
      "form.exampleProblem": "Example Problem",
+
      /** Generator **/
-     "generator.yes": "yes",
-     "generator.no": "no",
+     "generator.yes": "Yes",
+     "generator.no": "No",
      "generator.cancel": "Cancel",
      "generator.loading": "Loading...",
      "generator.confirmation": "Are you sure you'd like to perform this action?",
@@ -103,23 +105,28 @@ export default {
      "generator.add.loading": "Creating",
      "generator.edit": "Update",
      "generator.edit": "Updating",
-     "generator.addEdit.success": "was created/updated successfuly",
+     "generator.addEdit.success": "Was created/updated successfuly",
      "generator.creating": "To add a new {element}, just fill in the form bellow and click add.",
+
      /** Achievements */
      "generator.achievement.name": "Name",
      "generator.achievement.description": "Description",
      "generator.achievement.thresholdPercent": "Percent of correct problems Required",
      "generator.achievement.thresholdQuantity": "Minimum Problems to solve Required",
+
      /** Diff */
      "generator.difficulty.name": "Name",
      "generator.difficulty.description": "Description",
+
      /** Problem **/
      "generator.problem.problem": "Problem",
+
      /** School **/
      "generator.school.name": "School Name",
      "generator.school.address": "Address",
      "generator.school.telephone": "Phone Number",
      "generator.school.website": "Website Address",
+
      /** student **/
      "generator.student.username": "Username",
      "generator.student.name": "Name",
@@ -127,6 +134,7 @@ export default {
      "generator.student.bday": "Birth Date",
      "generator.student.gender": "Gender",
      "generator.student.personalInfo": "Personal Information",
+
      /** teacher **/
      "generator.teacher.username": "Username",
      "generator.teacher.degree": "Degree",
@@ -140,6 +148,7 @@ export default {
      "generator.topics.name": "Name",
      "generator.topics.description": "Description",
      "generator.topics.example": "Sample Problem",
+
      /**
       * General items
       */
