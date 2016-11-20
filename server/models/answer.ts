@@ -2,6 +2,7 @@ import * as Sequelize from 'sequelize';
 import * as Student from './student';
 import * as Problem from './problem';
 import * as Solution from './solution';
+import { Solution as Sol } from './db';
 
 export interface Pojo {
     studentId?: number;
@@ -43,7 +44,7 @@ export function define(sequelize: Sequelize.Sequelize): Model {
             }
         }
     }, {
-        freezeTableName: true // StudentModel tableName will be the same as the model name
+        freezeTableName: true, // StudentModel tableName will be the same as the model name,
     });
 
     return model;

@@ -12,9 +12,10 @@ import {
 export default class Difficulty extends Phaser.State {
     init() {
         this.difficultysButton = [];
-        this.difficultySelected = false;
+        this.selectedDifficulty = false;
         this.page = 1;
         this.initDifficulties.bind(this);
+        console.log(this.game.topicSelected);
     }
     preload() {
 
@@ -108,11 +109,12 @@ export default class Difficulty extends Phaser.State {
               style: { font: "20px Arial", fill: "#34495e", align: "center" },
               callback: () => {
                   // Select Difficulty:
-                  if (this.difficultySelected) {
+                  if (this.selectedDifficulty) {
                       return;
                   }
 
-                  this.difficultySelected = true;
+                  this.selectedDifficulty = true;
+                  this.game.selectedDifficulty = difficulty;
                   this.state.start('ProblemLoader');
               },
               callbackContext: this

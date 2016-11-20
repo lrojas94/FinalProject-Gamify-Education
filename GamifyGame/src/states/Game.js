@@ -86,7 +86,10 @@ export default class Game extends Phaser.State {
                         jwt_token: constants.JWT_TOKEN,
                         solutionId: solution.id,
                         problemId: solution.problemId,
-                        studentId: this.game.user.id
+                        studentId: this.game.user.id,
+                        topicId: this.game.selectedTopic.id,
+                        difficultyId: this.game.selectedDifficulty.id,
+
                     };
 
                     axios.post(`${constants.API_URL}answers/add`, answerData)
@@ -97,6 +100,7 @@ export default class Game extends Phaser.State {
                             }
 
                             //else, we have a new problem:D!
+                            console.log(data.data);
                             let problem = data.data.newProblem;
                             this.state.start('ProblemLoader', true, false, problem);
                         })

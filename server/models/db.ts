@@ -86,6 +86,12 @@ function createStudentRelations() {
   Student.belongsTo(Group, {
     as: 'group'
   });
+
+  Student.belongsToMany(Achievement, {
+      as: 'achivements',
+      through: 'StudentAchievements',
+      foreignKey: 'studentId',
+  });
 };
 
 function createTeacherRelations() {
@@ -241,6 +247,12 @@ function createTopicRelations() {
 function createAchievementRelations() {
   Achievement.belongsTo(Topic, {
     as: 'topic'
+  });
+
+  Achievement.belongsToMany(Student, {
+      as: 'completedBy',
+      through: 'StudentAchievements',
+      foreignKey: 'achievementId'
   });
 }
 

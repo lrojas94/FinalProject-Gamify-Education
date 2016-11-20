@@ -12,7 +12,7 @@ import {
 export default class Topic extends Phaser.State {
     init() {
         this.topicsButton = [];
-        this.topicSelected = false;
+        this.selectedTopic = false;
         this.page = 1;
         this.initTopics.bind(this);
     }
@@ -108,11 +108,12 @@ export default class Topic extends Phaser.State {
               style: { font: "20px Arial", fill: "#34495e", align: "center" },
               callback: () => {
                   // Select Topic:
-                  if (this.topicSelected) {
+                  if (this.selectedTopic) {
                       return;
                   }
 
-                  this.topicSelected = true;
+                  this.selectedTopic = true;
+                  this.game.selectedTopic = topic;
                   this.state.start('Difficulties');
               },
               callbackContext: this

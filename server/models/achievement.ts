@@ -1,6 +1,7 @@
 import * as Sequelize from 'sequelize';
 import * as Topic from './topic';
 import * as Group from './group';
+import * as Student from './student';
 
 export interface Pojo {
   name: string;
@@ -10,6 +11,7 @@ export interface Pojo {
   iconUrl: string;
   difficulty?: Object;
   topic?: Topic.Pojo;
+  completedBy?: Student.Pojo;
 }
 
 export interface Instance extends Sequelize.Instance<Pojo>, Pojo {};

@@ -2,6 +2,7 @@ import * as Sequelize from 'sequelize';
 import * as Person from './person';
 import * as Group from './group';
 import * as Answer from './answer';
+import * as Achievement from './achievement';
 
 export interface Pojo {
     username: string;
@@ -10,6 +11,7 @@ export interface Pojo {
     personId?: number;
     group?: Group.Pojo;
     answers?: Answer.Pojo[];
+    achievements?: Achievement.Pojo[];
 }
 
 export interface Instance extends Sequelize.Instance<Pojo>, Pojo {};
