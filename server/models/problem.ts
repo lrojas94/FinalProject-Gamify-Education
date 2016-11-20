@@ -49,6 +49,8 @@ export function define(sequelize: Sequelize.Sequelize): Model {
           Random: function(req?) {
             return new Promise<Instance>((resolve, reject) => {
               var where = req ? req.where || {} : {};
+              var bodyQuery = _.pick(req.body, ['groupId', 'difficultyId', 'topicId']);
+              where = _.merge(where, bodyQuery);
               where = _.pick(where, ['groupId', 'difficultyId', 'topicId']);
               this.findAll({
                 where,

@@ -117,11 +117,9 @@ var router = simpleRouter({
             var student = req.user;
             student.getGroup()
             .then((group) => {
-              req.where = {
-                groupId: {
-                  $eq: group.id
-                }
-              };
+              req.where = _.merge(req.where || {}, {
+                groupId: group.id,
+              });
 
               next();
             })

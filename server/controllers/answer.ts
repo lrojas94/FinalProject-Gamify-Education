@@ -113,7 +113,12 @@ router.post('/add', (req, res) => {
                   .then((student) => {
                     // now return problem:
                     //
-                    Problem.Random()
+                    req['where'] = _.merge(req['where'] || {}, {
+                        topicId: req.body.topicId,
+                        difficultyId: req.body.difficultyId
+                    });
+
+                    Problem.Random(req)
                     .then((problem) => {
                         result = {
                             status: QueryStatus.SUCCESS,
@@ -137,8 +142,8 @@ router.post('/add', (req, res) => {
 
                       res.json(result);
                     });
-                  })
-              })
+                });
+              });
 
           })
           .catch((err) => {

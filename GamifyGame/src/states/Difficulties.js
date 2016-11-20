@@ -25,8 +25,10 @@ export default class Difficulty extends Phaser.State {
         let difficultyLoader = this;
 
         axios.get(`${constants.API_URL}difficultys/`, {
-            page: page,
-            limit: 10
+            params: {
+                page: page,
+                limit: 10,
+            }
         }).then((response) => {
             const data = response.data;
             if (data.status === 1) {
@@ -128,7 +130,7 @@ export default class Difficulty extends Phaser.State {
                 callbackContext: this
             });
             panelButton.anchor.setTo(0.5);
-
+            this.game.selectedDifficulty = difficulty;
             this.difficultiesGroup.add(panelButton);
         });
 

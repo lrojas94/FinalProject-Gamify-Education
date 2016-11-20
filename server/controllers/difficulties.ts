@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as _ from 'lodash';
 import { Difficulty } from './../models/db';
 import simpleRouter from './../utility/simpleRouter';
 
