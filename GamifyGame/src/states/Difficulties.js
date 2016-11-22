@@ -27,7 +27,7 @@ export default class Difficulty extends Phaser.State {
         axios.get(`${constants.API_URL}difficultys/`, {
             params: {
                 page: page,
-                limit: 10,
+                limit: 4
             }
         }).then((response) => {
             const data = response.data;
@@ -69,11 +69,14 @@ export default class Difficulty extends Phaser.State {
         this.closeButton.anchor.setTo(0.5);
 
         // Load title text.
-        let titleText = this.add.text(this.game.world.centerX, 150, 'Choose a Difficulty');
-        titleText.font = 'Lato';
-        titleText.fontSize = 40;
-        titleText.fontWeight = 100;
-        titleText.fill = '#F0F0F0';
+        let titleText = this.add.text(this.game.world.centerX, 150, 'Choose a Difficulty',{
+            font: 'Lato',
+            fontSize: 40,
+            fontWeight: 400,
+            fill: '#FFCC00',
+            strokeThickness: 2,
+            stroke: '#C69F00'
+        });
         titleText.anchor.setTo(0.5);
 
         let loadingText = this.add.text(this.game.world.centerX, 300, 'Loading difficultys...');
@@ -92,7 +95,7 @@ export default class Difficulty extends Phaser.State {
 
     initDifficulties(difficultys) {
         let keys = this.game.cache.getKeys();
-        let difficultyImg = this.game.make.sprite(0, 0, 'panel');
+        let difficultyImg = this.game.make.sprite(0, 0, 'bordered_panel');
         difficultyImg.scale.setTo(0.2);
         let padding = 20;
         let count = difficultys.data.length;
@@ -125,12 +128,12 @@ export default class Difficulty extends Phaser.State {
                     }
 
                     this.difficultySelected = true;
-                    this.state.start('ProblemLoader');
+                    this.game.selectedDifficulty = difficulty;
+                    this.state.start('ProblemCountSelector');
                 },
                 callbackContext: this
             });
             panelButton.anchor.setTo(0.5);
-            this.game.selectedDifficulty = difficulty;
             this.difficultiesGroup.add(panelButton);
         });
 

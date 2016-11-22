@@ -110,7 +110,7 @@ export default class Login extends Phaser.State {
                             TODO:
                             Update the message to something like "SUCCESS or FAILURE"
                             */
-                            login.loginMsg.setText(data.message);
+                            alert(data.message);
                             this.loginButton.setText("Login");
                         }
                     })

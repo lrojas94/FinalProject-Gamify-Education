@@ -25,8 +25,10 @@ export default class Topic extends Phaser.State {
         let topicLoader = this;
 
         axios.get(`${constants.API_URL}topics/`, {
-            page: page,
-            limit: 10
+            params: {
+                page: page,
+                limit: 4
+            }
         }).then((response) => {
             const data = response.data;
             if (data.status === 1) {
@@ -67,11 +69,14 @@ export default class Topic extends Phaser.State {
         this.closeButton.anchor.setTo(0.5);
 
         // Load title text.
-        let titleText = this.add.text(this.game.world.centerX, 150, 'Choose a Topic');
-        titleText.font = 'Lato';
-        titleText.fontSize = 40;
-        titleText.fontWeight = 100;
-        titleText.fill = '#F0F0F0';
+        let titleText = this.add.text(this.game.world.centerX, 150, 'Choose a Topic',{
+            font: 'Lato',
+            fontSize: 40,
+            fontWeight: 400,
+            fill: '#FFCC00',
+            strokeThickness: 2,
+            stroke: '#C69F00'
+        });
         titleText.anchor.setTo(0.5);
 
         let loadingText = this.add.text(this.game.world.centerX, 300, 'Loading topics...');
@@ -90,7 +95,7 @@ export default class Topic extends Phaser.State {
 
     initTopics(topics) {
         let keys = this.game.cache.getKeys();
-        let topicImg = this.game.make.sprite(0, 0, 'panel');
+        let topicImg = this.game.make.sprite(0, 0, 'bordered_panel');
         topicImg.scale.setTo(0.2);
         let padding = 20;
         let count = topics.data.length;

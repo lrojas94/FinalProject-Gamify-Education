@@ -7,7 +7,12 @@ var stateManager;
 
 export default class ProblemLoader extends Phaser.State {
   init (problem) {
-
+    if(this.game.remainingProblems === 0) {
+        stateManager.state.start('Menu');
+    }
+    this.game.remainingProblems = this.game.remainingProblems - 1;
+    console.log(this.game.remainingProblems);
+    
     this.filesToLoad = {};
 
     if(problem){

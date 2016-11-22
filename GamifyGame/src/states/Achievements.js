@@ -26,8 +26,10 @@ export default class Achievement extends Phaser.State {
 
 
         axios.get(`${constants.API_URL}achievements/`, {
-            page: page,
-            limit: 10
+            params: {
+                page: page,
+                limit: 4
+            }
         }).then((response) => {
             const data = response.data;
             if (data.status === 1) {
@@ -91,7 +93,7 @@ export default class Achievement extends Phaser.State {
 
     initAchievements(achievements) {
         let keys = this.game.cache.getKeys();
-        let achievementImg = this.game.make.sprite(0, 0, 'panel');
+        let achievementImg = this.game.make.sprite(0, 0, 'bordered_panel');
         console.log(keys);
         console.log(achievementImg);
         achievementImg.scale.setTo(0.2);
