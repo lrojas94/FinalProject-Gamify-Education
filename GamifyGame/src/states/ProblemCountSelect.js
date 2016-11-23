@@ -9,7 +9,7 @@ import {
     centerGameObjects
 } from '../utils';
 
-export default class Difficulty extends Phaser.State {
+export default class ProblemCountSelector extends Phaser.State {
     init() {
 
     }
@@ -75,6 +75,7 @@ export default class Difficulty extends Phaser.State {
                     this.optSelected = true;
                     this.game.problemCount = opt;
                     this.game.remainingProblems = opt;
+                    this.game.correctAnswers = 0;
                     this.state.start('ProblemLoader');
                 },
                 callbackContext: this,

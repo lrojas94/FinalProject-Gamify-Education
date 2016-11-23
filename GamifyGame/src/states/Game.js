@@ -81,7 +81,12 @@ export default class Game extends Phaser.State {
                     }
 
                     this.solutionSelected = true;
-                    console.log(this.game.user);
+                    console.log(solution);
+
+                    if(solution.isCorrect) {
+                        this.game.correctAnswers += 1;
+                    }
+
                     var answerData = {
                         jwt_token: constants.JWT_TOKEN,
                         solutionId: solution.id,
@@ -89,7 +94,6 @@ export default class Game extends Phaser.State {
                         studentId: this.game.user.id,
                         topicId: this.game.selectedTopic.id,
                         difficultyId: this.game.selectedDifficulty.id,
-
                     };
 
                     axios.post(`${constants.API_URL}answers/add`, answerData)

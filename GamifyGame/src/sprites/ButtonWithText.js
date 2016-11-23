@@ -16,6 +16,7 @@ export default class ButtonWithText extends Phaser.Button {
         //create solution sprite:
         this.textSprite = this.addChild(this.game.make.text(0, 0, text, style));
         this.textSprite.anchor.setTo(0.5);
+        this.textSprite.width = Math.min(this.textSprite.width, this.width);
     }
 
     setText(text) {
