@@ -22,9 +22,11 @@ export default class PanelButton extends Phaser.Button {
         };
         this.titleText = this.addChild(this.game.make.text(0, 0, title, _.merge(textOpts, {
             fontWeight: 700,
-            lineSpacing: 20
+            lineSpacing: 20,
+            stroke: "#86969A",
+            strokeThickness: 3
         }, titleStyle)));
-        
+
         if(description) {
             this.descText = this.addChild(this.game.make.text(0, this.titleText.height/2 + 5, description, _.merge(textOpts, {
                 fontWeight: 400,

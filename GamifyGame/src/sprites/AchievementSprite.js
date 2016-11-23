@@ -26,7 +26,9 @@ export default class AchievementSprite extends Phaser.Button {
         this.medal = this.addChild(this.game.make.sprite(0,0,'medal'));
         this.medal.scale.setTo(1.2);
         this.achievementTitle = this.addChild(this.game.make.text(0, -10, this.achievement.name, _.merge(textOpts, {
-            fontWeight: 700
+            fontWeight: 700,
+            stroke: "#86969A",
+            strokeThickness: 3
         })));
 
         var completedBy = _.filter(this.achievement.completedBy, (u) => {

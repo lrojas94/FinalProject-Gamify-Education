@@ -11,6 +11,7 @@ export interface ITableQuery {
   include?: any;
   includeInSearchQuery?: any;
   includeInWhere?: any;
+  group?:any;
 }
 
 
@@ -65,7 +66,7 @@ var queryHelper = {
    * @param  {Function} onFailure        Function to be called on error.
    * @return {object}                  Query results
    */
-  tableQuery: ({ req, model, attributes, searchAttributes, url, include, includeInSearchQuery, includeInWhere }: ITableQuery) => {
+  tableQuery: ({ req, model, attributes, searchAttributes, url, include, includeInSearchQuery, includeInWhere, group }: ITableQuery) => {
     var limit = req.query.limit && req.query.limit < 25 ? req.query.limit : 10;
     var page = req.query.page - 1 || 0;
     var or = queryHelper.generateOr(req, searchAttributes);
@@ -98,7 +99,7 @@ var queryHelper = {
         offset: parseInt(`${page * limit}`),
         limit: parseInt(limit),
         include: include || [],
-        where,
+        where
       })
       .then((data) => {
         var nextPage = page * limit + limit > data.count ? 1 : page + 2;

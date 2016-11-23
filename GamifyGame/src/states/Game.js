@@ -48,7 +48,7 @@ export default class Game extends Phaser.State {
         // this.bg.smoothed = false;
 
         // Load title text.
-        let titleText = this.add.text(this.game.world.centerX, 150, 'Resuelva el Siguiente Problema');
+        let titleText = this.add.text(this.game.world.centerX, 150, 'Solve the following problem');
         titleText.font = 'Lato';
         titleText.fontSize = 40;
         titleText.fontWeight = 100;
@@ -106,7 +106,7 @@ export default class Game extends Phaser.State {
                             //else, we have a new problem:D!
                             console.log(data.data);
                             let problem = data.data.newProblem;
-                            this.state.start('ProblemLoader', true, false, problem);
+                            this.state.start('ProblemLoader', null, null, true, false, problem);
                         })
                         .catch((err) => {
                             console.log(err);

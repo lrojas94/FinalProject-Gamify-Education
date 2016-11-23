@@ -45,6 +45,8 @@ export default class extends Phaser.Sprite {
     this.main = this.addChild(game.make.sprite(0,0, 'bg-main'));
     this.main.anchor.setTo(0.5);
     scaleFitScreen(this.main, game);
+    this.main.anchor.y = 1;
+    this.main.y =  this.game.world.height/2;
   }
 
   update() {

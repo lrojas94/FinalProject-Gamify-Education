@@ -18,7 +18,7 @@ class Game extends Phaser.Game {
 
     constructor() {
         let width = document.documentElement.clientWidth;
-        let height = document.documentElement.clientHeight > 1024 ? 1024 : document.documentElement.clientHeight;
+        let height = (width/16) * 9;
 
         super(width, height, Phaser.AUTO, 'content', null);
         console.log(this.plugins);

@@ -8,6 +8,7 @@ export default class Boot extends Phaser.State {
     this.stage.backgroundColor = '#EDEEC9';
     this.fontsReady = true;
     this.fontsLoaded = this.fontsLoaded.bind(this);
+    this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
   }
 
   preload () {

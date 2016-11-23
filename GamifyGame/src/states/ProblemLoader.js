@@ -7,8 +7,9 @@ var stateManager;
 
 export default class ProblemLoader extends Phaser.State {
   init (problem) {
-    if(this.game.remainingProblems === 0) {
-        stateManager.state.start('Results');
+    if(this.game.remainingProblems < 0) {
+        this.state.start('Results');
+        return;
     }
     this.game.remainingProblems = this.game.remainingProblems - 1;
     console.log(this.game.remainingProblems);
@@ -52,18 +53,23 @@ export default class ProblemLoader extends Phaser.State {
         unloadedKeys.push(key);
       }
     }
-    if(changeState){
-      stateManager.state.start('Game',null,null, true, false, stateManager.problem);
+    if(stateManager.game.remainingProblems >= 0) {
+        stateManager.state.start('Game',null, null, true, false, stateManager.problem);
     }
-    else if (stateManager.load.hasLoaded) {
-      //Check which files are NOT loading:
-      unloadedKeys.map((key) => {
-        //Load keys:
-        stateManager.load.image(key, stateManager.filesToLoad[key].url);
-      });
-
-      stateManager.load.start();
+    else {
+        stateManager.state.start('Results');
     }
+    // if(changeState){
+    // }
+    // else if (stateManager.load.hasLoaded) {
+    //   //Check which files are NOT loading:
+    //   unloadedKeys.map((key) => {
+    //     //Load keys:
+    //     stateManager.load.image(key, stateManager.filesToLoad[key].url);
+    //   });
+    //
+    // //   stateManager.load.start();
+    // }
   }
   create(){
     let problemLoader = this;
@@ -105,7 +111,7 @@ export default class ProblemLoader extends Phaser.State {
         loaded: false,
         url: solution.url
       };
-      this.load.image(solutionKey,solution.url);
+      this.load.image(solutionKey, solution.url);
     });
     this.problem = problem;
     this.load.start();
