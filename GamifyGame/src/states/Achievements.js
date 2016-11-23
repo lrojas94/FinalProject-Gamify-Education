@@ -70,18 +70,24 @@ export default class Achievement extends Phaser.State {
         this.closeButton.anchor.setTo(0.5);
 
         // Load title text.
-        let titleText = this.add.text(this.game.world.centerX, 150, 'Choose a Achievement');
-        titleText.font = 'Lato';
-        titleText.fontSize = 40;
-        titleText.fontWeight = 100;
-        titleText.fill = '#F0F0F0';
+        let titleText = this.add.text(this.game.world.centerX, 120, 'Available Achivements',{
+            font: 'Lato',
+            fontSize: 40,
+            fontWeight: 400,
+            fill: '#FFCC00',
+            strokeThickness: 2,
+            stroke: '#C69F00'
+        });
         titleText.anchor.setTo(0.5);
 
-        let loadingText = this.add.text(this.game.world.centerX, 300, 'Loading achievements...');
-        loadingText.font = 'Lato';
-        loadingText.fontSize = 40;
-        loadingText.fontWeight = 100;
-        loadingText.fill = '#F0F0F0';
+        let loadingText = this.add.text(this.game.world.centerX, 300, 'Loading achievements...', {
+            font: 'Lato',
+            fontSize: 40,
+            fontWeight: 400,
+            fill: '#FFCC00',
+            strokeThickness: 2,
+            stroke: '#C69F00'
+        });
         loadingText.anchor.setTo(0.5);
 
         this.loadingText = loadingText;

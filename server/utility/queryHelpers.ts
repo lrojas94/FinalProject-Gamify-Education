@@ -70,6 +70,17 @@ var queryHelper = {
     var page = req.query.page - 1 || 0;
     var or = queryHelper.generateOr(req, searchAttributes);
     var where = req.where || {};
+    include = _.map(include, (elem) => {
+        if (elem['addToThroughWhereFromRequest']) {
+            var where = {};
+            var toAdd = elem['addToThroughWhereFromRequest'];
+            _.forEach(toAdd, (val, key) => {
+                where[key] = _.get(req, val);
+            });
+            elem['through']['where'] = where;
+        }
+        return elem;
+    });
 
     if (or.length !== 0) {
       where = _.merge(where, {

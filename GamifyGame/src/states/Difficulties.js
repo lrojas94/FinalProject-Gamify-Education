@@ -77,6 +77,7 @@ export default class Difficulty extends Phaser.State {
             strokeThickness: 2,
             stroke: '#C69F00'
         });
+
         titleText.anchor.setTo(0.5);
 
         let loadingText = this.add.text(this.game.world.centerX, 300, 'Loading difficultys...');

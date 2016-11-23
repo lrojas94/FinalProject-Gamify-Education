@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as _ from 'lodash';
-import { Achievement, Topic } from './../models/db';
+import { Achievement, Topic, Student } from './../models/db';
 import simpleRouter from './../utility/simpleRouter';
 
 var router = simpleRouter({
@@ -14,7 +14,9 @@ var router = simpleRouter({
         attributes: ['id', 'name', 'description', 'thresholdPercent', 'thresholdQuantity', 'iconUrl', 'difficultyId', 'topicId'],
         url: '/achievements',
         searchAttributes: ['name', 'description', 'thresholdPercent', 'thresholdQuantity'],
-        include: [{model: Topic, as: 'topic', required: true}]
+        include: [{ model: Topic, as: 'topic', required: true }, { model: Student, as: 'completedBy', addToWhereFromRequest: {
+            'id': 'user.id'
+        }}]
       },
       options: {
         attributes: ['name']
