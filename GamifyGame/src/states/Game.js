@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import axios from 'axios';
 import constants from '../constants';
 import ButtonWithText from './../sprites/ButtonWithText';
+import AchievementUnlocked from './../sprites/AchievementUnlocked';
 import SolutionButton from '../sprites/SolutionButton';
 import {
     setResponsiveWidth,
@@ -105,6 +106,15 @@ export default class Game extends Phaser.State {
 
                             //else, we have a new problem:D!
                             console.log(data.data);
+
+                            if(data.data.unlockedAchievements && data.data.unlockedAchievements.length !== 0) {
+                                // create the test achievement
+                                this.unlockedAchievement = new AchievementUnlocked({
+                                    game: this.game,
+                                    achievements: data.data.unlockedAchievements
+                                });
+                                this.unlockedAchievement.anchor.setTo(0.5);
+                            }
                             let problem = data.data.newProblem;
                             this.state.start('ProblemLoader', null, null, true, false, problem);
                         })

@@ -37,7 +37,7 @@ export default class AchievementSprite extends Phaser.Button {
 
         console.log(completedBy);
 
-        if(completedBy.length !== 0) {
+        if(completedBy.length === 0) {
             // means that the achievement was NOT copleted by user
             this.medal.alpha = 0.5;
         }

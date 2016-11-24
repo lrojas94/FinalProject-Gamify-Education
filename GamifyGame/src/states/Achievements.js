@@ -4,6 +4,7 @@ import axios from 'axios';
 import constants from '../constants';
 import ButtonWithText from './../sprites/ButtonWithText';
 import AchievementSprite from '../sprites/AchievementSprite';
+import AchievementUnlocked from '../sprites/AchievementUnlocked';
 import {
     setResponsiveWidth,
     centerGameObjects
