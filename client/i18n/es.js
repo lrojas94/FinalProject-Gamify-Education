@@ -172,4 +172,9 @@ export default {
      "Teachers": "Profesores",
      "Topic": "Tema",
      "Topics": "Temas",
+
+     "generator.problem.problemInfo": "Informaciones Generales",
+     "problems.chart.rightwrong": "Respuestas Correctas vs Incorrectas",
+     "problems.chart.answerdistribution": "Distribucion de respuestas en este problema"
+
 };

@@ -120,6 +120,7 @@ export default {
 
      /** Problem **/
      "generator.problem.problem": "Problem",
+     "generator.problem.problemInfo": "Problem Information",
 
      /** School **/
      "generator.school.name": "School Name",
@@ -172,4 +173,7 @@ export default {
      "Teachers": "Teachers",
      "Topic": "Topic",
      "Topics": "Topics",
+     /** Charts **/
+     "problems.chart.rightwrong": "Write vs Wrong Answers on this problem",
+     "problems.chart.answerdistribution": "Answer Distribution On This Problem"
 };

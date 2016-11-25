@@ -165,8 +165,11 @@ var generateView = ({pluralDisplayName, displayName, view, actions, url}) => {
           var TemplateComponent = e.template;
           if(TemplateComponent) {
             var props = _.get(this.props, elemName);
+            if(_.isEmpty(props)) {
+                return '';
+            }
             if(props) {
-              props = props.toJSON();
+              props = _.isEmpty(props) ? {} : props.toJSON();
               return (
                 <div key={e.title}>
                   <h3><FormattedMessage id={`generator.${displayName}.${e.title}`}/></h3>

@@ -108,6 +108,13 @@ export default ({ model, url, modelName, resultObjectName, attributes, opts }: I
   }
   router.get('/:id(\\d+)', (req, res) => {
 
+    if (req['result']) {
+        return res.json({
+            status: 0,
+            [resultObjectName]: req['result']
+        });
+    }
+
     model.findOne({
       where: {
         id: req.params.id

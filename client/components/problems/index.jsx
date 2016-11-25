@@ -11,9 +11,10 @@ import problemActions from './../../actions/problems';
 import { LinkColumn } from './../general/linkColumn';
 import { Route } from './../../models/route';
 import ProblemsForm from './form';
+import ProblemGraphData from './graphData';
 import SolutionForm from './../solutions/form';
 import ImageComponent from './../general/imageComponent'
-import {FormattedMessage, injectIntl} from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 const initialState = {
   problem: {
@@ -35,7 +36,7 @@ const generatedFeatures = componentGenerator({
     title: 'Problem',
     elements: [
       { title: '', properties: [{template: ImageComponent, path: 'url', name: 'problem'}], element: 'problems.view.problem.data'  },
-      // { title: 'person', template: ShowAddress, element: 'problems.view.problem.data.address' },
+      { title: 'problemInfo', template: ProblemGraphData, element: 'problems.view.problem.data' },
       // { title: 'phone', template: ShowPhone, element: 'problems.view.problem.data.phone' }
     ]
   },

@@ -4,7 +4,7 @@ import * as sequelize from 'sequelize';
 import * as rp from 'request-promise';
 import { constants } from './../constants';
 import { Pojo as SolutionPojo } from '../models/solution';
-import { Student, Problem, Solution, Teacher, Answer, Difficulty, DB } from './../models/db';
+import { Student, Problem, Solution, Teacher, Answer, Difficulty, Topic, DB } from './../models/db';
 import { ResponseMessage, QueryStatus } from './../constants';
 import simpleRouter from './../utility/simpleRouter';
 import solutionRouter from './solutions';
@@ -85,6 +85,44 @@ var router = simpleRouter({
       },
       middlewares: {
         create: assignSchoolIdAndTeacherId,
+        get: (req, res, next) => {
+            Problem.find({
+                attributes: ['id', 'problem', 'url', 'groupId', 'teacherId', 'topicId', 'difficultyId'],
+                where: {
+                    id: req.params.id
+                },
+                include: [{
+                    model: Solution,
+                    as: 'solutions',
+                    attributes: ['id', 'url', 'isCorrect',
+                        [DB.fn('COUNT', 'solutions.answers.id'), 'totalAnswers']
+                    ],
+                    required: true,
+                    include: [{
+                        model: Answer,
+                        as: 'answers',
+                        required: true,
+                        attributes: [],
+                    }]
+                }, {
+                    model: Difficulty,
+                    as: 'difficulty',
+                    attributes: ['name']
+                }, {
+                    model: Topic,
+                    as: 'topic',
+                    attributes: ['name']
+                }],
+                group: ['Problem.id', 'Problem.problem',
+                'Problem.groupId', 'Problem.teacherId', 'Problem.topicId',
+                'Problem.difficultyId', 'solutions.id', 'solutions.isCorrect',
+                'difficulty.id',  'difficulty.name', 'topic.id', 'topic.name']
+            })
+            .then((problem) => {
+                req['result'] = problem;
+                next();
+            });
+        },
         list: (req, res, next) => {
           if (req.userType === 'TEACHER') {
             var teacher = req.user;
