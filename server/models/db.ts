@@ -204,6 +204,12 @@ function createGroupRelations() {
     constraints: false
   });
 
+  Group.hasMany(Problem, {
+    as: 'problems',
+    foreignKey: 'groupId',
+    constraints: false
+  });
+
   Group.hasMany(Difficulty, {
     as: 'difficulties',
     foreignKey: 'groupId',

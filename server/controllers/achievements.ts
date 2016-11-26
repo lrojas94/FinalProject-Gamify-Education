@@ -14,7 +14,7 @@ var router = simpleRouter({
         attributes: ['id', 'name', 'description', 'thresholdPercent', 'thresholdQuantity', 'iconUrl', 'difficultyId', 'topicId'],
         url: '/achievements',
         searchAttributes: ['name', 'description', 'thresholdPercent', 'thresholdQuantity'],
-        include: [{ model: Topic, as: 'topic', required: true }, { model: Student, as: 'completedBy', addToWhereFromRequest: {
+        include: [{ model: Topic, as: 'topic', required: true }, { model: Student, as: 'completedBy', addToThroughWhereFromRequest: {
             'id': 'user.id'
         }}]
       },

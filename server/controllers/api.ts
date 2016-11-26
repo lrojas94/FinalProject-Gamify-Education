@@ -3,7 +3,7 @@ import * as jwt from 'jsonwebtoken';
 import * as passport from 'passport';
 import * as passportJwt from 'passport-jwt';
 import * as _ from 'lodash';
-import { Teacher, Student, Person } from '../models/db';
+import { Teacher, Student, Person, Problem, Answer, Topic, Group, Solution, DB, Difficulty } from '../models/db';
 import {constants, ResponseMessage, QueryStatus, JWTTokenValues} from '../constants';
 import studentRouter from './students';
 import problemRouter from './problems';
@@ -106,6 +106,116 @@ router.use(passport.authenticate('jwt', { session: false }));
  * @param  {[string]} '/'         [Route]
  * @param  {[callback]} (req,res) [Request and Response Headers]
  */
+router.get('/home', (req, res) => {
+    if (req['userType'] !== 'TEACHER') {
+        return res.send(401, 'Unauthorized');
+    }
+    var teacher = req.user;
+
+    Group.findAll({
+        attributes: [
+            'id',
+            [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'],
+            [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswer']
+        ],
+        where: {
+            teacherId: teacher.id
+        },
+        include: [{
+            model: Problem,
+            as: 'problems',
+            attributes: [],
+            required: true,
+            include: [{
+                model: Solution,
+                attributes: [],
+                as: 'solutions',
+                required: true,
+                include: [{
+                    model: Answer,
+                    as: 'answers',
+                    attributes: [],
+                    required: true,
+                }]
+            }]
+        }, {
+            model: Topic,
+            as: 'topics',
+            separate: true,
+            attributes: [
+                'id',
+                'name',
+                'groupId',
+                [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'],
+                [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswer'],
+            ],
+            include: [{
+                model: Problem,
+                attributes: [],
+                as: 'problems',
+                required: true,
+                include: [{
+                    model: Solution,
+                    attributes: [],
+                    as: 'solutions',
+                    required: true,
+                    include: [{
+                        model: Answer,
+                        as: 'answers',
+                        attributes: [],
+                        required: true,
+                    }]
+                }]
+            }],
+            group: ['Topic.id', 'Topic.name', 'Topic.groupId']
+        }, {
+            model: Difficulty,
+            as: 'difficulties',
+            separate: true,
+            attributes: [
+                'id',
+                'name',
+                'groupId',
+                [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'],
+                [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswer'],
+            ],
+            include: [{
+                model: Problem,
+                attributes: [],
+                as: 'problems',
+                required: true,
+                include: [{
+                    model: Solution,
+                    attributes: [],
+                    as: 'solutions',
+                    required: true,
+                    include: [{
+                        model: Answer,
+                        as: 'answers',
+                        attributes: [],
+                        required: true,
+                    }]
+                }]
+            }],
+            group: ['Difficulty.id', 'Difficulty.name', 'Difficulty.groupId']
+        }],
+        group: ['Group.id']
+    })
+    .then((problems) => {
+        return res.json({
+            status: 0,
+            data: problems
+        });
+    })
+    .catch((err) => {
+        return res.json({
+            status: 1,
+            data: err,
+            message: 'There was an error querying for general group information.'
+        });
+    });
+});
+
 
 router.use('/students', studentRouter.router);
 router.use('/problems', problemRouter);
