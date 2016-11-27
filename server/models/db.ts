@@ -255,6 +255,10 @@ function createAchievementRelations() {
     as: 'topic'
   });
 
+  Achievement.belongsTo(Difficulty, {
+    as: 'difficulty'
+  });
+
   Achievement.belongsToMany(Student, {
       as: 'completedBy',
       through: 'StudentAchievements',

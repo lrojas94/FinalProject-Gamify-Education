@@ -41,7 +41,7 @@ function mapDispatchToProps(dispatch) {
 class ProblemForm extends Component {
     constructor(props) {
         super(props);
-
+        console.log(props);
     };
 
     componentWillMount() {

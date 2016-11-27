@@ -5,6 +5,7 @@ export class Problem {
   solutions: object[];
   difficultyId: number;
   topicId: number;
+  groupId: number;
 
   static fromJSON(data) {
     return teacher = new Problem(data);
@@ -17,11 +18,12 @@ export class Problem {
       url: this.url,
       solutions: this.solutions,
       topicId: this.topicId,
-      difficultyId: this.difficultyId
+      difficultyId: this.difficultyId,
+      groupId: this.groupId,
     }
   }
 
-  constructor(dataId, problem, url, solutions, topicId, difficultyId) {
+  constructor(dataId, problem, url, solutions, topicId, difficultyId, groupId) {
     if(dataId) {
       if(arguments.length === 1) { //Only data was passed
         var data = dataId;
@@ -31,6 +33,7 @@ export class Problem {
         this.solutions = data.solutions;
         this.topicId = data.topicId;
         this.difficultyId = data.difficultyId;
+        this.groupId = data.groupId;
       }
       else {
         this.id = dataId;
@@ -39,6 +42,7 @@ export class Problem {
         this.solutions = solutions;
         this.topicId = topicId;
         this.difficultyId = difficultyId;
+        this.groupId = groupId;
       }
     }
     else return null;

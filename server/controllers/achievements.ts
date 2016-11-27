@@ -7,11 +7,11 @@ var router = simpleRouter({
     model: Achievement,
     url: '/achievements',
     modelName: 'Achievement',
-    attributes: ['id', 'name', 'description', 'thresholdPercent', 'thresholdQuantity', 'iconUrl', 'difficultyId', 'topicId'],
+    attributes: ['id', 'name', 'description', 'thresholdPercent', 'thresholdQuantity', 'difficultyId', 'topicId'],
     opts: {
       list: {
         model: Achievement,
-        attributes: ['id', 'name', 'description', 'thresholdPercent', 'thresholdQuantity', 'iconUrl', 'difficultyId', 'topicId'],
+        attributes: ['id', 'name', 'description', 'thresholdPercent', 'thresholdQuantity', 'difficultyId', 'topicId'],
         url: '/achievements',
         searchAttributes: ['name', 'description', 'thresholdPercent', 'thresholdQuantity'],
         include: [{ model: Topic, as: 'topic', required: true }, { model: Student, as: 'completedBy', addToThroughWhereFromRequest: {

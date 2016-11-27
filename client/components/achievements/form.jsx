@@ -51,12 +51,6 @@ class AchievementForm extends Component {
         return (
             <div className='row'>
                 <div className='col-xs-12'>
-                    <label htmlFor="input-topic-name" className="control-label">Test</label>
-                    <FileBase64 multiple={false} onDone={this.getFiles.bind(this)}
-                                elementProps={{className: 'btn btn-block m-light-blue'}}
-                                handleFormChange={this.props.handleFormChange}/>
-                </div>
-                <div className='col-xs-12'>
                     <div className="form-group">
                         {this.props.id
                             ? (<input type='hidden' name='id' value={this.props.id}/>)
@@ -65,10 +59,6 @@ class AchievementForm extends Component {
                             <FormattedMessage id="form.achievementName"/> *
                         </label>
                         <input type="text" className="form-control" id="input-topic-name" onChange={this.props.handleFormChange} value={this.props.name} name='name' required/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="input-topic-iconUrl" className="control-label">Icon Image URL *</label>
-                        <input type="text" className="form-control" id="input-topic-iconUrl" onChange={this.props.handleFormChange} value={this.props.iconUrl} name='iconUrl' required/>
                     </div>
                     <div className='form-group'>
                         <label htmlFor="input-topic-description" className="control-label">

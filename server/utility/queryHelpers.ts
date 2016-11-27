@@ -197,11 +197,13 @@ var queryHelper = {
         data = _.chain(req.body).pick(attributes).omit(_.isEmpty).omit(_.isNull).omit(_.isUndefined).value();
       }
     }
+    console.log('--------- ATTRIBUTES --------------')
+    console.log(attributes);
 
-    console.log(path);
+    console.log('------------ DATA -----------------');
+    console.log(data);
 
     var upsert = (data) => {
-      console.log(data);
       return new Promise((resolve, reject) => {
         if (data.id) {
           // this is an update
@@ -235,6 +237,7 @@ var queryHelper = {
         else {
           // this is a create
           //
+          console.log(`---------------- CREATING ----------------`);
           model.create(data, { transaction: transaction })
           .then((result) => {
             resolve(result);

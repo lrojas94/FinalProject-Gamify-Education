@@ -5,6 +5,7 @@ export class Topic {
   name: string;
   description: string;
   example: string;
+  groupId: number;
 
   static fromJSON(data) {
     return teacher = new Topic(data);
@@ -16,10 +17,11 @@ export class Topic {
       name: this.name,
       description: this.description,
       example: this.example,
+      groupId: this.groupId,
     }
   }
 
-  constructor(dataId, name, description, example) {
+  constructor(dataId, name, description, example, groupId) {
     if(dataId) {
       if(arguments.length === 1) { //Only data was passed
         var data = dataId;
@@ -27,12 +29,14 @@ export class Topic {
         this.name = data.name;
         this.description = data.description;
         this.example = data.example;
+        this.groupId = data.groupId;
       }
       else {
         this.id = dataId;
         this.name = name;
         this.description = description;
         this.example = example;
+        this.groupId = groupId;
       }
     }
     else return null;

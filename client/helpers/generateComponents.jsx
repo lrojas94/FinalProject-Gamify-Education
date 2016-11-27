@@ -651,7 +651,7 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
             <div className='container-fluid'>
               <div className='row'>
                 <div className='col-xs-12'>
-                  <h4><FormattedMessage id='generator.creating' value={{element: this.props.intl.messages[`${_.capitalize(displayName)}`]}}/></h4>
+                  <h4><FormattedMessage id='generator.creating' values={{element: this.props.intl.messages[`${_.capitalize(displayName)}`]}}/></h4>
                   <hr/>
                   { this.props[pluralDisplayName].status === 'success' ? (
                     <div className='alert alert-success'> <FormattedMessage id={_.capitalize(displayName)}/><strong>{this.props[pluralDisplayName].data.name}</strong> <FormattedMessage id='generator.addEdit.success'/> </div>
