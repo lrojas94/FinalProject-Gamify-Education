@@ -146,9 +146,9 @@ export default {
      "generator.teacher.personalInfo": "Personal Information",
 
      /** topics **/
-     "generator.topics.name": "Name",
-     "generator.topics.description": "Description",
-     "generator.topics.example": "Sample Problem",
+     "generator.topic.name": "Name",
+     "generator.topic.description": "Description",
+     "generator.topic.example": "Sample Problem",
 
      /**
       * General items

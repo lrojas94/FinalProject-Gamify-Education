@@ -145,9 +145,9 @@ export default {
      "generator.teacher.personalInfo": "Informaciones Personales",
 
      /** topics **/
-     "generator.topics.name": "Nombre",
-     "generator.topics.description": "Descripción",
-     "generator.topics.example": "Problema de Ejemplo",
+     "generator.topic.name": "Nombre",
+     "generator.topic.description": "Descripción",
+     "generator.topic.example": "Problema de Ejemplo",
 
      /**
       * General items
@@ -175,6 +175,6 @@ export default {
 
      "generator.problem.problemInfo": "Informaciones Generales",
      "problems.chart.rightwrong": "Respuestas Correctas vs Incorrectas",
-     "problems.chart.answerdistribution": "Distribucion de respuestas en este problema"
+     "problems.chart.answerdistribution": "Distribución de Respuestas en este Problema"
 
 };

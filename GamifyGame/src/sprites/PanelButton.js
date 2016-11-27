@@ -14,7 +14,7 @@ export default class PanelButton extends Phaser.Button {
 
         var textOpts = {
             wordWrap: true,
-            wordWrapWidth: this.background.width - 120,
+            wordWrapWidth: this.background.width - 80,
             font: 'Lato',
             fontSize: 20,
             align: 'center',
