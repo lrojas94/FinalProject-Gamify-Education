@@ -181,4 +181,9 @@ export default {
      "home.totalAnswers": "Wrong Answers",
      "home.group.overview": "Groups Overview",
      "home.group.overviewAnswers": "Total Answers Per Group",
+     "home.topics.per.group" : "Topics Performance by Group",
+     "home.topics.placeholder" : "Select Group to list",
+     "home.difficulties.per.group" : "Difficulty Performance by Group",
+     "home.difficulties.placeholder" : "Select Group to list",
+
 };

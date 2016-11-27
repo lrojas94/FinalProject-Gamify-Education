@@ -146,10 +146,10 @@ class HomeIndex extends Component {
     perTopicOfGroupChart() {
         return (
             <div>
-                <h3> Topics Performance by Group </h3>
+                <h3> <FormattedMessage id='home.topics.per.group'/> </h3>
                 <ReactSelect options={this.groupOptions}
                     name="irrelevant"
-                    placeholder="Topic Select."
+                    placeholder={this.props.intl.messages['home.topics.placeholder']}
                     value={this.state.groupTopic}
                     onChange={this.onChangeTopicGraphGroup.bind(this)}
                 />
@@ -172,10 +172,10 @@ class HomeIndex extends Component {
     perDifficultyOfGroupChart() {
         return (
             <div>
-                <h3> Difficultys Performance by Group </h3>
+                <h3> <FormattedMessage id='home.difficulties.per.group'/> </h3>
                 <ReactSelect options={this.groupOptions}
                     name="irrelevant"
-                    placeholder="Difficulty Select."
+                    placeholder={this.props.intl.messages['home.difficulties.placeholder']}
                     value={this.state.groupDifficulty}
                     onChange={this.onChangeDifficultyGraphGroup.bind(this)}
                 />
