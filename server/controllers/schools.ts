@@ -10,9 +10,9 @@ var router = simpleRouter({
     opts: {
       list: {
         model: School,
-        attributes: ['id', 'name', 'telephone'],
+        attributes: ['id', 'name', 'website'],
         url: '/schools',
-        searchAttributes: ['name', 'telephone'],
+        searchAttributes: ['name', 'website'],
 
       },
       options: {
