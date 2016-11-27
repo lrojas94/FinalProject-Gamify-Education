@@ -180,6 +180,10 @@ export default {
      "home.correctAnswers": "Respuestas Correctas",
      "home.totalAnswers": "Respuestas Incorrectas",
      "home.group.overview": "Resumen de los Grupos",
-     "home.group.overviewAnswers": "Total de Respuestas por Grupos"
+     "home.group.overviewAnswers": "Total de Respuestas por Grupos",
+     "home.topics.per.group" : "Rendimiento de Temas por Grupo",
+     "home.topics.placeholder" : "Seleccionar Grupo",
+     "home.difficulties.per.group" : "Rendimiento de Dificultades por Grupo",
+     "home.difficulties.placeholder" : "Seleccionar Grupo"
 
 };
