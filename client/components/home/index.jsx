@@ -10,10 +10,13 @@ import defaultColors from './../general/colors';
 import {push} from 'react-router-redux';
 import homeActions from './../../actions/home';
 import * as randomMC from 'random-material-color';
+import ReactSelect from 'react-select';
+import 'react-select/dist/react-select.css';
+
+
 
 
 function mapStateToProps(props) {
-    console.log(props);
     return {
         home: props.home
     };
@@ -29,78 +32,192 @@ function mapDispatchToProps(dispatch) {
 class HomeIndex extends Component {
     constructor(props) {
         super(props);
+        this.groupChartsData = {};
 
+        this.state = {
+            groupDifficulty: '',
+            groupTopic: ''
+        }
+
+        if(this.props.home.status === 'SUCCESS') {
+            // here we go
+            this.preparePerGroupTopicAndDifficultyChart();
+        }
     };
 
     componentWillMount() {
         this.props.fetch();
     }
 
-    perGroupAnswersChart() {
-        var graphData = {
+    componentWillReceiveProps(props) {
+        if(props.home.status === 'SUCCESS') {
+            this.props = props;
+            this.preparePerGroupTopicAndDifficultyChart();
+        }
+    }
+
+    preparePerGroupTopicAndDifficultyChart() {
+        this.groupOptions = [];
+        this.groupColors = {};
+        this.perGroupCorrectVsWrongChart = {
+            labels: [this.props.intl.messages['home.correctAnswers'], this.props.intl.messages['home.totalAnswers']],
+            datasets: []
+        };
+
+        this.perGroupTotalAnswersChart = {
             labels: [],
             datasets: []
-        }
+        };
 
         _.forEach(this.props.home.data, (elem) => {
-            let label = `${elem.grade} - ${elem.year}`;
-            // graphData.labels.push(label);
-            var dataset = {
-                label: label,
+            // let's do so:
+            var groupTitle = `${elem.grade} - ${elem.year}`;
+            this.groupColors[groupTitle] = randomMC.getColor();
+            this.groupOptions.push({
+                value: groupTitle,
+                label: groupTitle
+            });
+            // per group chart correct vs incorrect char:
+            this.perGroupCorrectVsWrongChart.datasets.push({
+                label: groupTitle,
+                data: [elem.correctAnswers, elem.totalAnswers - elem.correctAnswers],
+                backgroundColor: [this.groupColors[groupTitle],this.groupColors[groupTitle]]
+            });
+            // per group total chart:
+            this.perGroupTotalAnswersChart.datasets.push({
+                label: groupTitle,
                 data: [elem.totalAnswers],
-                backgroundColor: [randomMC.getColor()],
-            };
+                backgroundColor: [this.groupColors[groupTitle]],
+            });
 
-            graphData.datasets.push(dataset);
+            var topicGraphData= {
+                labels: [this.props.intl.messages['home.correctAnswers'], this.props.intl.messages['home.totalAnswers']],
+                datasets: [], // 1 datasets per topic.
+            }
+
+            var difficultyGraphData= {
+                labels: [this.props.intl.messages['home.correctAnswers'], this.props.intl.messages['home.totalAnswers']],
+                datasets: [], // 1 datasets per topic.
+            }
+
+            _.forEach((elem.topics), (topic) => {
+                // add those dataset
+                let color = randomMC.getColor();
+                let label = topic.name;
+                topicGraphData.datasets.push({
+                    label,
+                    backgroundColor: [color, color],
+                    data: [topic.correctAnswers, topic.totalAnswers - topic.correctAnswers]
+                });
+            });
+
+            _.forEach((elem.difficulties), (difficulty) => {
+                // add those dataset
+                let color = randomMC.getColor();
+                let label = difficulty.name;
+                difficultyGraphData.datasets.push({
+                    label,
+                    backgroundColor: [color, color],
+                    data: [difficulty.correctAnswers, difficulty.totalAnswers - difficulty.correctAnswers]
+                });
+            });
+
+            this.groupChartsData[groupTitle] = {
+                topic: topicGraphData,
+                difficulty: difficultyGraphData,
+            };
         });
+
+        console.log(this.groupChartsData);
+    }
+
+    onChangeTopicGraphGroup(elem) {
+        console.log(elem);
+        this.setState({
+            groupTopic : elem.value
+        });
+    }
+    onChangeDifficultyGraphGroup(elem) {
+        this.setState({
+            groupDifficulty : elem.value
+        });
+    }
+
+    perTopicOfGroupChart() {
+        return (
+            <div>
+                <h3> Topics Performance by Group </h3>
+                <ReactSelect options={this.groupOptions}
+                    name="irrelevant"
+                    placeholder="Topic Select."
+                    value={this.state.groupTopic}
+                    onChange={this.onChangeTopicGraphGroup.bind(this)}
+                />
+                {this.state.groupTopic ? (
+                    <Bar data={this.groupChartsData[this.state.groupTopic].topic}
+                        options={{ scales: {
+                            yAxes: [{
+                                ticks: {
+                                    suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                                    // OR //
+                                    beginAtZero: true   // minimum value will be 0.
+                                }
+                            }]
+                        }}}/>
+                ): ""}
+            </div>
+        )
+    }
+
+    perDifficultyOfGroupChart() {
+        return (
+            <div>
+                <h3> Difficultys Performance by Group </h3>
+                <ReactSelect options={this.groupOptions}
+                    name="irrelevant"
+                    placeholder="Difficulty Select."
+                    value={this.state.groupDifficulty}
+                    onChange={this.onChangeDifficultyGraphGroup.bind(this)}
+                />
+                {this.state.groupDifficulty ? (
+                    <Bar data={this.groupChartsData[this.state.groupDifficulty].difficulty}
+                        options={{ scales: {
+                            yAxes: [{
+                                ticks: {
+                                    suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                                    // OR //
+                                    beginAtZero: true   // minimum value will be 0.
+                                }
+                            }]
+                        }}}/>
+                ): ""}
+            </div>
+        )
+    }
+
+    perGroupAnswersChart() {
 
         return (
             <div>
                 <h3 className='text-center'><FormattedMessage id="home.group.overviewAnswers"/></h3>
-                <Bar data={graphData} />
+                <Bar data={this.perGroupTotalAnswersChart} options={{ scales: {
+                    yAxes: [{
+                        ticks: {
+                            suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                            // OR //
+                            beginAtZero: true   // minimum value will be 0.
+                        }
+                    }]
+                }}}/>
             </div>
         );
     }
 
     perGroupChart() {
-        var graphData = {
-            labels: [this.props.intl.messages['home.correctAnswers'], this.props.intl.messages['home.totalAnswers']],
-            datasets: []
-        };
-
-        var correctDataSet = {
-            label: this.props.intl.messages['home.correctAnswers'],
-            backgroundColor: [],
-            data: []
-        }
-        var totalDataSet = {
-            label: this.props.intl.messages['home.totalAnswers'],
-            backgroundColor: [],
-            data: []
-        }
-
-        _.forEach(this.props.home.data, (elem) => {
-            let label = `${elem.grade} - ${elem.year}`;
-            let color = randomMC.getColor();
-            var dataset = {
-                label,
-                data: [elem.correctAnswers, elem.totalAnswers- elem.correctAnswers],
-                backgroundColor: [color,color]
-            }
-
-            graphData.datasets.push(dataset);
-            correctDataSet.data.push(elem.correctAnswers);
-            totalDataSet.data.push(elem.totalAnswers);
-            correctDataSet.backgroundColor.push("#8BC34A");
-            totalDataSet.backgroundColor.push("#F44336");
-        });
-
-        // graphData.datasets = [correctDataSet, totalDataSet];
-
         return (
             <div>
                 <h3 className='text-center'><FormattedMessage id="home.group.overview"/></h3>
-                <Bar data={graphData} options={{ scales: {
+                <Bar data={this.perGroupCorrectVsWrongChart} options={{ scales: {
                     yAxes: [{
                         ticks: {
                             suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
@@ -127,6 +244,17 @@ class HomeIndex extends Component {
                                 {this.perGroupChart()}
                             </div>
                         </div>
+                        <div className='row'>
+                            <div className='col-xs-12'>
+                                {this.perTopicOfGroupChart()}
+                            </div>
+                        </div>
+                        <div className='row'>
+                            <div className='col-xs-12'>
+                                {this.perDifficultyOfGroupChart()}
+                            </div>
+                        </div>
+                        <div className='pad-me'></div>
                     </div>
                 </div>
             )
