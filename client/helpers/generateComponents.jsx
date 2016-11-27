@@ -228,7 +228,7 @@ var generateView = ({pluralDisplayName, displayName, view, actions, url}) => {
                   <div className='col-xs-12'>
                     <h3><FormattedMessage id='generator.error.title'/></h3>
                     <hr/>
-                    <div className='alert alert-danger'> <FormattedMessage id='generator.error' value={{error: this.props[pluralDisplayName].view.error.message}}/></div>
+                    <div className='alert alert-danger'> <FormattedMessage id='generator.error' values={{error: this.props[pluralDisplayName].view.error.message}}/></div>
                   </div>
                 </div>
               </div>
@@ -657,7 +657,7 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
                     <div className='alert alert-success'> <FormattedMessage id={_.capitalize(displayName)}/><strong>{this.props[pluralDisplayName].data.name}</strong> <FormattedMessage id='generator.addEdit.success'/> </div>
                   ) : '' }
                   { this.props[pluralDisplayName].error && this.props[pluralDisplayName].status === 'failure' ? (
-                    <div className='alert alert-danger'><FormattedMessage id='generator.error' value={{ error: this.props[pluralDisplayName].error.message }}/></div>
+                    <div className='alert alert-danger'><FormattedMessage id='generator.error' values={{ error: this.props[pluralDisplayName].error.message }}/></div>
                   ) : '' }
                   <form className='form' action='/api/{url}' ref='form' onSubmit={this.performActionWithItem.bind(this)}>
 

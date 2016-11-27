@@ -27,13 +27,6 @@ export function define(sequelize: Sequelize.Sequelize): Model {
         grade: {
             type: Sequelize.STRING,
             allowNull: false,
-            validate: {
-                notEmpty: true,
-                isIn: {
-                    args: [['7', '8']],
-                    msg: lang.es.errors.db.group.gradeValidation
-                }
-            }
         }
     }, {
         freezeTableName: true // Model tableName will be the same as the model name

@@ -56,9 +56,9 @@ const generatedFeatures = componentGenerator({
             }
         ],
         queryKeys: [
-            'year', 'grade'
+            'id', 'year', 'grade'
         ],
-        columns: ['year', 'grade']
+        columns: ['id', 'year', 'grade']
     },
     createOpts: {
         forms: [

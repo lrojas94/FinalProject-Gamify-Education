@@ -2,6 +2,7 @@ export class Group {
   id: number;
   year: string;
   grade: string;
+  schoolId: number;
 
   static fromJSON(data) {
     return teacher = new Group(data);
@@ -12,6 +13,7 @@ export class Group {
       id: this.id,
       year: this.year,
       grade: this.grade,
+      schoolId: this.schoolId
     }
   }
 
@@ -22,11 +24,13 @@ export class Group {
         this.id = data.id;
         this.year = data.year;
         this.grade = data.grade;
+        this.schoolId = data.schoolId;
       }
       else {
         this.id = dataId;
         this.year = year;
         this.grade = grade;
+        this.schoolId = schoolId;
       }
     }
     else return null;
