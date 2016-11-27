@@ -175,5 +175,10 @@ export default {
      "Topics": "Topics",
      /** Charts **/
      "problems.chart.rightwrong": "Write vs Wrong Answers on this problem",
-     "problems.chart.answerdistribution": "Answer Distribution On This Problem"
+     "problems.chart.answerdistribution": "Answer Distribution On This Problem",
+     "home.title": "Students Overview",
+     "home.correctAnswers": "Correct Answers",
+     "home.totalAnswers": "Wrong Answers",
+     "home.group.overview": "Groups Overview",
+     "home.group.overviewAnswers": "Total Answers Per Group",
 };

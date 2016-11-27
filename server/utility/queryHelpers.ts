@@ -72,7 +72,7 @@ var queryHelper = {
     var or = queryHelper.generateOr(req, searchAttributes);
     var where = req.where || {};
     include = _.map(include, (elem) => {
-        if (elem['addToThroughWhereFromRequest']) {
+        if (elem['addToThroughWhereFromRequest'] && elem['through']) {
             var where = {};
             var toAdd = elem['addToThroughWhereFromRequest'];
             _.forEach(toAdd, (val, key) => {

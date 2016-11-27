@@ -26,6 +26,14 @@ var router = simpleRouter({
       },
       options: {
         attributes: ['grade', 'year']
+      },
+      middlewares: {
+          create: (req, res, next) => {
+              if (req.body.group) {
+                  req.body.group.teacherId = req.user.id;
+              }
+              next();
+          }
       }
     }
 });

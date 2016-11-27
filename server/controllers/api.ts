@@ -115,8 +115,11 @@ router.get('/home', (req, res) => {
     Group.findAll({
         attributes: [
             'id',
+            'year',
+            'grade',
+            'teacherId',
             [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'],
-            [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswer']
+            [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswers']
         ],
         where: {
             teacherId: teacher.id
@@ -147,7 +150,7 @@ router.get('/home', (req, res) => {
                 'name',
                 'groupId',
                 [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'],
-                [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswer'],
+                [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswers'],
             ],
             include: [{
                 model: Problem,
@@ -177,7 +180,7 @@ router.get('/home', (req, res) => {
                 'name',
                 'groupId',
                 [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'],
-                [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswer'],
+                [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswers'],
             ],
             include: [{
                 model: Problem,
