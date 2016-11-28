@@ -94,7 +94,7 @@ var router = simpleRouter({
                 include: [{
                     model: Solution,
                     as: 'solutions',
-                    attributes: ['id', 'url', 'isCorrect', 'solution',
+                    attributes: ['id', 'url', 'isCorrect', 'solution', 'problemId',
                         [DB.fn('COUNT', 'solutions.answers.id'), 'totalAnswers']
                     ],
                     required: true,

@@ -80,6 +80,17 @@ class ProblemGraphData extends Component {
         }
     }
 
+    renderSolutions() {
+        return _.map(this.props.solutions, (sols, idx) => {
+            return (
+                <div className='col-xs-12 col-md-6'>
+                    <h3 className='text-center'>#{idx}</h3>
+                    <img key={sols.id} className='img img-responsive center-block' src={sols.url}/>
+                </div>
+            );
+        });
+    }
+
     render() {
         return (
             <div className='row'>
@@ -90,6 +101,11 @@ class ProblemGraphData extends Component {
                 <div className='col-xs-12 col-md-6'>
                     <h4 className='text-center'> <FormattedMessage id='problems.chart.answerdistribution'/> </h4>
                     <Doughnut data={this.answerDistributionChart}/>
+                </div>
+                <div className='col-xs-12'>
+                    <div className='row'>
+                        {this.renderSolutions()}
+                    </div>
                 </div>
             </div>
         );
