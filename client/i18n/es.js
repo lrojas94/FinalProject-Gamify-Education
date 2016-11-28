@@ -175,6 +175,15 @@ export default {
 
      "generator.problem.problemInfo": "Informaciones Generales",
      "problems.chart.rightwrong": "Respuestas Correctas vs Incorrectas",
-     "problems.chart.answerdistribution": "Distribución de Respuestas en este Problema"
+     "problems.chart.answerdistribution": "Distribución de Respuestas en este Problema",
+     "home.title": "Resumen de los Estudiantes",
+     "home.correctAnswers": "Respuestas Correctas",
+     "home.totalAnswers": "Respuestas Incorrectas",
+     "home.group.overview": "Resumen de los Grupos",
+     "home.group.overviewAnswers": "Total de Respuestas por Grupos",
+     "home.topics.per.group" : "Rendimiento de Temas por Grupo",
+     "home.topics.placeholder" : "Seleccionar Grupo",
+     "home.difficulties.per.group" : "Rendimiento de Dificultades por Grupo",
+     "home.difficulties.placeholder" : "Seleccionar Grupo"
 
 };
