@@ -41,7 +41,7 @@ export default class Game extends Phaser.State {
 
         this.closeButton.anchor.setTo(0.5);
 
-        this.bg = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'panel');
+        this.bg = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'y_panel');
         // bg.smoothed = false;
         this.bg.anchor.setTo(0.5);
         this.bg.scale.y = 0.5;
@@ -49,32 +49,44 @@ export default class Game extends Phaser.State {
         // this.bg.smoothed = false;
 
         // Load title text.
-        let titleText = this.add.text(this.game.world.centerX, 150, 'Solve the following problem');
-        titleText.font = 'Lato';
-        titleText.fontSize = 40;
-        titleText.fontWeight = 100;
-        titleText.fill = '#000';
+        let titleText = this.add.text(this.game.world.centerX, 150, 'Solve the following problem',{
+            font: 'Lato',
+            fontSize: 40,
+            fontWeight: 400,
+            fill: '#FFCC00',
+            strokeThickness: 2,
+            stroke: '#C69F00'
+        });
         titleText.anchor.setTo(0.5);
         // Problem:
         this.problemSprite = this.add.sprite(this.game.world.centerX, this.game.world.centerY - 100, `p${this.problem.id}`);
         this.problemSprite.anchor.setTo(0.5);
+        this.bg.width = this.problemSprite.width + 40;
+        this.bg.height = this.problemSprite.height + 40;
+        this.bg.y = titleText.y + this.bg.height/2 + 40;
+        this.problemSprite.y = this.bg.y;
         // Solutions:
         this.solutionButtons = this.game.add.group();
         let buttonImg = this.game.cache.getFrameByName('ui-grey', 'grey_button00.png');
         let padding = 5;
         this.solutionSelected = false;
+        let buttonSize = {
+            width: 0,
+            height: 0
+        };
+
         this.problem.solutions.map((solution, index) => {
 
             let button = new SolutionButton({
                 game: this.game,
                 solution: solution,
-                x: index * (buttonImg.width + padding),
+                x: 0,
                 y: 0,
-                key: 'ui-blue',
-                upFrame: 'blue_button05.png',
-                outFrame: 'blue_button02.png',
-                overFrame: 'blue_button04.png',
-                downFrame: 'blue_button04.png',
+                key: 'ui-yellow',
+                upFrame: 'yellow_button05.png',
+                outFrame: 'yellow_button02.png',
+                overFrame: 'yellow_button04.png',
+                downFrame: 'yellow_button04.png',
                 callback: () => {
                     //Answer question:
                     if (this.solutionSelected) {
@@ -82,7 +94,6 @@ export default class Game extends Phaser.State {
                     }
 
                     this.solutionSelected = true;
-                    console.log(solution);
 
                     if(solution.isCorrect) {
                         this.game.correctAnswers += 1;
@@ -124,13 +135,30 @@ export default class Game extends Phaser.State {
                 },
                 callbackContext: this
             });
-            button.anchor.setTo(0.5);
+            button.anchor.y = 0.5;
+            buttonSize = {
+                width: Math.max(buttonSize.width, button.solutionWidth() + 40),
+                height: Math.max(buttonSize.height, button.solutionHeight() + 20),
+            }
 
+            button.idx = index;
             this.solutionButtons.add(button);
         });
+        var solutionsWidth = 0;
+        this.solutionButtons.forEach(function(button) {
+            button.setBGSize(buttonSize);
+            button.x = button.idx * (buttonSize.width + padding);
+            solutionsWidth += (buttonSize.width);
+            if(button.idx > 0) {
+                solutionsWidth += padding;
+            }
+        }, this);
 
-        this.solutionButtons.x = this.game.world.centerX + buttonImg.width / 2 - this.solutionButtons.width / 2 ;
-        this.solutionButtons.y = this.game.world.centerY;
+        this.solutionButtons.x = this.game.world.centerX + Math.floor((buttonSize.width - solutionsWidth) / 2);
+        console.log(this.solutionButtons.width);
+        console.log(solutionsWidth);
+        console.log(buttonSize.width);
+        this.solutionButtons.y = this.bg.y + this.bg.height / 2 + 40;
         this.game.add.existing(this.solutionButtons);
         this.game.add.existing(this.closeButton);
     }

@@ -12,39 +12,47 @@ export default class ProblemLoader extends Phaser.State {
         return;
     }
     this.game.remainingProblems = this.game.remainingProblems - 1;
-    console.log(this.game.remainingProblems);
+    this.problem = problem;
 
     this.filesToLoad = {};
 
-    if(problem){
-      this.loadProblemData(problem);
-      this.shouldSelectProblem = false;
-    }
-    else{
-      this.problem = null;
-      this.shouldSelectProblem = true;
-    }
-  }
-
-  preload () {
-    stateManager = this;
-    this.loaderBg = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loaderBg');
-    this.loaderBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loaderBar');
-    centerGameObjects([this.loaderBg, this.loaderBar]);
-
-
-    this.load.crossOrigin = 'anonymous';
-    this.load.setPreloadSprite(this.loaderBar);
-    this.load.onLoadComplete.add(this.loadComplete);
-    this.load.onFileComplete.add(this.fileComplete);
 
   }
+
+  preload() {
+      stateManager = this;
+      this.loaderBg = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loaderBg');
+      this.loaderBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loaderBar');
+      centerGameObjects([this.loaderBg, this.loaderBar]);
+      this.game.load.crossOrigin = 'anonymous';
+      this.game.load.setPreloadSprite(this.loaderBar);
+      this.game.load.onLoadComplete.add(this.loadComplete);
+      this.game.load.onFileComplete.add(this.fileComplete);
+  }
+
+  create() {
+
+      if(this.problem){
+        this.shouldSelectProblem = false;
+        this.loadProblemData(this.problem);
+      }
+      else{
+        this.shouldSelectProblem = true;
+        this.start();
+      }
+  }
+
   fileComplete(progress, key, success, totalLoadedFiles, totalFiles){
     stateManager.filesToLoad[key].loaded = true;
+    console.log(progress);
+    console.log('Loaded -> ' + totalLoadedFiles);
+    console.log('Total -> ' + totalFiles);
+    console.log('Key -> ' + key);
   }
 
   loadComplete(){
     //here, this is not this xD
+    console.log('Load complete o.O');
     let changeState = true;
     let unloadedKeys = [];
     for(let key in stateManager.filesToLoad){
@@ -59,19 +67,8 @@ export default class ProblemLoader extends Phaser.State {
     else {
         stateManager.state.start('Results');
     }
-    // if(changeState){
-    // }
-    // else if (stateManager.load.hasLoaded) {
-    //   //Check which files are NOT loading:
-    //   unloadedKeys.map((key) => {
-    //     //Load keys:
-    //     stateManager.load.image(key, stateManager.filesToLoad[key].url);
-    //   });
-    //
-    // //   stateManager.load.start();
-    // }
   }
-  create(){
+  start(){
     let problemLoader = this;
     // Load from API:
     if(this.shouldSelectProblem){
@@ -100,21 +97,21 @@ export default class ProblemLoader extends Phaser.State {
 
   loadProblemData(problem){
     let problemKey = `p${problem.id}`;
-    this.load.image(problemKey,problem.url);
-    this.filesToLoad[problemKey] = {
-      loaded: false,
-      url: problem.url
-    };
     problem.solutions.map((solution) => {
       let solutionKey = `s${solution.id}`;
       this.filesToLoad[solutionKey] = {
         loaded: false,
         url: solution.url
       };
-      this.load.image(solutionKey, solution.url);
+      this.game.load.image(solutionKey, solution.url);
     });
+    this.game.load.image(problemKey, problem.url);
+    this.filesToLoad[problemKey] = {
+        loaded: false,
+        url: problem.url
+    };
     this.problem = problem;
-    this.load.start();
+    this.game.load.start();
   }
 
 }

@@ -9,7 +9,7 @@ export default class Boot extends Phaser.State {
     this.fontsReady = true;
     this.fontsLoaded = this.fontsLoaded.bind(this);
     this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-    this.game.time.advancedTiming = true 
+    this.game.time.advancedTiming = true
   }
 
   preload () {
@@ -34,6 +34,7 @@ export default class Boot extends Phaser.State {
     this.load.image('background', './assets/images/background.png');
     this.load.image('yellow_btn', './assets/images/yellow_button.png');
     this.load.image('panel', './assets/images/grey_panel.png');
+    this.load.image('y_panel', './assets/images/yellow_grey_panel.png');
     this.load.image('bordered_panel', './assets/images/new_panel.png');
     this.load.image('achievementUnlocked', './assets/images/achievementUnlocked.png');
     /** Medals: **/
