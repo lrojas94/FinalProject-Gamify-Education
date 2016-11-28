@@ -50,8 +50,8 @@ export default {
     "form.lastName": "Last Name",
     "form.birthDate": "Birth Date",
     "form.gender": "Gender",
-    "form.boy": "Boy",
-    "form.girl": "Girl",
+    "form.boy": "Male",
+    "form.girl": "Female",
 
     /**
      * Problems Form
