@@ -118,8 +118,8 @@ router.get('/home', (req, res) => {
             'year',
             'grade',
             'teacherId',
-            [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'],
-            [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswers']
+            [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'] as any,
+            [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswers'] as any
         ],
         where: {
             teacherId: teacher.id
@@ -149,8 +149,8 @@ router.get('/home', (req, res) => {
                 'id',
                 'name',
                 'groupId',
-                [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'],
-                [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswers'],
+                [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'] as any,
+                [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswers'] as any,
             ],
             include: [{
                 model: Problem,
@@ -179,8 +179,8 @@ router.get('/home', (req, res) => {
                 'id',
                 'name',
                 'groupId',
-                [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'],
-                [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswers'],
+                [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'] as any,
+                [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswers'] as any,
             ],
             include: [{
                 model: Problem,
@@ -199,9 +199,9 @@ router.get('/home', (req, res) => {
                         required: true,
                     }]
                 }]
-            }],
+            }] as any,
             group: ['Difficulty.id', 'Difficulty.name', 'Difficulty.groupId']
-        }],
+        }] as any,
         group: ['Group.id']
     })
     .then((problems) => {

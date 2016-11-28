@@ -3,7 +3,7 @@ const webpack = require("webpack");
 
 module.exports = {
     entry: {
-        app: path.join(__dirname, "/client/app.jsx") //Use this to add more builds. Different modules don't have to be together on a single file.
+        app: path.join(__dirname, "client/app.jsx") //Use this to add more builds. Different modules don't have to be together on a single file.
     },
     output: {
         path    : path.join(__dirname, "client/build/"),

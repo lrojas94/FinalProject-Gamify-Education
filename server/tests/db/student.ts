@@ -37,7 +37,6 @@ db.syncAll()
                   db.Student.create({
                       username: 'lrojas',
                       password: 'lrojas',
-                      studentId: 'leroc0178',
                       personId: person.get('id')
                   })
                   .then(() => {
@@ -53,7 +52,6 @@ db.syncAll()
                       .then((student) => {
                           student.username.should.equal('lrojas');
                           student.password.should.equal('lrojas');
-                          student.studentId.should.equal('leroc0178');
                           student.person.name.should.equal('Luis Eduardo');
                           student.person.lastName.should.equal('Rojas Cabrera');
                           student.person.birthDay.getTime().should.equal(new Date('April 28, 1994').getTime());

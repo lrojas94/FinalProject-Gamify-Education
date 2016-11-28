@@ -41,7 +41,7 @@ export function initialize(): void {
       maxConnections: 100,
       minConnections: 0,
       maxIdleTime: 10000
-    },
+    } as any,
     // logging: false
 
   });
