@@ -641,12 +641,6 @@ var generateAddEdit = ({ displayName, pluralDisplayName, opts, url }) => {
 
         return (
           <div className='padded-content'>
-            <div className='row'>
-              <div className='col-xs-12 text-right'>
-                <Link to={`/${url}`} className='btn-fab-sm m-yellow'><i className="material-icons">reply</i></Link>
-              </div>
-            </div>
-
             <h3> <FormattedMessage id={`generator.${opts.title}`}/> <FormattedMessage id={_.capitalize(displayName)}/> </h3>
             <div className='container-fluid'>
               <div className='row'>
