@@ -150,6 +150,10 @@ export default {
      "generator.topic.description": "Description",
      "generator.topic.example": "Sample Problem",
 
+     /** groups **/
+     "generator.group.grade": "Grade",
+     "generator.group.year": "Year",
+
      /**
       * General items
       */
