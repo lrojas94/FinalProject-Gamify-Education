@@ -67,7 +67,7 @@ class PersonForm extends Component {
                             <option value='m'>
                                 <FormattedMessage id="form.boy" />
                             </option>
-                            <option value='h'>
+                            <option value='f'>
                                 <FormattedMessage id="form.girl" />
                             </option>
                         </select>

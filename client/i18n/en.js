@@ -50,8 +50,8 @@ export default {
     "form.lastName": "Last Name",
     "form.birthDate": "Birth Date",
     "form.gender": "Gender",
-    "form.boy": "Boy",
-    "form.girl": "Girl",
+    "form.boy": "Male",
+    "form.girl": "Female",
 
     /**
      * Problems Form
@@ -149,6 +149,10 @@ export default {
      "generator.topic.name": "Name",
      "generator.topic.description": "Description",
      "generator.topic.example": "Sample Problem",
+
+     /** groups **/
+     "generator.group.grade": "Grade",
+     "generator.group.year": "Year",
 
      /**
       * General items

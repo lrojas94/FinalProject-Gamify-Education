@@ -149,6 +149,10 @@ export default {
      "generator.topic.description": "Descripción",
      "generator.topic.example": "Problema de Ejemplo",
 
+     /** groups **/
+     "generator.group.grade": "Curso",
+     "generator.group.year": "Año Escolar",
+
      /**
       * General items
       */
