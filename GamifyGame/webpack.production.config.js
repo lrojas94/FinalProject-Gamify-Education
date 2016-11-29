@@ -6,6 +6,8 @@ var phaserModule = path.join(__dirname, '/node_modules/phaser/');
 var phaser = path.join(phaserModule, 'build/custom/phaser-split.js');
 var pixi = path.join(phaserModule, 'build/custom/pixi.js');
 var p2 = path.join(phaserModule, 'build/custom/p2.js');
+var phaserInput = path.join(__dirname, '/node_modules/phaser-input/build/phaser-input.js');
+var phaserTransitions = path.join(__dirname, '/src/phaser-state-transition.min.js');
 
 var definePlugin = new webpack.DefinePlugin({
   __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'false'))
@@ -42,7 +44,16 @@ module.exports = {
       { test: /pixi\.js/, loader: 'expose?PIXI' },
       { test: /phaser-split\.js$/, loader: 'expose?Phaser' },
       { test: /p2\.js/, loader: 'expose?p2' },
-      { test: /phaser\-input\.js$/, loader: 'exports?Fabrique=true' }
+      {
+          test: /phaser\-input\.js$/,
+          loader: 'exports?Fabrique=true'
+      }, {
+          test: /phaser\-input$/,
+          loader: 'exports?Fabrique=true'
+      }, {
+          test: /phaser\-state\-transition\.js$/,
+          loader: 'exports?StateTransition'
+      }
     ]
   },
   node: {
@@ -52,7 +63,9 @@ module.exports = {
     alias: {
       'phaser': phaser,
       'pixi': pixi,
-      'p2': p2
+      'p2': p2,
+      'phaser-input': phaserInput,
+      'phaser-state-transition': phaserTransitions
     }
   }
 };

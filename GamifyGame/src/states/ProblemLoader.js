@@ -73,7 +73,6 @@ export default class ProblemLoader extends Phaser.State {
     // Load from API:
     if(this.shouldSelectProblem){
       axios.post(`${constants.API_URL}problems/random`,{
-          jwt_token: constants.JWT_TOKEN,
           topicId: this.game.selectedTopic.id,
           difficultyId: this.game.selectedDifficulty.id,
 

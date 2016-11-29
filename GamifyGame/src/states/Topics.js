@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import axios from 'axios';
 import constants from '../constants';
 import ButtonWithText from './../sprites/ButtonWithText';
-import PanelButton from '../sprites/PanelButton';
+import PanelButton from '../sprites/TopicButton';
 import {
     setResponsiveWidth,
     centerGameObjects
@@ -131,7 +131,10 @@ export default class Topic extends Phaser.State {
                     this.game.selectedTopic = topic;
                     this.state.start('Difficulties');
                 },
-                callbackContext: this
+                callbackContext: this,
+                extraData: {
+                    topic: topic
+                }
             });
             panelButton.anchor.setTo(0.5);
 

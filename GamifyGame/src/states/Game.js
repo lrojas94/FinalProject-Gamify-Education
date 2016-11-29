@@ -100,7 +100,6 @@ export default class Game extends Phaser.State {
                     }
 
                     var answerData = {
-                        jwt_token: constants.JWT_TOKEN,
                         solutionId: solution.id,
                         problemId: solution.problemId,
                         studentId: this.game.user.id,
