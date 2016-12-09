@@ -89,6 +89,9 @@ var router = simpleRouter({
                           });
                       });
               }
+              else {
+                  next();
+              }
           }
       }
     }
