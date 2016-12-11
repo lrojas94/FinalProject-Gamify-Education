@@ -11,6 +11,7 @@ import difficultyActions from './../../actions/difficulties';
 import {LinkColumn} from './../general/linkColumn';
 import {Route} from './../../models/route';
 import DifficultysForm from './form';
+import DifficultyGraphData from './graphData';
 import {FormattedMessage, injectIntl} from 'react-intl';
 
 const initialState = {
@@ -36,7 +37,8 @@ const generatedFeatures = componentGenerator({
                     'name', 'description'
                 ],
                 element: 'difficultys.view.difficulty.data'
-            }
+            },
+            { title: 'charts', template: DifficultyGraphData, element: 'difficultys.view.difficulty.data' },
         ]
     },
     list: {
