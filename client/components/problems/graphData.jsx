@@ -33,8 +33,8 @@ class ProblemGraphData extends Component {
 
             this.correctAnswersChart = {
                 labels: [
-                    "Wrong Answers",
-                    "Right Answers",
+                    this.props.intl.messages['charts.rightAnswers'],
+                    this.props.intl.messages['charts.wrongAnswers'],
                 ],
                 datasets: [
                     {

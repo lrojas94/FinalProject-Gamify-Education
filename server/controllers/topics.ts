@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { Topic, Problem, Answer, Solution, DB } from './../models/db';
+import { Topic, Problem, Answer, Solution, DB, Difficulty } from './../models/db';
 import simpleRouter from './../utility/simpleRouter';
 
 var router = simpleRouter({
@@ -18,6 +18,81 @@ var router = simpleRouter({
         attributes: ['name']
       },
       middlewares: {
+          get: (req, res, next) => {
+              Topic.find({
+                  attributes: [
+                      'id',
+                      'name',
+                      'description',
+                      'example',
+                      'groupId',
+                      [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'] as any,
+                      [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswers'] as any,
+                  ],
+                  where: {
+                      id: req.params.id
+                  },
+                  include: [{
+                      model: Problem,
+                      attributes: [],
+                      as: 'problems',
+                      required: true,
+                      include: [{
+                          model: Solution,
+                          attributes: [],
+                          as: 'solutions',
+                          required: true,
+                          include: [{
+                              model: Answer,
+                              as: 'answers',
+                              attributes: [],
+                              required: true,
+                          }]
+                      }]
+                  }],
+                  group: ['Topic.id', 'Topic.name',
+                  'Topic.groupId', 'Topic.example', 'Topic.description',
+                  'Topic.example', 'Topic.groupId']
+              })
+              .then((topic) => {
+                  // Find difficulties:
+                  Difficulty.findAll({
+                      attributes: [
+                          'id',
+                          'name',
+                          [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'] as any,
+                          [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswers'] as any,
+                      ],
+                      include: [{
+                          model: Problem,
+                          attributes: [],
+                          as: 'problems',
+                          required: true,
+                          where: {
+                              topicId: topic['id']
+                          } as any,
+                          include: [{
+                              model: Solution,
+                              attributes: [],
+                              as: 'solutions',
+                              required: true,
+                              include: [{
+                                  model: Answer,
+                                  as: 'answers',
+                                  attributes: [],
+                                  required: true,
+                              }]
+                          }]
+                      }] as any,
+                      group: ['Difficulty.id', 'Difficulty.name']
+                  })
+                  .then((difficulties) => {
+                      topic.setDataValue('difficulties', difficulties);
+                      req['result'] = topic;
+                      next();
+                  });
+              });
+          },
           list: (req, res, next) => {
               if (req['userType'] === 'STUDENT') {
                   // query for students:

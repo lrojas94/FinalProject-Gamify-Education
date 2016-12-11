@@ -149,6 +149,7 @@ export default {
      "generator.topic.name": "Name",
      "generator.topic.description": "Description",
      "generator.topic.example": "Sample Problem",
+     "generator.topic.chart": "Statistics",
 
      /** groups **/
      "generator.group.grade": "Grade",
@@ -180,6 +181,13 @@ export default {
      /** Charts **/
      "problems.chart.rightwrong": "Write vs Wrong Answers on this problem",
      "problems.chart.answerdistribution": "Answer Distribution On This Problem",
+
+     "generator.topic.charts": "Statistics",
+     "topics.chart.rightwrong": "Write vs Wrong Answers on this Topic",
+     "topics.chart.difficultydistribution": "Answers per Difficulty On This Problem",
+     "charts.rightAnswers": "Right Answers",
+     "charts.wrongAnswers": "Wrong Answers",
+
      "home.title": "Students Overview",
      "home.correctAnswers": "Correct Answers",
      "home.totalAnswers": "Wrong Answers",

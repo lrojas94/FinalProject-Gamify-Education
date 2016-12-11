@@ -11,6 +11,7 @@ import topicActions from './../../actions/topics';
 import {LinkColumn} from './../general/linkColumn';
 import {Route} from './../../models/route';
 import TopicsForm from './form';
+import TopicGraphData from './graphData';
 import {FormattedMessage, injectIntl} from 'react-intl';
 
 const initialState = {
@@ -35,7 +36,9 @@ const generatedFeatures = componentGenerator({
                     'name', 'description', 'example'
                 ],
                 element: 'topics.view.topic.data'
-            }
+            },
+            { title: 'charts', template: TopicGraphData, element: 'topics.view.topic.data' },
+
         ]
     },
     list: {

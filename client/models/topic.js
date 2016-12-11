@@ -6,6 +6,9 @@ export class Topic {
   description: string;
   example: string;
   groupId: number;
+  correctAnswers: number;
+  totalAnswers: number;
+  difficulties: object;
 
   static fromJSON(data) {
     return teacher = new Topic(data);
@@ -18,6 +21,9 @@ export class Topic {
       description: this.description,
       example: this.example,
       groupId: this.groupId,
+      correctAnswers: this.correctAnswers,
+      totalAnswers: this.totalAnswers,
+      difficulties: this.difficulties,
     }
   }
 
@@ -30,6 +36,10 @@ export class Topic {
         this.description = data.description;
         this.example = data.example;
         this.groupId = data.groupId;
+        this.correctAnswers = data.correctAnswers;
+        this.totalAnswers = data.totalAnswers;
+        this.difficulties = data.difficulties;
+
       }
       else {
         this.id = dataId;
