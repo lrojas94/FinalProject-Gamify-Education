@@ -183,9 +183,9 @@ export default {
      "problems.chart.answerdistribution": "Answer Distribution On This Problem",
 
      "generator.topic.charts": "Statistics",
-     "topics.chart.rightwrong": "Write vs Wrong Answers on this Topic",
+     "topics.chart.rightwrong": "Right vs Wrong Answers on this Topic",
      "topics.chart.difficultydistribution": "Answers per Difficulty On This Problem",
-     "difficulties.chart.rightwrong": "Write vs Wrong Answers on this Difficulty",
+     "difficulties.chart.rightwrong": "Right vs Wrong Answers on this Difficulty",
      "difficulties.chart.topicdistribution": "Answers per Topic On This Problem",
      "charts.rightAnswers": "Right Answers",
      "charts.wrongAnswers": "Wrong Answers",

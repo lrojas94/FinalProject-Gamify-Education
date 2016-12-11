@@ -120,6 +120,7 @@ export default {
 
      /** Problem **/
      "generator.problem.problem": "Problema",
+          "generator.problem.problemInfo": "Información del Problema",
 
      /** School **/
      "generator.school.name": "Nombre de la Escuela",
@@ -177,9 +178,18 @@ export default {
      "Topic": "Tema",
      "Topics": "Temas",
 
-     "generator.problem.problemInfo": "Informaciones Generales",
+     /** Charts **/
      "problems.chart.rightwrong": "Respuestas Correctas vs Incorrectas",
      "problems.chart.answerdistribution": "Distribución de Respuestas en este Problema",
+
+      "generator.topic.charts": "Estadísticas",
+      "topics.chart.rightwrong": "Respuestas Correctas vs Incorrectas en este Tema",
+      "topics.chart.difficultydistribution": "Respuestas por Dificultad en este Problema",
+      "difficulties.chart.rightwrong": "Respuestas Correctas vs Incorrectas en esta Dificultad",
+      "difficulties.chart.topicdistribution": "Respuestas por Tema en este Problema",
+      "charts.rightAnswers": "Respuestas Correctas",
+      "charts.wrongAnswers": "Respuestas Incorrectas",
+
      "home.title": "Resumen de los Estudiantes",
      "home.correctAnswers": "Respuestas Correctas",
      "home.totalAnswers": "Respuestas Incorrectas",
