@@ -71,7 +71,7 @@ export default class Achievement extends Phaser.State {
         this.closeButton.anchor.setTo(0.5);
 
         // Load title text.
-        let titleText = this.add.text(this.game.world.centerX, 120, 'Available Achivements',{
+        let titleText = this.add.text(this.game.world.centerX, 120, 'Available Achievements',{
             font: 'Lato',
             fontSize: 40,
             fontWeight: 400,
