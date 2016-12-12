@@ -36,6 +36,22 @@ export default class Topic extends Phaser.State {
                 throw Error(data.message);
             } else {
                 // Remove loading text
+                console.log(response);
+                // Add next button():
+                this.page = data.currentPage;
+                if(data.next <= data.currentPage){
+                    this.next.alpha=0;
+                }
+                else{
+                    this.next.alpha=1;
+                }
+                if(data.currentPage <= 1) {
+                    this.prev.alpha=0;
+                }
+                else{
+                    this.prev.alpha=1;
+                }
+
                 topicLoader.loadingText.setText("");
                 topicLoader.initTopics(data);
             }
@@ -47,6 +63,21 @@ export default class Topic extends Phaser.State {
     create() {
         // load bg:
         this.stage.backgroundColor = '#34495e';
+        if(this.topicsGroup){
+            this.topicsGroup.destroy(true);
+        }
+
+        this.next = game.add.button(game.world.width - 5, game.world.centerY, 'next', this.nextPage, this, 2, 1, 0);
+        this.next.anchor.y = 0.5;
+        this.next.anchor.x = 1;
+        this.next.scale.setTo(0.5);
+
+        this.prev = game.add.button(5, game.world.centerY, 'prev', this.prevPage, this, 2, 1, 0);
+        this.prev.anchor.y = 0.5;
+        this.prev.anchor.x = 0;
+        this.prev.scale.setTo(0.5);
+        this.prev.alpha=0;
+
         this.topicsGroup = this.game.add.group();
         // this.background = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
         // this.background.anchor.setTo(0.5, 0.5);
@@ -93,12 +124,29 @@ export default class Topic extends Phaser.State {
         this.game.add.existing(this.closeButton);
     }
 
+    nextPage() {
+        this.page = this.page+1;
+        return this.loadPage(this.page);
+    }
+
+    prevPage() {
+        if(this.page<=1){
+            return;
+        }
+        this.page=this.page-1;
+        this.loadPage(this.page);
+    }
+
     initTopics(topics) {
         let keys = this.game.cache.getKeys();
         let topicImg = this.game.make.sprite(0, 0, 'bordered_panel');
         topicImg.scale.setTo(0.2);
         let padding = 20;
         let count = topics.data.length;
+        if(this.topicsGroup){
+            this.topicsGroup.destroy(true);
+        }
+        this.topicsGroup = this.game.add.group();
 
         // 5 items per row.
         let rows = 1;
@@ -140,6 +188,8 @@ export default class Topic extends Phaser.State {
 
             this.topicsGroup.add(panelButton);
         });
+
+
 
         this.topicsGroup.x = this.game.world.centerX - this.topicsGroup.width / 2;
         this.topicsGroup.y = this.game.world.centerY;

@@ -64,7 +64,7 @@ export default class Menu extends Phaser.State {
 
         this.profileButton = new ButtonWithText({
             game: this.game,
-            text: "Profile",
+            text: "Achievements",
             x: 0,
             y: 0,
             key: 'ui-blue',
@@ -78,29 +78,29 @@ export default class Menu extends Phaser.State {
             callbackContext: this
         }).alignTo(this.playButton, Phaser.BOTTOM_CENTER, 0, 16);
 
-        this.settingsButton = new ButtonWithText({
-            game: this.game,
-            text: "Settings",
-            x: 0,
-            y: 0,
-            key: 'ui-red',
-            upFrame: 'red_button02.png',
-            outFrame: 'red_button13.png',
-            overFrame: 'red_button01.png',
-            downFrame: 'red_button01.png',
-            callback: () => {
-                menu.state.start('Menu', transitionOut, null);
-            },
-            callbackContext: this
-        }).alignTo(this.profileButton, Phaser.BOTTOM_CENTER, 0, 16);
+        // this.settingsButton = new ButtonWithText({
+        //     game: this.game,
+        //     text: "Settings",
+        //     x: 0,
+        //     y: 0,
+        //     key: 'ui-red',
+        //     upFrame: 'red_button02.png',
+        //     outFrame: 'red_button13.png',
+        //     overFrame: 'red_button01.png',
+        //     downFrame: 'red_button01.png',
+        //     callback: () => {
+        //         menu.state.start('Menu', transitionOut, null);
+        //     },
+        //     callbackContext: this
+        // }).alignTo(this.profileButton, Phaser.BOTTOM_CENTER, 0, 16);
 
         this.playButton.anchor.setTo(0.5, 0.5);
         this.profileButton.anchor.setTo(0.5, 0.5);
-        this.settingsButton.anchor.setTo(0.5, 0.5);
+        // this.settingsButton.anchor.setTo(0.5, 0.5);
 
         this.menuButtons.add(this.playButton);
         this.menuButtons.add(this.profileButton);
-        this.menuButtons.add(this.settingsButton);
+        // this.menuButtons.add(this.settingsButton);
 
         this.game.add.existing(this.menuButtons);
     }

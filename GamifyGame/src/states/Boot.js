@@ -37,6 +37,8 @@ export default class Boot extends Phaser.State {
     this.load.image('y_panel', './assets/images/yellow_grey_panel.png');
     this.load.image('bordered_panel', './assets/images/new_panel.png');
     this.load.image('achievementUnlocked', './assets/images/achievementUnlocked.png');
+    this.load.image('next', './assets/next.png');
+    this.load.image('prev', './assets/prev.png');
     /** Medals: **/
     this.load.image('star', './assets/images/star.png');
     this.load.image('medal', './assets/images/medals/shaded_medal1.png');

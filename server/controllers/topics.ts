@@ -176,10 +176,20 @@ var router = simpleRouter({
                       })
                       .then((topics) => {
                           console.log(topics);
-                          return res.json({
-                              status: 0,
-                              data: topics
-                          });
+                          Topic.count()
+                          .then((count) => {
+                              var limit = parseInt(req.query.limit);
+                              var pages = Math.ceil(count / limit);
+                              var current = parseInt(req.query.page);
+                              var next = current >= pages ? 1 : current + 1;
+                              return res.json({
+                                  status: 0,
+                                  data: topics,
+                                  currentPage:current,
+                                  next: next
+                              });
+
+                          })
                       })
                       .catch((err) => {
                           return res.json({
