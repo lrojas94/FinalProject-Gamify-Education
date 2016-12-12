@@ -186,7 +186,12 @@ export default {
      "topics.chart.rightwrong": "Right vs Wrong Answers on this Topic",
      "topics.chart.difficultydistribution": "Answers per Difficulty On This Problem",
      "difficulties.chart.rightwrong": "Right vs Wrong Answers on this Difficulty",
-     "difficulties.chart.topicdistribution": "Answers per Topic On This Problem",     "generator.difficulty.charts": "Statistics",
+     "difficulties.chart.topicdistribution": "Answers per Topic On This Problem",
+     "generator.difficulty.charts": "Statistics",
+     "generator.student.charts": "Statistics",
+     "students.chart.perdifficulty": "Per Difficulty Status",
+     "students.chart.pertopic": "Per Topic Status",
+     "chart.noDataToShow": "No information available",
      "charts.rightAnswers": "Right Answers",
      "charts.wrongAnswers": "Wrong Answers",
 

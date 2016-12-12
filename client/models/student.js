@@ -8,6 +8,9 @@ export class Student {
   groupId: number;
   person: Person;
   group: Group;
+  topics: object;
+  difficulties: object;
+
 
   static fromJSON(data) {
     return new Student(data);
@@ -21,6 +24,8 @@ export class Student {
       groupId: this.groupId,
       person: this.person,
       group: this.group,
+      topics: this.topics,
+      difficulties: this.difficulties,
     }
   }
 
@@ -34,6 +39,8 @@ export class Student {
         this.groupId = data.groupId;
         this.person = data.person ? new Person(data.person) : null;
         this.group = data.group ? new Group(data.group) : null;
+        this.topics = data.topics
+        this.difficulties = data.difficulties
       }
       else {
         this.id = dataId;

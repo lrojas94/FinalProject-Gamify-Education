@@ -127,8 +127,6 @@ class HomeIndex extends Component {
                 difficulty: difficultyGraphData,
             };
         });
-
-        console.log(this.groupChartsData);
     }
 
     onChangeTopicGraphGroup(elem) {

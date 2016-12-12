@@ -12,6 +12,7 @@ import { LinkColumn } from './../general/linkColumn';
 import { NestedColumn } from './../general/nestedColumn';
 import { Route } from './../../models/route';
 import StudentsForm from './form';
+import StudentGraphData from './graphData';
 import PersonForm from './../persons/form';
 // import ShowGroup from './../groups/show';
 import DateComponent from './../general/dateComponent';
@@ -45,7 +46,8 @@ const generatedFeatures = componentGenerator({
       { title: 'personalInfo',
         properties: ['name', 'lastName', {template: DateComponent, path: 'birthDay', name: 'bday'}, 'gender'],
         element: 'students.view.student.data.person'
-      }
+    },
+    { title: 'charts', template: StudentGraphData, element: 'students.view.student.data' }
       // { title: 'group', template: ShowGroup, element: 'students.view.student.data.group' },
       // { title: 'phone', template: ShowPhone, element: 'students.view.student.data.phone' }
     ]
@@ -138,7 +140,7 @@ class StudentsMain extends Component {
           <div>
           <SectionTitle
             title={this.props.intl.messages['sidebar.students']}
-            background={'http://uconn-today.universityofconn.netdna-cdn.com/wp-content/uploads/2014/05/MaleMathStudent.jpg'}
+            background={'http://www.psu.edu/sites/default/files/CS_howdoi.jpg'}
             customContent={''}
           />
           <br/>
