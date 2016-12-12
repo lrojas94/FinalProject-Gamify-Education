@@ -71,6 +71,7 @@ export default class Topic extends Phaser.State {
         this.next.anchor.y = 0.5;
         this.next.anchor.x = 1;
         this.next.scale.setTo(0.5);
+        this.next.alpha=0;
 
         this.prev = game.add.button(5, game.world.centerY, 'prev', this.prevPage, this, 2, 1, 0);
         this.prev.anchor.y = 0.5;
