@@ -38,6 +38,22 @@ export default class Achievement extends Phaser.State {
                 throw Error(data.message);
             } else {
                 // Remove loading text
+                data.currentPage=data.page;
+                this.page = data.currentPage;
+                console.log(this.page);
+
+                if(data.nextPage <= data.currentPage){
+                    this.next.alpha=0;
+                }
+                else{
+                    this.next.alpha=1;
+                }
+                if(data.currentPage <= 1) {
+                    this.prev.alpha=0;
+                }
+                else{
+                    this.prev.alpha=1;
+                }
                 achievementLoader.loadingText.setText("");
                 achievementLoader.initAchievements(data);
             }
@@ -46,12 +62,37 @@ export default class Achievement extends Phaser.State {
         });
     }
 
+    nextPage() {
+        this.page = this.page+1;
+        return this.loadPage(this.page);
+    }
+
+    prevPage() {
+        if(this.page<=1){
+            return;
+        }
+        this.page=this.page-1;
+        return this.loadPage(this.page);
+    }
+
     create() {
         // load bg:
         this.stage.backgroundColor = '#34495e';
         this.achievementsGroup = this.game.add.group();
         // this.background = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'background');
         // this.background.anchor.setTo(0.5, 0.5);
+        this.next = game.add.button(game.world.width - 5, game.world.centerY, 'next', this.nextPage, this, 2, 1, 0);
+        this.next.anchor.y = 0.5;
+        this.next.anchor.x = 1;
+        this.next.scale.setTo(0.5);
+        this.next.alpha=0;
+
+        this.prev = game.add.button(5, game.world.centerY, 'prev', this.prevPage, this, 2, 1, 0);
+        this.prev.anchor.y = 0.5;
+        this.prev.anchor.x = 0;
+        this.prev.scale.setTo(0.5);
+        this.prev.alpha=0;
+
 
         this.closeButton = new ButtonWithText({
             game: this.game,
