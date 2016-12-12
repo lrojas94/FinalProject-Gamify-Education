@@ -104,7 +104,6 @@ export default {
      "generator.add": "Add",
      "generator.add.loading": "Creating",
      "generator.edit": "Update",
-     "generator.edit": "Updating",
      "generator.addEdit.success": "Was created/updated successfuly",
      "generator.creating": "To add a new {element}, just fill in the form bellow and click add.",
 
@@ -178,6 +177,7 @@ export default {
      "Teachers": "Teachers",
      "Topic": "Topic",
      "Topics": "Topics",
+
      /** Charts **/
      "problems.chart.rightwrong": "Write vs Wrong Answers on this problem",
      "problems.chart.answerdistribution": "Answer Distribution On This Problem",

@@ -104,7 +104,6 @@ export default {
      "generator.add": "Agregar",
      "generator.add.loading": "Agregando",
      "generator.edit": "Actualizar",
-     "generator.edit": "Actualizando",
      "generator.addEdit.success": "Fue creado/actualizado correctamente",
      "generator.creating": "Para agregar un nuevo elemento de {element}, Complete el formulario y presione Agregar al final de la página.",
 
@@ -120,7 +119,7 @@ export default {
 
      /** Problem **/
      "generator.problem.problem": "Problema",
-          "generator.problem.problemInfo": "Información del Problema",
+     "generator.problem.problemInfo": "Información del Problema",
 
      /** School **/
      "generator.school.name": "Nombre de la Escuela",
@@ -149,6 +148,7 @@ export default {
      "generator.topic.name": "Nombre",
      "generator.topic.description": "Descripción",
      "generator.topic.example": "Problema de Ejemplo",
+     "generator.topic.chart": "Estadísticas",
 
      /** groups **/
      "generator.group.grade": "Curso",
@@ -187,6 +187,11 @@ export default {
       "topics.chart.difficultydistribution": "Respuestas por Dificultad en este Problema",
       "difficulties.chart.rightwrong": "Respuestas Correctas vs Incorrectas en esta Dificultad",
       "difficulties.chart.topicdistribution": "Respuestas por Tema en este Problema",
+      "generator.difficulty.charts": "Estadísticas",
+      "generator.student.charts": "Estadísticas",
+      "students.chart.perdifficulty": "Estado por Dificultad",
+      "students.chart.pertopic": "Estado por Tema",
+      "chart.noDataToShow": "No hay información disponible",
       "charts.rightAnswers": "Respuestas Correctas",
       "charts.wrongAnswers": "Respuestas Incorrectas",
 
