@@ -188,6 +188,7 @@ export default {
      "topics.chart.difficultydistribution": "Answers per Difficulty On This Problem",
      "difficulties.chart.rightwrong": "Write vs Wrong Answers on this Difficulty",
      "difficulties.chart.topicdistribution": "Answers per Topic On This Topic",
+     "generator.difficulty.charts": "Statistics",
      "charts.rightAnswers": "Right Answers",
      "charts.wrongAnswers": "Wrong Answers",
 

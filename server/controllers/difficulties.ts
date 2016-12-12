@@ -52,41 +52,55 @@ var router = simpleRouter({
                 group: ['Difficulty.id', 'Difficulty.name', 'Difficulty.description']
             })
             .then((difficulty) => {
-                Topic.findAll({
-                    attributes: [
-                        'id',
-                        'name',
-                        [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'] as any,
-                        [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswers'] as any,
-                    ],
-                    include: [{
-                        model: Problem,
-                        attributes: [],
-                        as: 'problems',
-                        required: true,
+                if (difficulty === null) {
+                    Difficulty.find({
+                        attributes: ['id', 'name', 'description'],
                         where: {
-                            difficultyId: difficulty['id']
-                        } as any,
+                            id: req.params.id
+                        }
+                    })
+                    .then((d) => {
+                        req['result'] = d;
+                        next();
+                    });
+                }
+                else {
+                    Topic.findAll({
+                        attributes: [
+                            'id',
+                            'name',
+                            [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'] as any,
+                            [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswers'] as any,
+                        ],
                         include: [{
-                            model: Solution,
+                            model: Problem,
                             attributes: [],
-                            as: 'solutions',
+                            as: 'problems',
                             required: true,
+                            where: {
+                                difficultyId: difficulty['id']
+                            } as any,
                             include: [{
-                                model: Answer,
-                                as: 'answers',
+                                model: Solution,
                                 attributes: [],
+                                as: 'solutions',
                                 required: true,
+                                include: [{
+                                    model: Answer,
+                                    as: 'answers',
+                                    attributes: [],
+                                    required: true,
+                                }]
                             }]
-                        }]
-                    }] as any,
-                    group: ['Topic.id', 'Topic.name']
-                })
-                .then((topics) => {
-                    difficulty.setDataValue('topics', topics);
-                    req['result'] = difficulty;
-                    next();
-                });
+                        }] as any,
+                        group: ['Topic.id', 'Topic.name']
+                    })
+                    .then((topics) => {
+                        difficulty.setDataValue('topics', topics);
+                        req['result'] = difficulty;
+                        next();
+                    });
+                }
             });
         }
     }
