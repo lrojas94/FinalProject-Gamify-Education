@@ -69,6 +69,15 @@ class TopicGraphData extends Component {
     }
 
     render() {
+        if(!this.props.totalAnswers) {
+            return (
+                <div className='row'>
+                    <div className='col-xs-12'>
+                        <h4 className='text-center'> <FormattedMessage id='chart.noDataToShow'/> </h4>
+                    </div>
+                </div>
+            )
+        }
         return (
             <div className='row'>
                 <div className='col-xs-12 col-md-6'>

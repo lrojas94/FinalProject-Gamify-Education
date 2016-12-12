@@ -30,7 +30,7 @@ var router = simpleRouter({
                       [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswers'] as any,
                   ],
                   where: {
-                      id: req.params.id
+                      id: parseInt(req.params.id)
                   },
                   include: [{
                       model: Problem,
@@ -51,46 +51,71 @@ var router = simpleRouter({
                       }]
                   }],
                   group: ['Topic.id', 'Topic.name',
-                  'Topic.groupId', 'Topic.example', 'Topic.description',
-                  'Topic.example', 'Topic.groupId']
+                  'Topic.groupId', 'Topic.example', 'Topic.description']
               })
               .then((topic) => {
                   // Find difficulties:
-                  Difficulty.findAll({
-                      attributes: [
-                          'id',
-                          'name',
-                          [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'] as any,
-                          [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswers'] as any,
-                      ],
-                      include: [{
-                          model: Problem,
-                          attributes: [],
-                          as: 'problems',
-                          required: true,
-                          where: {
-                              topicId: topic['id']
-                          } as any,
+                  var finishRequest = (topic) => {
+                      Difficulty.findAll({
+                          attributes: [
+                              'id',
+                              'name',
+                              [DB.fn('COUNT', 'problems.solutions.answers.id'), 'totalAnswers'] as any,
+                              [DB.fn('SUM', DB.cast(DB.col('problems.solutions.isCorrect'), 'int')), 'correctAnswers'] as any,
+                          ],
                           include: [{
-                              model: Solution,
+                              model: Problem,
                               attributes: [],
-                              as: 'solutions',
+                              as: 'problems',
                               required: true,
+                              where: {
+                                  topicId: topic['id']
+                              } as any,
                               include: [{
-                                  model: Answer,
-                                  as: 'answers',
+                                  model: Solution,
                                   attributes: [],
+                                  as: 'solutions',
                                   required: true,
+                                  include: [{
+                                      model: Answer,
+                                      as: 'answers',
+                                      attributes: [],
+                                      required: true,
+                                  }]
                               }]
-                          }]
-                      }] as any,
-                      group: ['Difficulty.id', 'Difficulty.name']
-                  })
-                  .then((difficulties) => {
-                      topic.setDataValue('difficulties', difficulties);
-                      req['result'] = topic;
-                      next();
-                  });
+                          }] as any,
+                          group: ['Difficulty.id', 'Difficulty.name']
+                      })
+                      .then((difficulties) => {
+                          topic.setDataValue('difficulties', difficulties);
+                          req['result'] = topic;
+                          next();
+                      });
+                  };
+
+                  if (topic === null) {
+                    Topic.find({
+                        attributes: [
+                            'id',
+                            'name',
+                            'description',
+                            'example',
+                            'groupId',
+                        ],
+                        where: {
+                            id: req.params.id
+                        }
+                    })
+                    .then((t) => {
+                        t.setDataValue('difficulties', []);
+                        req['result'] = t;
+                        next();
+                    });
+                  }
+                  else {
+                      finishRequest(topic);
+                  }
+
               });
           },
           list: (req, res, next) => {
